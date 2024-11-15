@@ -8,8 +8,8 @@ const cors = require("cors");
 const { PORT, HOST, VERSION } = require("./setups");
 
 // Cron Job
-const job = require("./src/helpers/cron");
-console.log("Cron job is being started...");
+// const job = require("./src/helpers/cron");
+// console.log("Cron job is being started...");
 // job.start();
 
 // Connect to DB:
@@ -36,9 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middlewares
 
-// Limit requests from same IP
-const { generalRateLimiter } = require("./src/middlewares/rateLimiters");
-app.use("/", generalRateLimiter);
+app.use("/uploads", express.static("./uploads"));
 
 // - Logger
 app.use(require("./src/middlewares/logger"));
@@ -50,7 +48,7 @@ app.use(require("./src/middlewares/logger"));
 // app.use(require("./src/middlewares/queryHandler"));
 
 // Routes;
-// app.use(`/api/${VERSION}`, require("./src/routes"));
+app.use(`/api/${VERSION}`, require("./src/routes"));
 
 app.get("/", (req, res) => {
   res.redirect(`/api/${VERSION}`);

@@ -1,7 +1,5 @@
 "use strict";
 
-// app.use(require('./src/middlewares/logger'));
-
 const morgan = require("morgan");
 const fs = require("node:fs");
 
