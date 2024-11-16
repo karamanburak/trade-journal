@@ -2,17 +2,17 @@
 
 const router = require("express").Router();
 const idValidation = require("../middlewares/idValidation");
-const userController = require("../controllers/user");
+const user = require("../controllers/user");
 
 //URL: /users
 
-router.route("/").get(userController.list);
+router.route("/").get(user.list);
 router
   .route("/:id")
   .all(idValidation)
-  .get(userController.read)
-  .put(userController.update)
-  .patch(userController.update)
-  .delete(userController.delete);
+  .get(user.read)
+  .put(user.update)
+  .patch(user.update)
+  .delete(user.delete);
 
 module.exports = router;

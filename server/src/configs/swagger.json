@@ -1,0 +1,2281 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": "RESTful-API Trade-Journal",
+    "termsOfService": "",
+    "contact": {
+      "name": "tradejournalpjm@gmail.com",
+      "email": "tradejournalpjm@gmail.com"
+    },
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "host": "127.0.0.1:8000",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "Token": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Simple Token Authentication * Example: <b>Token ...tokenKey...</b>"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/tokens/": {
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "Get all tokens",
+        "description": "Retrieve a list of all tokens",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tokens retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "details": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "object"
+                        }
+                      }
+                    }
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "token-id"
+                      },
+                      "token": {
+                        "type": "string",
+                        "example": "token-string"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "example": "user-id"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "Create a new token",
+        "description": "Create a new token and save it to the database",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "example": "token-string"
+                },
+                "userId": {
+                  "type": "string",
+                  "example": "user-id"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Token created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "token-id"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "token-string"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "user-id"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/tokens/{id}": {
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "Get a token by ID",
+        "description": "Retrieve a specific token by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Token ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token retrieved successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "token-id"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "token-string"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "user-id"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "Delete a token by ID",
+        "description": "Delete a specific token by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Token ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Token deleted successfully"
+          },
+          "404": {
+            "description": "Token not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Token not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register",
+        "description": "Register with valid fullName, email, and password",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Doe"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "john.doe@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Test@1234"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Your registration is successful"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, validation error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation error message"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "Login with email and password to get simpleToken and JWT",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "testUser@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Test@1234"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/auth/logout": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "SimpleToken: Logout",
+        "description": "Delete simple token key and bypass JWT token",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "You are successfully logged out!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Logout failed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Logout failed. Please try again!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "No Authorization Header provided!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List Users",
+        "description": "\r  You can send query with endpoint for search[], sort[], page and limit.\r  <ul> Examples:\r  <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>\r  <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>\r  <li>URL/?<b>page=2&limit=1</b></li>\r  </ul>\r  ",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get Single User",
+        "description": "",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User",
+        "description": "",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete User",
+        "description": "",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Account successfully deleted!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Error message"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update User",
+        "description": "",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "User ID"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/trades/": {
+      "get": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Get List of Trades",
+        "description": "Fetch a list of all trades",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Create a New Trade",
+        "description": "Create a new trade and send a notification email to the user",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/trades/{id}": {
+      "get": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Get Trade Details",
+        "description": "Fetch details of a single trade by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the trade to fetch"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Update a Trade",
+        "description": "Update an existing trade by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the trade to update"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Delete a Trade",
+        "description": "Delete a trade by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the trade to delete"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Trade   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade successfully deleted!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Trade not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade not found!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Trade"
+        ],
+        "summary": "Update a Trade",
+        "description": "Update an existing trade by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the trade to update"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/positions/": {
+      "get": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Get List of Positions",
+        "description": "Fetch a list of all positions, including related open trades",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Create a New Position",
+        "description": "Create a new position for a specific stock",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "stockSymbol": {
+                  "type": "string",
+                  "example": "AAPL"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 100
+                },
+                "price": {
+                  "type": "number",
+                  "example": 150
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Position created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "position-id"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "user-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 15000
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 15000
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Position already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position already exists"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/positions/{id}": {
+      "get": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Get Position Details",
+        "description": "Fetch details of a single position by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the position to fetch"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Position details fetched successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "position-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 15000
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 16000
+                    },
+                    "openTrades": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "stockSymbol": {
+                            "type": "string",
+                            "example": "AAPL"
+                          },
+                          "quantity": {
+                            "type": "number",
+                            "example": 50
+                          },
+                          "price": {
+                            "type": "number",
+                            "example": 145
+                          },
+                          "executionDate": {
+                            "type": "string",
+                            "example": "2024-11-15"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Position not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Update a Position",
+        "description": "Update an existing position by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the position to update"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "number",
+                  "example": 150
+                },
+                "price": {
+                  "type": "number",
+                  "example": 155
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Position   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "position-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 155
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 23250
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 23250
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Position not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Delete a Position",
+        "description": "Delete a position by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the position to delete"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Position   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position successfully deleted!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Position not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position not found!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Update a Position",
+        "description": "Update an existing position by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the position to update"
+          },
+          {
+            "name": "tradeDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stockSymbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "number",
+                  "example": 150
+                },
+                "price": {
+                  "type": "number",
+                  "example": 155
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Position   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "position-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 155
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 23250
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 23250
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Position not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Position not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Position": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            }
+          }
+        },
+        "stockSymbol": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "upperCase": {
+              "type": "boolean",
+              "example": true
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "quantity": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            },
+            "min": {
+              "type": "number",
+              "example": 1
+            }
+          }
+        },
+        "price": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "averagePrice": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "totalInvestment": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "currentValue": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "openTrades": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Trade"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "token": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trime": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "unique": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "Trade": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "User"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "index": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "stockSymbol": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "uppercase": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "tradeDate": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "function"
+            }
+          }
+        },
+        "quantity": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            },
+            "min": {
+              "type": "number",
+              "example": 1
+            }
+          }
+        },
+        "price": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "min": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "type": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "enum": {
+              "type": "array",
+              "example": [
+                "BUY",
+                "SELL"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "enum": {
+              "type": "array",
+              "example": [
+                "OPEN",
+                "COMPLETED",
+                "CANCELLED"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "default": {
+              "type": "string",
+              "example": "OPEN"
+            }
+          }
+        },
+        "executionDate": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "function"
+            }
+          }
+        },
+        "closingDate": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            }
+          }
+        },
+        "holdingPeriod": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "profitLoss": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "notes": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "function"
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "function"
+                  },
+                  "default": {
+                    "type": "function"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lessons": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "lastName": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "email": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "validate": {
+              "type": "array",
+              "example": [
+                null,
+                "Please provide a valid email address."
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "password": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            },
+            "select": {
+              "type": "boolean",
+              "example": false
+            },
+            "set": {
+              "type": "function"
+            }
+          }
+        },
+        "isVerified": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        },
+        "isActive": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "verificationToken": {
+          "type": "function"
+        },
+        "verificationTokenExpiresAt": {
+          "type": "function"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "Token": []
+    }
+  ]
+}

@@ -66,15 +66,7 @@ module.exports = {
       });
     }
 
-    let hashedPassword;
-    try {
-      hashedPassword = await bcrypt.hash(password, 10);
-    } catch (err) {
-      return res.status(500).send({
-        error: true,
-        message: "An error occurred while hashing the password.",
-      });
-    }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       username,
@@ -85,7 +77,7 @@ module.exports = {
       isActive: true,
     });
 
-    // Send email to user
+    // Send registration email to user
     const emailSubject = "Welcome to Trade Journal!";
     const emailHtml = getWelcomeEmailHtml(firstName);
     await sendEmail(email, emailSubject, emailHtml);
@@ -143,7 +135,7 @@ module.exports = {
     // console.log("Login attempt:", email, password);
 
     if (email && password) {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email }).select("+password");
       if (!user) {
         throw new CustomError("Wrong email or password!", 401);
       }
@@ -155,6 +147,10 @@ module.exports = {
       }
 
       const isPasswordMatch = await bcrypt.compare(password, user.password);
+      //   console.log("Input password:", password);
+      //   console.log("Stored password hash:", user.password);
+      //   console.log("Password match result:", isPasswordMatch);
+
       if (isPasswordMatch) {
         let tokenData = await Token.findOne({ userId: user._id });
         if (!tokenData) {

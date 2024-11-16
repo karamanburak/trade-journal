@@ -3,7 +3,6 @@
 require("express-async-errors");
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
 const cors = require("cors");
 const { PORT, HOST, VERSION } = require("./setups");
 
@@ -42,10 +41,10 @@ app.use("/uploads", express.static("./uploads"));
 app.use(require("./src/middlewares/logger"));
 
 // - Authentication
-// app.use(require("./src/middlewares/authentication"));
+app.use(require("./src/middlewares/authentication"));
 
 // - QueryHandler
-// app.use(require("./src/middlewares/queryHandler"));
+app.use(require("./src/middlewares/queryHandler"));
 
 // Routes;
 app.use(`/api/${VERSION}`, require("./src/routes"));
@@ -79,5 +78,5 @@ app.use(require("./src/middlewares/errorHandler"));
 
 app.listen(PORT, () => console.log(`server running on http://${HOST}:${PORT}`));
 
-// Syncronization (must be in commentLine):
-// require("./src/helpers/sync")(); // !!! It clear database.
+// Syncronization
+// require("./src/helpers/sync")();

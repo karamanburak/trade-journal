@@ -1,0 +1,19 @@
+"use strict";
+
+const router = require("express").Router();
+
+const trade = require("../controllers/trade");
+const idValidation = require("../middlewares/idValidation");
+
+//URL: /trades
+
+router.route("/").get(trade.list).post(trade.create);
+router
+  .route("/:id")
+  .all(idValidation)
+  .get(trade.read)
+  .put(trade.update)
+  .patch(trade.update)
+  .delete(trade.delete);
+
+module.exports = router;
