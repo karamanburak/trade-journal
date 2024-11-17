@@ -31,16 +31,6 @@ const PositionSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    currentValue: {
-      type: Number,
-      default: 0,
-    },
-    openTrades: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Trade",
-      },
-    ],
   },
   {
     collection: "positions",

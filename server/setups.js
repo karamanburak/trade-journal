@@ -13,7 +13,6 @@ module.exports = {
   VERIFY_EMAIL_EXP: process.env?.VERIFY_EMAIL_EXP || "7d",
   RESET_PASSWORD_KEY: process.env?.RESET_PASSWORD_KEY,
   RESET_PASSWORD_EXP: process.env?.RESET_PASSWORD_EXP || "2m",
-  NODE_ENV: process.env.NODE_ENV == "production" ? true : false,
   VERSION: process.env.VERSION,
   NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL,
   NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD,

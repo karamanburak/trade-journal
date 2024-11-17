@@ -1,6 +1,7 @@
 "use strict";
 
 const Trade = require("../models/trade");
+const Position = require("../models/position");
 const User = require("../models/user");
 const { CustomError } = require("../errors/customError");
 const { getTradeCreatedEmailHtml } = require("../configs/email/trade/trade");
@@ -31,11 +32,20 @@ module.exports = {
             }
         }
     */
-    const data = await res.getModelList(Trade, {}, []);
+    const data = await res.getModelList(Trade, {}, [
+      {
+        path: "userId",
+        select: "username firstName lastName email",
+      },
+    ]);
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Trade, {}),
-      data,
+      data: data.map((trade) => ({
+        ...trade._doc,
+        profitOrLoss: trade.profitOrLoss || 0,
+        tradeDuration: trade.tradeDuration || 0,
+      })),
     });
   },
   create: async (req, res) => {
@@ -81,6 +91,8 @@ module.exports = {
     //   req.body.image = req.body.image || image;
     // }
 
+    const { userId, stockSymbol, quantity, price, type } = req.body;
+
     const newTrade = await Trade.create(req.body);
 
     const user = await User.findById(req.body.userId);
@@ -91,9 +103,56 @@ module.exports = {
       });
     }
 
+    const position = await Position.findOne({ userId, stockSymbol });
+
+    if (type === "BUY") {
+      if (position) {
+        const totalQuantity = position.quantity + quantity;
+        position.averagePrice =
+          (position.quantity * position.averagePrice + quantity * price) /
+          totalQuantity;
+        position.quantity = totalQuantity;
+        await position.save();
+      } else {
+        await Position.create({
+          userId,
+          stockSymbol,
+          quantity,
+          averagePrice: price,
+        });
+      }
+    } else if (type === "SELL") {
+      if (!position || position.quantity < quantity) {
+        return res.status(400).send({
+          error: true,
+          message: "Insufficient quantity in position to sell",
+        });
+      }
+
+      const profitOrLoss = (price - position.averagePrice) * quantity;
+
+      const tradeDuration =
+        (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
+
+      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
+
+      position.quantity -= quantity;
+      if (position.quantity === 0) {
+        await position.remove();
+      } else {
+        await position.save();
+      }
+
+      newTrade.profitOrLoss = profitOrLoss;
+      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
+      newTrade.status = "COMPLETED";
+      // console.log("Saving new trade with tradeDuration:", newTrade);
+      await newTrade.save();
+    }
+
     // Send email notification for new trade to user
     const emailSubject = "New Trade Created!";
-    const emailHtml = getTradeCreatedEmailHtml(user.firstName, trade);
+    const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
     await sendEmail(user.email, emailSubject, emailHtml);
 
     res.status(201).send({

@@ -25,25 +25,12 @@ module.exports = {
                         averagePrice: 150,
                         totalInvestment: 15000,
                         currentValue: 16000,
-                        openTrades: [
-                            {
-                                stockSymbol: "AAPL",
-                                quantity: 50,
-                                price: 145,
-                                executionDate: "2024-11-15",
-                            },
-                        ],
                     },
                 ],
             },
         }
     */
-    const data = await res.getModelList(Position, {}, [
-      {
-        path: "openTrades",
-        select: "stockSymbol quantity price executionDate",
-      },
-    ]);
+    const data = await res.getModelList(Position, {}, []);
 
     res.status(200).send({
       error: false,
@@ -76,7 +63,6 @@ module.exports = {
                     quantity: 100,
                     averagePrice: 150,
                     totalInvestment: 15000,
-                    currentValue: 15000,
                 },
             },
         }
@@ -99,12 +85,8 @@ module.exports = {
       throw new CustomError("Quantity and price are required", 400);
     }
 
-    // Trim and convert to number
-    const trimmedQuantity = quantity?.trim();
-    const trimmedPrice = averagePrice?.trim();
-
-    const quantityNum = Number(trimmedQuantity);
-    const priceNum = Number(trimmedPrice);
+    const quantityNum = Number(quantity);
+    const priceNum = Number(averagePrice);
 
     // Check if the quantity and price are valid numbers
     if (isNaN(quantityNum) || isNaN(priceNum)) {
@@ -160,15 +142,6 @@ module.exports = {
                     quantity: 100,
                     averagePrice: 150,
                     totalInvestment: 15000,
-                    currentValue: 16000,
-                    openTrades: [
-                        {
-                            stockSymbol: "AAPL",
-                            quantity: 50,
-                            price: 145,
-                            executionDate: "2024-11-15",
-                        },
-                    ],
                 },
             },
         }
@@ -183,7 +156,7 @@ module.exports = {
     const data = await Position.findOne({
       _id: req.params.id,
       userId: req.user._id,
-    }).populate("openTrades");
+    });
     if (!data) {
       throw new CustomError("Position not found", 404);
     }

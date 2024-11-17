@@ -12,6 +12,12 @@ router.use("/users", require("./user"));
 router.use("/trades", require("./trade"));
 // positions:
 router.use("/positions", require("./position"));
+// accounts:
+router.use("/accounts", require("./account"));
+// deposits:
+router.use("/deposits", require("./deposit"));
+// capitals:
+router.use("/capitals", require("./capital"));
 // documentations:
 router.use("/documentations", require("./documentation"));
 

@@ -6,6 +6,21 @@ const validator = require("validator");
 
 const UserSchema = new mongoose.Schema(
   {
+    userType: {
+      type: String,
+      enum: {
+        values: ["admin", "individual"],
+        message: "Invalid userType. Valid values are: admin, individual.",
+      },
+      required: [true, "UserType is required."],
+      immutable: true, // Once entered, userType cannot be changed again
+    },
+    username: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
+    },
     firstName: {
       type: String,
       trim: true,
@@ -34,7 +49,7 @@ const UserSchema = new mongoose.Schema(
         }
       },
     },
-    isVerified: {
+    isEmailVerified: {
       type: Boolean,
       default: false,
     },
