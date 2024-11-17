@@ -7,7 +7,7 @@ import NotFound from "../pages/NotFound";
 
 const AppRouter = () => {
     return (
-        <Router>
+        <Router >
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="login" element={<Login />} />

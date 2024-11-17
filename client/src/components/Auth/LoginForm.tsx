@@ -1,0 +1,130 @@
+import { Formik, Field, Form, type FormikHelpers } from "formik"
+import * as Yup from "yup"
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md"
+import useAuthCall from "../../hooks/useAuthCall";
+import type { RootState } from "../../app/store";
+import { useSelector } from "react-redux";
+import { ImSpinner9 } from "react-icons/im"
+
+
+const validationSchema = Yup.object({
+    email: Yup
+        .string()
+        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email address")
+        .required("Email is required"),
+    password: Yup.string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(30, "Password must be at most 30 characters long")
+        .matches(/\d+/, "Password must contain at least one number")
+        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .matches(/[@$?!%&*]+/, "Password must contain at least one special character")
+        .required("Password is required"),
+})
+
+const LoginForm: React.FC = () => {
+    const { login } = useAuthCall()
+    const [showPassword, setShowPassword] = useState(false)
+    const loading = useSelector((state: RootState) => state.auth.loading)
+    const formValuesRef = useRef<IMyLoginFormValues | null>();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
+
+    const handleSubmit = (values: IMyLoginFormValues, { setSubmitting }: FormikHelpers<IMyLoginFormValues>) => {
+        login(values)
+        formValuesRef.current = values
+        setSubmitting(false)
+    }
+
+
+    return (
+        <>
+            <Formik
+                initialValues={{
+                    email: "",
+                    password: "",
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+            >
+                {({ errors, touched }) => (
+                    <Form className="md:space-y-3">
+                        {/* Email */}
+                        <div>
+                            <p className="text-gray-2 text-[0.875rem] md:text-[1rem]">
+                                Email
+                            </p>
+                            <Field
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                className={`w-full border rounded-lg text-[1rem] placeholder-gray-2 dark:placeholder-white dark:bg-black dark:text-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-green 
+                ${touched.email && errors.email ? "border-red" : "border-gray-1"}`}
+                            />
+                            <div className="h-[20px]">
+                                {touched.email && errors.email && (
+                                    <p className="text-danger text-[0.875rem]">{errors.email}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Password */}
+                        <div>
+                            <p className="text-gray-2 text-[0.875rem] md:text-[1rem]">
+                                Password
+                            </p>
+                            <div className="relative">
+                                <Field
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    className={`w-full border rounded-lg text-[1rem] placeholder-gray-2 dark:placeholder-white dark:bg-black dark:text-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-blue ${touched.password && errors.password ? "border-red" : "border-gray-1"}`}
+                                />
+                                <div className="absolute inset-y-0 text-primary-blue right-3 pr-3 flex items-center text-2xl cursor-pointer">
+                                    {showPassword ? (
+                                        <MdVisibilityOff onClick={togglePasswordVisibility} />
+                                    ) : (
+                                        <MdVisibility onClick={togglePasswordVisibility} />
+                                    )}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* Submit Button */}
+                        <div className="flex flex-col items-center">
+                            <button
+                                type="submit"
+                                className={`w-full bg-primary-blue text-white text-[1rem] py-3 mt-3 rounded-lg focus:outline-none  flex justify-center items-center ${loading ? "opacity-50 cursor-not-allowed" : ""
+                                    }`}
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <>
+                                        <ImSpinner9 className="animate-spin mr-2" />
+                                        Loading...
+                                    </>
+                                ) : (
+                                    "Login"
+                                )}
+                            </button>
+
+                            <div className="text-center mt-6">
+                                <span className="text-gray-2">Do not have an account yet?</span>
+                                <Link to="/register" className="ml-1 text-primary-blue font-semibold underline">
+                                    Sign Up
+                                </Link>
+                            </div>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
+
+        </>
+    )
+}
+export default LoginForm;
