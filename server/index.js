@@ -16,12 +16,17 @@ const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
 //* cors
-// app.use(cors()); // all clients
+// app.use(cors());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Authorization", "Content-Type"],
   })
 );
 // envVariables to process.env:
@@ -31,11 +36,11 @@ require("dotenv").config();
 app.use(express.json());
 
 // Accept FormData
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 // Middlewares
 
-app.use("/uploads", express.static("./uploads"));
+// app.use("/uploads", express.static("./uploads"));
 
 // - Logger
 app.use(require("./src/middlewares/logger"));

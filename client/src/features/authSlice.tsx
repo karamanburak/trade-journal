@@ -24,11 +24,6 @@ const authSlice = createSlice({
             state.loading = false
             state.error = false
         },
-        verifySuccess: (state, { payload }) => {
-            state.loading = false
-            state.currentUser = payload?.data
-            state.token = payload?.token
-        },
         loginSuccess: (state, { payload }) => {
             state.loading = false
             state.currentUser = payload?.user

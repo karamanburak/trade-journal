@@ -6,6 +6,7 @@ interface IMyRegisterFormValues {
   email: string
   password: string
   confirmPassword: string
+  _id?: string
 }
 
 interface IAuthState {

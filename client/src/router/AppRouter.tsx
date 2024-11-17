@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 
 const AppRouter = () => {
     return (
@@ -14,7 +15,7 @@ const AppRouter = () => {
                 <Route path="register" element={<Register />} />
 
                 <Route path="" element={<PrivateRouter />}>
-                    {/* <Route path="profile/:userId" element={<Profile />} /> */}
+                    <Route path="profile/:userId" element={<Profile />} />
                     {/* <Route path="" element={< />} /> */}
                     {/* <Route path="" element={< />} /> */}
                     {/* <Route path="" element={< />} /> */}

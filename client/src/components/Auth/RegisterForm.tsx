@@ -7,6 +7,7 @@ import { ImSpinner9 } from "react-icons/im";
 import useAuthCall from "../../hooks/useAuthCall";
 import { RootState } from "../../app/store";
 import TermsModal from "./TermsModal";
+import { Link } from "react-router-dom";
 
 interface IMyRegisterFormValues {
     username: string;
@@ -94,20 +95,20 @@ const RegisterForm = () => {
                 onSubmit={handleSubmit}
             >
                 {({ errors, touched }) => (
-                    <Form className="md:space-y-3">
+                    <Form className="md:space-y-3 ">
                         {registerFormField.map((field) => (
                             <div key={field.id}>
-                                <p className="text-gray-2 text-[0.875rem] md:text-[1rem]">{field.label}</p>
+                                <p className="text-[0.875rem] md:text-[1rem]">{field.label}</p>
                                 <Field
                                     name={field.name}
                                     type={field.type}
                                     placeholder={field.placeholder}
-                                    className={`w-full border dark:border-white rounded-lg text-[1rem] placeholder-gray-2 dark:placeholder-white dark:bg-black dark:text-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-green 
+                                    className={`w-full border  rounded-lg text-[1rem] p-3 h-[42px] md:h-[48px] focus:outline-none dark:text-dark-secondary
                   ${touched[field.name as keyof IMyRegisterFormValues] && errors[field.name as keyof IMyRegisterFormValues] ? "border-red" : "border-gray-1"}`}
                                 />
                                 <div className="h-[20px]">
                                     {touched[field.name as keyof IMyRegisterFormValues] && errors[field.name as keyof IMyRegisterFormValues] && (
-                                        <p className="text-red-500 text-[0.875rem]">{errors[field.name as keyof IMyRegisterFormValues]}</p>
+                                        <p className="text-dark-danger text-[0.875rem]">{errors[field.name as keyof IMyRegisterFormValues]}</p>
                                     )}
                                 </div>
                             </div>
@@ -116,8 +117,8 @@ const RegisterForm = () => {
                         {/* Password Field */}
                         <div className="relative">
                             <div className="flex items-center justify-between mb-2">
-                                <label htmlFor="password" className="text-gray-2 text-[0.875rem] md:text-[1rem]">Password</label>
-                                <div className="absolute inset-y-0 text-primary-blue right-3 pr-3 pt-3 flex items-center text-2xl cursor-pointer">
+                                <label htmlFor="password" className=" text-[0.875rem] md:text-[1rem]">Password</label>
+                                <div className="absolute inset-y-0 right-3 pr-3 pt-3 flex items-center text-2xl cursor-pointer text-dark-primary">
                                     {showPassword === "password" ? (
                                         <MdVisibilityOff onClick={togglePasswordVisibility} />
                                     ) : (
@@ -129,12 +130,11 @@ const RegisterForm = () => {
                                 type={showPassword === "password" ? "password" : "text"}
                                 name="password"
                                 placeholder="Enter your password"
-                                className={`w-full border dark:border-white rounded-lg text-[1rem] placeholder-gray-2 dark:bg-black dark:text-white dark:placeholder-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-blue 
-                ${touched.password && errors.password ? "border-red" : "border-gray-1"}`}
+                                className="w-full border dark:border-white rounded-lg text-[1rem] p-3 h-[42px] md:h-[48px] focus:outline-none dark:text-dark-secondary"
                             />
                             <div className="h-[20px]">
                                 {touched.password && errors.password && (
-                                    <p className="text-red-500 text-[0.875rem]">{errors.password}</p>
+                                    <p className="text-dark-danger text-[0.875rem]">{errors.password}</p>
                                 )}
                             </div>
                         </div>
@@ -142,8 +142,8 @@ const RegisterForm = () => {
                         {/* Confirm Password Field */}
                         <div className="relative">
                             <div className="flex items-center justify-between mb-2">
-                                <label htmlFor="confirmPassword" className="text-gray-2 text-[0.875rem] md:text-[1rem]">Confirm Password</label>
-                                <div className="absolute inset-y-0 text-primary-blue right-3 pr-3 flex items-center pt-3 text-2xl cursor-pointer">
+                                <label htmlFor="confirmPassword" className="text-[0.875rem] md:text-[1rem]">Confirm Password</label>
+                                <div className="absolute inset-y-0 right-3 pr-3 flex items-center pt-3 text-2xl cursor-pointer text-dark-primary">
                                     {showConfirmPassword === "password" ? (
                                         <MdVisibilityOff onClick={toggleConfirmPasswordVisibility} />
                                     ) : (
@@ -155,12 +155,12 @@ const RegisterForm = () => {
                                 type={showConfirmPassword === "password" ? "password" : "text"}
                                 name="confirmPassword"
                                 placeholder="Confirm your password"
-                                className={`w-full border dark:border-white rounded-lg text-[1rem] placeholder-gray-2 dark:bg-black dark:text-white dark:placeholder-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-blue 
-                ${touched.confirmPassword && errors.confirmPassword ? "border-red" : "border-gray-1"}`}
+                                className="w-full border dark:border-white rounded-lg text-[1rem] p-3 h-[42px] md:h-[48px] focus:outline-none dark:text-dark-secondary"
+
                             />
                             <div className="h-[20px]">
                                 {touched.confirmPassword && errors.confirmPassword && (
-                                    <p className="text-red-500 text-[0.875rem]">{errors.confirmPassword}</p>
+                                    <p className="text-dark-danger text-[0.875rem]">{errors.confirmPassword}</p>
                                 )}
                             </div>
                         </div>
@@ -173,10 +173,10 @@ const RegisterForm = () => {
                                 id="terms"
                                 className="mr-2"
                             />
-                            <label htmlFor="terms" className="text-gray-2 text-[0.875rem] md:text-[1rem]">
+                            <label htmlFor="terms" className="text-[0.875rem] md:text-[1rem]">
                                 I agree to the{" "}
                                 <span
-                                    className="text-primary-blue cursor-pointer"
+                                    className="text-dark-primary cursor-pointer"
                                     onClick={() => setIsModalOpen(true)}
                                 >
                                     Terms and Conditions
@@ -184,14 +184,14 @@ const RegisterForm = () => {
                             </label>
                         </div>
                         {touched.terms && errors.terms && (
-                            <p className="text-red-500 text-[0.875rem]">{errors.terms}</p>
+                            <p className="text-dark-danger text-[0.875rem]">{errors.terms}</p>
                         )}
 
                         {/* Submit Button */}
                         <div className="flex flex-col items-center">
                             <button
                                 type="submit"
-                                className={`w-full bg-primary-blue text-white text-[1rem] py-3 mt-3 rounded-lg focus:outline-none flex items-center justify-center ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                className={`w-full text-white bg-dark-primary text-[1rem] py-3 mt-3 rounded-lg focus:outline-none flex items-center justify-center hover:bg-light-button-hover ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 disabled={loading}
                             >
                                 {loading ? (
@@ -203,13 +203,21 @@ const RegisterForm = () => {
                                     "Create Account"
                                 )}
                             </button>
+                            <div className="text-center mt-4">
+                                <span className="text-gray-2 dark:text-white">
+                                    Already have an account?{" "}
+                                </span>
+                                <Link to="/login" className="ml-1 text-dark-primary font-semibold underline">
+                                    Login
+                                </Link>
+                            </div>
                         </div>
                     </Form>
                 )}
             </Formik>
 
             <TermsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <button onClick={() => setIsModalOpen(false)} className="mt-4 bg-danger text-white rounded-md px-4 py-2">
+                <button onClick={() => setIsModalOpen(false)} className="mt-4 bg-danger rounded-md px-4 py-2 bg-dark-danger text-white">
                     Close
                 </button>
             </TermsModal>

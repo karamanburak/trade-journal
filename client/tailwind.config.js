@@ -5,32 +5,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        white: "#FFFFFF",
-        "light-gray": "#F9FAFB",
-        "light-gray-2": "#EFF2F6",
-        "light-gray-3": "#E5E8EB",
-        "gray-1": "#B0B4BB",
-        "gray-2": "#8A8F99",
-        "dark-gray-1": "#646C77",
-        "dark-gray-2": "#434A54",
-        "dark-gray-3": "#2E333B",
-        black: "#1C1F23",
-
-        "light-blue": "#EAF4FC",
-        "primary-blue": "#5B9ED8",
-        "dark-blue": "#3A6E98",
-
-        "light-green": "#E7F3EA",
-        "primary-green": "#4D9467",
-        "dark-green": "#356749",
-
-        "warning-light": "#FFE6CC",
-        warning: "#F5A623",
-        danger: "#E63946",
-        "danger-light": "#FDEDEE",
-
-        "success-light": "#D6F5E6",
-        success: "#43A047",
+        // Light Mode Colors
+        light: {
+          background: "#FFFFFF",
+          primary: "#5B9ED8",
+          secondary: "#F9FAFB",
+          text: "#434A54",
+          textSecondary: "#8A8F99",
+          border: "#E5E8EB",
+          button: {
+            DEFAULT: "#5B9ED8",
+            hover: "#3A6E98",
+          },
+          success: "#43A047",
+          warning: "#F5A623",
+          danger: "#E63946",
+        },
+        // Dark Mode Colors
+        dark: {
+          background: "#111827",
+          background2: "#161f30",
+          background3: "#1d2a44",
+          primary: "#5B9ED8",
+          secondary: "#2E333B",
+          text: "#F9FAFB",
+          textSecondary: "#B0B4BB",
+          border: "#646C77",
+          button: {
+            DEFAULT: "#5B9ED8",
+            hover: "#3A6E98",
+          },
+          success: "#43A047",
+          warning: "#F5A623",
+          danger: "#E63946",
+        },
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

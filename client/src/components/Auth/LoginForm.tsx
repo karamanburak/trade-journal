@@ -52,29 +52,28 @@ const LoginForm: React.FC = () => {
                 onSubmit={handleSubmit}
             >
                 {({ errors, touched }) => (
+
                     <Form className="md:space-y-3">
-                        {/* Email */}
                         <div>
-                            <p className="text-gray-2 text-[0.875rem] md:text-[1rem]">
+                            <p className="text-[0.875rem] md:text-[1rem]">
                                 Email
                             </p>
                             <Field
                                 type="email"
                                 name="email"
                                 placeholder="Enter your email address"
-                                className={`w-full border rounded-lg text-[1rem] placeholder-gray-2 dark:placeholder-white dark:bg-black dark:text-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-green 
-                ${touched.email && errors.email ? "border-red" : "border-gray-1"}`}
+                                className={`w-full border rounded-lg text-light-text text-[1rem] p-3 h-[42px] md:h-[48px] focus:outline-none 
+                ${touched.email && errors.email ? "border-red" : "border-dark-border"}`}
                             />
                             <div className="h-[20px]">
                                 {touched.email && errors.email && (
-                                    <p className="text-danger text-[0.875rem]">{errors.email}</p>
+                                    <p className="text-dark-danger text-[0.875rem]">{errors.email}</p>
                                 )}
                             </div>
                         </div>
 
-                        {/* Password */}
                         <div>
-                            <p className="text-gray-2 text-[0.875rem] md:text-[1rem]">
+                            <p className="text-[0.875rem] md:text-[1rem]">
                                 Password
                             </p>
                             <div className="relative">
@@ -82,9 +81,12 @@ const LoginForm: React.FC = () => {
                                     type={showPassword ? "text" : "password"}
                                     name="password"
                                     placeholder="Enter your password"
-                                    className={`w-full border rounded-lg text-[1rem] placeholder-gray-2 dark:placeholder-white dark:bg-black dark:text-white p-3 h-[42px] md:h-[48px] focus:outline-none focus:border-primary-blue ${touched.password && errors.password ? "border-red" : "border-gray-1"}`}
+                                    className={`w-full border rounded-lg text-[1rem] text-light-text p-3 h-[42px] md:h-[48px] focus:outline-none ${touched.password && errors.password ? "border-red" : "border-dark-border"}`}
                                 />
-                                <div className="absolute inset-y-0 text-primary-blue right-3 pr-3 flex items-center text-2xl cursor-pointer">
+                                {errors.password && (
+                                    <p className="text-dark-danger text-[0.875rem]">{errors.password}</p>
+                                )}
+                                <div className="absolute top-3 text-dark-primary right-3 pr-3 flex items-center text-2xl cursor-pointer">
                                     {showPassword ? (
                                         <MdVisibilityOff onClick={togglePasswordVisibility} />
                                     ) : (
@@ -99,7 +101,7 @@ const LoginForm: React.FC = () => {
                         <div className="flex flex-col items-center">
                             <button
                                 type="submit"
-                                className={`w-full bg-primary-blue text-white text-[1rem] py-3 mt-3 rounded-lg focus:outline-none  flex justify-center items-center ${loading ? "opacity-50 cursor-not-allowed" : ""
+                                className={`w-full bg-dark-primary text-dark-text text-[1rem] py-3 mt-3 rounded-lg focus:outline-none flex justify-center items-center hover:bg-light-button-hover ${loading ? "opacity-50 cursor-not-allowed" : ""
                                     }`}
                                 disabled={loading}
                             >
@@ -115,7 +117,7 @@ const LoginForm: React.FC = () => {
 
                             <div className="text-center mt-6">
                                 <span className="text-gray-2">Do not have an account yet?</span>
-                                <Link to="/register" className="ml-1 text-primary-blue font-semibold underline">
+                                <Link to="/register" className="ml-1 text-dark-primary font-semibold underline">
                                     Sign Up
                                 </Link>
                             </div>

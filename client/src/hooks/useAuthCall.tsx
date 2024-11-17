@@ -5,7 +5,14 @@ import { AxiosError } from "axios";
 import useAxios, { axiosWithPublic } from "./useAxios";
 import toastNotify from "../utils/toastNotify";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+const handleAxiosError = (error: unknown) => {
+    if (error instanceof AxiosError && error.response) {
+        const message = error.response.data?.message || "An unexpected error occurred";
+        toastNotify("error", message);
+    } else {
+        toastNotify("error", "An unexpected error occurred");
+    }
+};
 
 const useAuthCall = () => {
     const dispatch = useDispatch();
@@ -22,13 +29,9 @@ const useAuthCall = () => {
             dispatch(registerSuccess(data.data));
             toastNotify("success", data.message)
             navigate("/");
-        } catch (error: unknown) {
+        } catch (error) {
             dispatch(fetchFail());
-            if (error instanceof AxiosError && error.response) {
-                toastNotify("error", error.response.data.message || "An unexpected error occurred");
-            } else {
-                toastNotify("error", "An unexpected error occurred");
-            }
+            handleAxiosError(error)
         }
     };
 
@@ -38,37 +41,29 @@ const useAuthCall = () => {
         try {
             const { data } = await axiosWithPublic.post(`auth/login`, userInfo);
             dispatch(loginSuccess(data));
-            console.log('Login response:', data);
+            // console.log('Login response:', data);
             toastNotify("success", `Hello ${data.user.username}! Welcome back!`);
             navigate("/");
-        } catch (error: unknown) {
+        } catch (error) {
             console.error('Login error details:', error);
             dispatch(fetchFail());
-            if (error instanceof AxiosError && error.response) {
-                toastNotify("error", error.response.data.message || "An unexpected error occurred");
-            } else {
-                toastNotify("error", "An unexpected error occurred");
-            }
+            handleAxiosError(error)
         }
     };
-
 
 
     // Logout User
     const logout = async () => {
         dispatch(fetchStart());
         try {
-            await axiosWithToken.post(`auth/logout`, {}, { withCredentials: true });
+            await axiosWithToken(`auth/logout`);
             dispatch(logoutSuccess());
             toastNotify("success", "You have been logged out successfully.");
-            navigate("/login");
+            navigate("/");
         } catch (error) {
             dispatch(fetchFail());
-            if (error instanceof AxiosError && error.response) {
-                toastNotify("error", error.response.data.message || "An unexpected error occurred");
-            } else {
-                toastNotify("error", "An unexpected error occurred");
-            }
+            handleAxiosError(error)
+
         }
     };
 
