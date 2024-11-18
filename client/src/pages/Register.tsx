@@ -9,7 +9,7 @@ const Register = () => {
         <>
             <Header />
             <div className='max-w-[1800px] mx-auto flex justify-evenly items-stretch my-5 gap-6 px-6 font-nunito'>
-                <div className='w-full md:w-1/2 h-full p-10 rounded-lg dark:bg-dark-background2'>
+                <div className='w-full md:w-1/2 h-full p-10 rounded-lg bg-light-secondary dark:bg-dark-background2'>
                     <RegisterForm />
                 </div>
                 <div className='md:w-1/2 h-[80vh]'>

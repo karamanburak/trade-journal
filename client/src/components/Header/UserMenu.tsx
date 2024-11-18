@@ -51,14 +51,12 @@ const UserMenu = () => {
                             {currentUser ? (
                                 <>
                                     <button className="block w-full text-left p-1 hover:text-primary-blue"
+                                        onClick={() => navigate(`/`)} >
+                                        Home
+                                    </button>
+                                    <button className="block w-full text-left p-1 hover:text-primary-blue"
                                         onClick={() => navigate(`/profile/${currentUser._id}`)} >
                                         Profile
-                                    </button>
-                                    <button
-                                        className="block w-full text-left p-1 hover:text-primary-blue"
-                                        onClick={() => navigate("/settings")}
-                                    >
-                                        Settings
                                     </button>
                                     <button
                                         className="block w-full text-left p-1 hover:text-primary-blue"
