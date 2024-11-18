@@ -15,6 +15,10 @@ const CapitalSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    depositeDate: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     collection: "capitals",

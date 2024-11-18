@@ -91,75 +91,105 @@ module.exports = {
     //   req.body.image = req.body.image || image;
     // }
 
-    const { userId, stockSymbol, quantity, price, type } = req.body;
+    try {
+      const { userId, stockSymbol, quantity, price, type } = req.body;
 
-    const newTrade = await Trade.create(req.body);
-
-    const user = await User.findById(req.body.userId);
-    if (!user) {
-      return res.status(404).send({
-        error: true,
-        message: "User not found. Cannot send notification email.",
-      });
-    }
-
-    const position = await Position.findOne({ userId, stockSymbol });
-
-    if (type === "BUY") {
-      if (position) {
-        const totalQuantity = position.quantity + quantity;
-        position.averagePrice =
-          (position.quantity * position.averagePrice + quantity * price) /
-          totalQuantity;
-        position.quantity = totalQuantity;
-        await position.save();
-      } else {
-        await Position.create({
-          userId,
-          stockSymbol,
-          quantity,
-          averagePrice: price,
+      // Kullanıcı doğrulama
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).send({
+          error: true,
+          message: "User not found. Cannot proceed with the trade.",
         });
       }
-    } else if (type === "SELL") {
-      if (!position || position.quantity < quantity) {
+
+      // Pozisyon sorgusu
+      const position = await Position.findOne({ userId, stockSymbol });
+      console.log("Position found:", position);
+
+      // Yeni işlem oluşturma
+      const newTrade = new Trade(req.body);
+
+      if (type === "BUY") {
+        // Satın alma işlemi
+        if (position) {
+          // Pozisyon mevcutsa güncelle
+          const totalQuantity = position.quantity + quantity;
+          position.averagePrice =
+            (position.quantity * position.averagePrice + quantity * price) /
+            totalQuantity;
+          position.quantity = totalQuantity;
+          await position.save();
+        } else {
+          // Yeni pozisyon oluştur
+          await Position.create({
+            userId,
+            stockSymbol,
+            quantity,
+            averagePrice: price,
+          });
+        }
+
+        newTrade.status = "COMPLETED";
+        await newTrade.save();
+      } else if (type === "SELL") {
+        // Satış işlemi
+        if (!position || position.quantity < quantity) {
+          console.log(
+            "Insufficient quantity:",
+            position ? position.quantity : 0,
+            "Requested:",
+            quantity
+          );
+          return res.status(400).send({
+            error: true,
+            message: "Insufficient quantity in position to sell",
+          });
+        }
+
+        // Kar/Zarar ve süre hesaplama
+        const profitOrLoss = (price - position.averagePrice) * quantity;
+        const tradeDuration =
+          (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
+
+        // Pozisyon güncelle
+        position.quantity -= quantity;
+        if (position.quantity === 0) {
+          await position.remove();
+        } else {
+          await position.save();
+        }
+
+        // Trade güncelle
+        newTrade.profitOrLoss = profitOrLoss;
+        newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
+        newTrade.status = "COMPLETED";
+        await newTrade.save();
+      } else {
         return res.status(400).send({
           error: true,
-          message: "Insufficient quantity in position to sell",
+          message: "Invalid trade type. Only 'BUY' or 'SELL' allowed.",
         });
       }
 
-      const profitOrLoss = (price - position.averagePrice) * quantity;
+      // Kullanıcıya e-posta bildirimi gönder
+      const emailSubject = "New Trade Created!";
+      const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
+      await sendEmail(user.email, emailSubject, emailHtml);
 
-      const tradeDuration =
-        (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
-
-      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
-
-      position.quantity -= quantity;
-      if (position.quantity === 0) {
-        await position.remove();
-      } else {
-        await position.save();
-      }
-
-      newTrade.profitOrLoss = profitOrLoss;
-      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
-      newTrade.status = "COMPLETED";
-      // console.log("Saving new trade with tradeDuration:", newTrade);
-      await newTrade.save();
+      // Başarı yanıtı
+      return res.status(201).send({
+        error: false,
+        message: "Trade created successfully",
+        data: newTrade,
+      });
+    } catch (error) {
+      console.error("Error creating trade:", error);
+      return res.status(500).send({
+        error: true,
+        message: "An error occurred while processing the trade.",
+      });
     }
-
-    // Send email notification for new trade to user
-    const emailSubject = "New Trade Created!";
-    const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
-    await sendEmail(user.email, emailSubject, emailHtml);
-
-    res.status(201).send({
-      error: false,
-      message: "Trade created successfully",
-      data: newTrade,
-    });
   },
   read: async (req, res) => {
     /*

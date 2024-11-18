@@ -11,15 +11,21 @@ const TradeSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    stockSymbol: {
+    stockId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Stock",
+      required: true,
+    },
+    symbol: {
       type: String,
       trim: true,
       uppercase: true,
       required: true,
     },
-    tradeDate: {
-      type: Date,
-      default: Date.now,
+    transactionType: {
+      type: String,
+      enum: ["BUY", "SELL"],
+      required: true,
     },
     quantity: {
       type: Number,
@@ -32,10 +38,14 @@ const TradeSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    type: {
+    transactionDate: {
+      type: Date,
+      default: Date.now,
+    },
+    status: {
       type: String,
-      enum: ["BUY", "SELL"],
-      required: true,
+      enum: ["OPEN", "COMPLETED", "CANCELLED"],
+      default: "OPEN",
     },
     profitOrLoss: {
       type: Number,
@@ -45,11 +55,24 @@ const TradeSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    status: {
-      type: String,
-      enum: ["OPEN", "COMPLETED", "CANCELLED"],
-      default: "OPEN",
+    entryPrice: {
+      type: Number,
+      default: 0,
     },
+    exitPrice: {
+      type: Number,
+      default: 0,
+    },
+    notes: {
+      type: String,
+      trim: true,
+    },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
 
   {
@@ -57,45 +80,5 @@ const TradeSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-TradeSchema.pre("save", function (next) {
-  if (this.isModified("status") && this.status === "COMPLETED") {
-    const duration =
-      (new Date(this.tradeDate) - new Date(this.createdAt)) /
-      (1000 * 60 * 60 * 24);
-    this.tradeDuration = Math.round(duration * 100) / 100;
-  }
-  next();
-});
-
-TradeSchema.post("save", async function () {
-  if (this.status === "COMPLETED") {
-    try {
-      const Trade = mongoose.model("Trade");
-      const trades = await Trade.find({
-        userId: this.userId,
-        status: "COMPLETED",
-      });
-      const totalProfit = trades.reduce(
-        (sum, trade) => sum + (trade.profitOrLoss || 0),
-        0
-      );
-      const winRate =
-        (trades.filter((trade) => trade.profitOrLoss > 0).length /
-          trades.length) *
-        100;
-
-      await mongoose
-        .model("Account")
-        .findOneAndUpdate(
-          { userId: this.userId },
-          { $set: { totalProfit, winRate } },
-          { upsert: true }
-        );
-    } catch (err) {
-      console.error("Performance metrics update failed:", err);
-    }
-  }
-});
 
 module.exports = mongoose.model("Trade", TradeSchema);

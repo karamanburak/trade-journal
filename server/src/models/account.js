@@ -10,28 +10,33 @@ const AccountSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    tradeId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Trade",
-      required: true,
-    },
-    notes: {
-      type: String,
-      trim: true,
-    },
-    comments: {
-      type: String,
-      trim: true,
-    },
-    profitOrLoss: {
+    totalValue: {
       type: Number,
-      required: true,
       default: 0,
     },
-    tradeDuration: {
+    completedTransactions: {
       type: Number,
-      required: true,
       default: 0,
+    },
+    winRate: {
+      type: Number,
+      default: 0,
+    },
+    profitFactor: {
+      type: Number,
+      default: 0,
+    },
+    avarageProfit: {
+      type: Number,
+      default: 0,
+    },
+    avarageLoss: {
+      type: Number,
+      default: 0,
+    },
+    avarageHoldDuration: {
+      type: Number,
+      default: 0, //in days
     },
   },
   {

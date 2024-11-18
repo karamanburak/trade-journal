@@ -1,11 +1,15 @@
 "use strict";
 
 const bcrypt = require("bcryptjs");
-const { CustomError } = require("../errors/customError");
 const User = require("../models/user");
 const Token = require("../models/token");
 const { getWelcomeEmailHtml } = require("../configs/email/welcome/welcome");
 const { sendEmail } = require("../configs/email/emailService");
+const {
+  generateAuthTokens,
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../helpers/tokenGenerator");
 
 module.exports = {
   register: async (req, res) => {
@@ -132,44 +136,67 @@ module.exports = {
     */
 
     const { email, password } = req.body;
-    // console.log("Login attempt:", email, password);
 
-    if (email && password) {
-      const user = await User.findOne({ email }).select("+password");
-      if (!user) {
-        throw new CustomError("Wrong email or password!", 401);
+    if (!email || !password) {
+      return res
+        .status(400)
+        .send({ error: true, message: "All fields are required." });
+    }
+
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res
+        .status(401)
+        .send({ error: true, message: "Wrong email or password!" });
+    }
+
+    if (!user.isActive) {
+      return res.status(401).send({
+        error: true,
+        message: "Your account is not active. Please contact support.",
+      });
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(401).send({
+        error: true,
+        message: "Wrong email or password!",
+      });
+    }
+    if (isPasswordMatch) {
+      let tokenData = await Token.findOne({ userId: user._id });
+
+      let accessToken = "";
+      let refreshToken = "";
+      let simpleToken = tokenData?.token || "";
+
+      if (!tokenData) {
+        const authTokens = await generateAuthTokens(user);
+        accessToken = authTokens.accessToken;
+        refreshToken = authTokens.refreshToken;
+        simpleToken = authTokens.simpleToken;
+      } else {
+        accessToken = generateAccessToken(user);
+        refreshToken = generateRefreshToken(user);
       }
-      if (!user.isActive) {
-        throw new CustomError(
-          "Your account is not active. Please verify your email address.",
-          401
-        );
-      }
 
-      const isPasswordMatch = await bcrypt.compare(password, user.password);
-      //   console.log("Input password:", password);
-      //   console.log("Stored password hash:", user.password);
-      //   console.log("Password match result:", isPasswordMatch);
+      console.log("Login response data:", {
+        accessToken,
+        refreshToken,
+        simpleToken,
+      }); // Debugging
 
-      if (isPasswordMatch) {
-        let tokenData = await Token.findOne({ userId: user._id });
-        if (!tokenData) {
-          const plainTextToken = `${user._id}-${Date.now()}`;
-          const hashedToken = await bcrypt.hash(plainTextToken, 10);
-
-          // Save the hashed token to the database
-          tokenData = await Token.create({
-            userId: user._id,
-            token: hashedToken,
-          });
-          res.status(200).send({
-            error: false,
-            message: "You are successfully logged in!",
-            token: tokenData.token,
-            user,
-          });
-        }
-      }
+      res.status(200).send({
+        error: false,
+        message: "You are successfully logged in!",
+        bearer: {
+          access: accessToken,
+          refresh: refreshToken,
+        },
+        token: simpleToken,
+        user,
+      });
     }
   },
   logout: async (req, res) => {

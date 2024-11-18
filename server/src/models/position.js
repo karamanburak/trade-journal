@@ -9,17 +9,21 @@ const PositionSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
-    stockSymbol: {
+    stockId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Stock",
+      required: true,
+    },
+    symbol: {
       type: String,
       required: true,
-      upperCase: true,
+      unique: true,
       trim: true,
     },
-    quantity: {
+    totalQuantity: {
       type: Number,
       required: true,
       default: 0,
-      min: 1,
     },
     averagePrice: {
       type: Number,

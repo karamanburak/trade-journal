@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema(
         values: ["admin", "individual"],
         message: "Invalid userType. Valid values are: admin, individual.",
       },
+      default: "individual",
       required: [true, "UserType is required."],
       immutable: true, // Once entered, userType cannot be changed again
     },
@@ -49,16 +50,10 @@ const UserSchema = new mongoose.Schema(
         }
       },
     },
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
-    },
     isActive: {
       type: Boolean,
       default: true,
     },
-    verificationToken: String,
-    verificationTokenExpiresAt: Date,
   },
   {
     collection: "users",

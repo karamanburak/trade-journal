@@ -18,6 +18,10 @@ router.use("/accounts", require("./account"));
 router.use("/deposits", require("./deposit"));
 // capitals:
 router.use("/capitals", require("./capital"));
+// stocks:
+router.use("/stocks", require("./stock"));
+// comments:
+router.use("/comments", require("./comment"));
 // documentations:
 router.use("/documentations", require("./documentation"));
 
