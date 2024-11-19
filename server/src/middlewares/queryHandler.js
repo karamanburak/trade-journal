@@ -73,6 +73,15 @@ module.exports = async (req, res, next) => {
     }
   }
 
+  // User ID Filter
+  if (filter.userId) {
+    const { ObjectId } = require("mongoose").Types;
+    if (!ObjectId.isValid(filter.userId)) {
+      throw new CustomError("Invalid user ID", 400);
+    }
+    filterCriteria.userId = filter.userId;
+  }
+
   // Completed Status Filter
   if (filter.status) {
     if (
@@ -119,6 +128,10 @@ module.exports = async (req, res, next) => {
   if (!Object.keys(sortCriteria).length) {
     sortCriteria.tradeDate = -1;
   }
+
+  // console.log("Request Query:", req.query);
+  // console.log("Filter Criteria:", filterCriteria);
+  // console.log("Sort Criteria:", sortCriteria);
 
   // ### PAGINATION ###
   let limit = Number(req.query?.limit);

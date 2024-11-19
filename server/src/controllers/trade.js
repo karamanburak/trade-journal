@@ -3,6 +3,7 @@
 const Trade = require("../models/trade");
 const Position = require("../models/position");
 const User = require("../models/user");
+const Account = require("../models/account");
 const { CustomError } = require("../errors/customError");
 const { getTradeCreatedEmailHtml } = require("../configs/email/trade/trade");
 const { sendEmail } = require("../configs/email/emailService");
@@ -35,7 +36,6 @@ module.exports = {
     const data = await res.getModelList(Trade, {}, [
       {
         path: "userId",
-        select: "username firstName lastName email",
       },
       {
         path: "stockId",
@@ -97,96 +97,142 @@ module.exports = {
     //   req.body.image = req.body.image || image;
     // }
 
-    try {
-      const { userId, stockId, symbol, quantity, price, transactionType } =
-        req.body;
+    const { userId, stockId, symbol, quantity, price, transactionType } =
+      req.body;
 
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).send({
+    // Find the user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({
+        error: true,
+        message: "User not found. Cannot proceed with the trade.",
+      });
+    }
+
+    // Find the user's account
+    const account = await Account.findOne({ userId: userId });
+    if (!account) {
+      return res.status(400).send({
+        error: true,
+        message:
+          "User does not have an associated account. Cannot create trade.",
+      });
+    }
+
+    // Calculate the required value for the trade (quantity * price)
+    const requiredValue = quantity * price;
+
+    // Create the trade (we define it here to use it later)
+    const newTrade = new Trade(req.body);
+
+    // Check if it's a BUY transaction and validate funds
+    if (transactionType === "BUY") {
+      if (account.totalValue < requiredValue) {
+        return res.status(400).send({
           error: true,
-          message: "User not found. Cannot proceed with the trade.",
+          message: `Insufficient funds to complete the trade. Please deposit funds first.`,
         });
       }
 
       const position = await Position.findOne({ userId, symbol });
-      const newTrade = new Trade(req.body);
 
-      if (transactionType === "BUY") {
-        if (position) {
-          const totalQuantity = position.quantity + quantity;
+      // If the position exists, update it
+      if (position) {
+        const totalQuantity = position.totalQuantity + quantity;
+        const newAveragePrice =
+          (position.totalInvestment + quantity * price) / totalQuantity;
 
-          if (
-            isNaN(position.averagePrice) ||
-            position.averagePrice === undefined
-          ) {
-            position.averagePrice = price;
-          }
+        position.totalQuantity = totalQuantity;
+        position.averagePrice = newAveragePrice;
+        position.totalInvestment = totalQuantity * newAveragePrice;
 
-          if (isNaN(quantity) || isNaN(price)) {
-            throw new CustomError("Invalid quantity or price.", 400);
-          }
-
-          const newAveragePrice =
-            (position.quantity * position.averagePrice + quantity * price) /
-            totalQuantity;
-
-          if (isNaN(newAveragePrice)) {
-            position.averagePrice = price;
-          } else {
-            position.averagePrice = newAveragePrice;
-          }
-
-          position.quantity = totalQuantity;
-          await position.save();
-        } else {
-          await Position.create({
-            userId,
-            symbol,
-            stockId,
-            quantity,
-            averagePrice: price,
-            transactionType,
-          });
-        }
-
-        newTrade.status = "OPEN";
-        await newTrade.save();
-      } else if (transactionType === "SELL") {
-        if (!position || position.quantity < quantity) {
-          throw new CustomError("Insufficient stock quantity.", 400);
-        }
-
-        const profitOrLoss = (price - position.averagePrice) * quantity;
-        const tradeDuration =
-          (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
-
-        position.quantity -= quantity;
-        if (position.quantity === 0) {
-          await position.remove();
-        } else {
-          await position.save();
-        }
-
-        newTrade.profitOrLoss = profitOrLoss;
-        newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
-
-        newTrade.status = "OPEN";
-        await newTrade.save();
+        await position.save();
+      } else {
+        // Otherwise, create a new position
+        await Position.create({
+          userId,
+          symbol,
+          stockId,
+          totalQuantity: quantity,
+          averagePrice: price,
+          totalInvestment: quantity * price,
+        });
       }
 
-      const emailSubject = "New Trade Created!";
-      const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
-      await sendEmail(user.email, emailSubject, emailHtml);
+      // Deduct the required value from the user's account for a BUY transaction
+      account.totalValue -= requiredValue;
+      await account.save();
 
-      return res.status(201).send({
-        error: false,
-        message: "Trade created successfully",
-        data: newTrade,
-      });
-    } catch (error) {
-      next(error);
+      // Set trade status to OPEN and save it
+      newTrade.status = "OPEN";
+      await newTrade.save();
     }
+
+    // Check if it's a SELL transaction
+    else if (transactionType === "SELL") {
+      const position = await Position.findOne({ userId, symbol });
+
+      if (!position || position.totalQuantity < quantity) {
+        return res.status(400).send({
+          error: true,
+          message: "Insufficient stock quantity.",
+        });
+      }
+
+      const profitOrLoss = (price - position.averagePrice) * quantity;
+      const tradeDuration =
+        (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
+
+      // Update position after sale
+      position.totalQuantity -= quantity;
+      position.totalInvestment -= quantity * position.averagePrice;
+
+      if (position.totalQuantity === 0) {
+        await position.deleteOne({ _id: position._id });
+      } else {
+        await position.save();
+      }
+
+      // Set the profit or loss and trade duration for the SELL trade
+      newTrade.profitOrLoss = profitOrLoss;
+      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
+      newTrade.status = "CLOSED";
+      await newTrade.save();
+
+      // Update account after SELL transaction
+      account.completedTransactions += 1;
+      account.totalValue += profitOrLoss;
+
+      if (profitOrLoss > 0) {
+        account.avarageProfit =
+          (account.avarageProfit * (account.completedTransactions - 1) +
+            profitOrLoss) /
+          account.completedTransactions;
+      } else {
+        account.avarageLoss =
+          (account.avarageLoss * (account.completedTransactions - 1) +
+            profitOrLoss) /
+          account.completedTransactions;
+      }
+
+      const profitCount = profitOrLoss > 0 ? 1 : 0;
+      const lossCount = profitOrLoss < 0 ? 1 : 0;
+      account.winRate = (profitCount / account.completedTransactions) * 100;
+      account.profitFactor = profitCount / lossCount;
+
+      await account.save();
+    }
+
+    // Send a notification email to the user
+    const emailSubject = "New Trade Created!";
+    const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
+    await sendEmail(user.email, emailSubject, emailHtml);
+
+    return res.status(201).send({
+      error: false,
+      message: "Trade created successfully",
+      data: newTrade,
+    });
   },
   read: async (req, res) => {
     /*

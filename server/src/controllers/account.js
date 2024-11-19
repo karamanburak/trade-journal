@@ -33,9 +33,6 @@ module.exports = {
       {
         path: "userId",
       },
-      {
-        path: "tradeId",
-      },
     ]);
     res.status(200).send({
       error: false,
@@ -104,7 +101,12 @@ module.exports = {
             }
         }
     */
-    const data = await Account.findById(req.params.id);
+    const data = await Account.findOne({ _id: req.params.id });
+
+    if (!data) {
+      throw new CustomError("Account not found", 404);
+    }
+
     res.status(200).send({
       error: false,
       data,
@@ -152,13 +154,15 @@ module.exports = {
         }
     */
     const updatedAccount = await Account.findOneAndUpdate(
-      { _id: req.params.id },
-      req.body,
-      { new: true, runValidators: true }
+      { userId: req.body.userId },
+      { $inc: { totalValue: req.body.totalValue } },
+      { new: true }
     );
+
     if (!updatedAccount) {
-      throw new CustomError("Account not found", 404);
+      throw new CustomError("Account not found for the given userId", 404);
     }
+
     res.status(202).send({
       error: false,
       message: "Account updated successfully",

@@ -28,7 +28,7 @@ const useAuthCall = () => {
             console.log(data);
             dispatch(registerSuccess(data.data));
             toastNotify("success", data.message)
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             dispatch(fetchFail());
             handleAxiosError(error)

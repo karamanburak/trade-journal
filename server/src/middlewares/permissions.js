@@ -6,6 +6,7 @@ const User = require("../models/user");
 const Deposit = require("../models/deposit");
 const Position = require("../models/position");
 const Trade = require("../models/trade");
+const Account = require("../models/account");
 
 module.exports = {
   /* ---------------------------------- */
@@ -43,18 +44,28 @@ module.exports = {
   /* ---------------------------------- */
   /*               Account             */
   /* ---------------------------------- */
-
   isAccountOwner: async (req, res, next) => {
-    const account = await Account.findById(req.params.id);
+    try {
+      if (!req.user || !req.user._id) {
+        throw new CustomError(
+          "Unauthorized: No user information available",
+          401
+        );
+      }
 
-    if (!account) {
-      throw new CustomError("Account not found", 404);
-    }
+      const account = await Account.findOne({ userId: req.params.id });
 
-    if (String(account.userId) === String(req.user._id)) {
-      return next();
-    } else {
-      throw new CustomError("You are not the owner of this account", 403);
+      if (!account) {
+        throw new CustomError("Account not found", 404);
+      }
+
+      if (String(account.userId) === String(req.user._id)) {
+        return next();
+      } else {
+        throw new CustomError("You are not the owner of this account", 403);
+      }
+    } catch (error) {
+      next(error);
     }
   },
 
@@ -70,7 +81,7 @@ module.exports = {
     }
 
     if (String(account.userId) === String(req.user._id)) {
-      return next(); // User can make a deposit to their own account
+      return next();
     } else {
       throw new CustomError("You cannot deposit to this account", 403);
     }

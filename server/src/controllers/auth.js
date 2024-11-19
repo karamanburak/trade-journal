@@ -2,6 +2,7 @@
 
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const Account = require("../models/account");
 const Token = require("../models/token");
 const { getWelcomeEmailHtml } = require("../configs/email/welcome/welcome");
 const { sendEmail } = require("../configs/email/emailService");
@@ -81,6 +82,16 @@ module.exports = {
       isActive: true,
     });
 
+    const newAccount = await Account.create({
+      userId: newUser._id,
+      totalValue: 0,
+      completedTransactions: 0,
+      avarageProfit: 0,
+      avarageLoss: 0,
+      winRate: 0,
+      profitFactor: 0,
+    });
+
     // Send registration email to user
     const emailSubject = "Welcome to Trade Journal!";
     const emailHtml = getWelcomeEmailHtml(firstName);
@@ -90,6 +101,7 @@ module.exports = {
       error: false,
       message: "User created successfully!",
       newUser,
+      newAccount,
     });
   },
   login: async (req, res) => {

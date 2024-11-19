@@ -43,7 +43,7 @@ const TradeSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["OPEN", "COMPLETED", "CANCELLED"],
+      enum: ["OPEN", "CLOSED", "PENDING"],
       default: "OPEN",
     },
     profitOrLoss: {

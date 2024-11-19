@@ -6,7 +6,7 @@ const useAccountCall = () => {
     const getAccount = async (userId: string) => {
         try {
             const { data } = await axiosWithToken.get(`/accounts?filter[userId]=${userId}`);
-            // console.log(data.data);
+            console.log(data.data);
             return data;
         } catch (error) {
             console.error("Error getting account:", error);
