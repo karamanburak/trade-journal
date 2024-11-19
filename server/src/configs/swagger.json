@@ -59,17 +59,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -144,17 +169,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -235,17 +285,42 @@
             "description": "Token ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -306,17 +381,42 @@
             "description": "Token ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -362,17 +462,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -460,17 +585,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -521,17 +671,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -612,17 +787,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -656,17 +856,42 @@
             "description": "User ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -698,17 +923,42 @@
             "description": "User ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -748,17 +998,42 @@
             "description": "User ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -828,17 +1103,42 @@
             "description": "User ID"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -873,17 +1173,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -908,12 +1233,27 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
@@ -923,14 +1263,21 @@
             "type": "string"
           },
           {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "userId": {
-                  "example": "any"
-                },
                 "in": {
                   "example": "any"
                 },
@@ -947,9 +1294,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -979,12 +1323,27 @@
             "description": "ID of the trade to fetch"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
@@ -992,11 +1351,50 @@
             "name": "status",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Trade details fetched successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "trade-id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Sample Trade"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Details of the trade"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -1021,12 +1419,27 @@
             "description": "ID of the trade to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
@@ -1034,11 +1447,91 @@
             "name": "status",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Trade Name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated details of the trade"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "202": {
-            "description": "Accepted"
+            "description": "Trade   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "trade-id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Updated Trade Name"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Updated details of the trade"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Trade not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -1063,17 +1556,42 @@
             "description": "ID of the trade to delete"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1140,12 +1658,27 @@
             "description": "ID of the trade to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
@@ -1153,11 +1686,91 @@
             "name": "status",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Trade Name"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated details of the trade"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "202": {
-            "description": "Accepted"
+            "description": "Trade   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "trade-id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Updated Trade Name"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Updated details of the trade"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Trade not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Trade not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -1177,17 +1790,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1212,17 +1850,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -1338,17 +2001,42 @@
             "description": "ID of the position to fetch"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1436,17 +2124,42 @@
             "description": "ID of the position to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -1563,17 +2276,42 @@
             "description": "ID of the position to delete"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1640,17 +2378,42 @@
             "description": "ID of the position to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -1762,17 +2525,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1797,17 +2585,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1841,17 +2654,42 @@
             "description": "ID of the account to fetch"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1883,17 +2721,42 @@
             "description": "ID of the account to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1925,17 +2788,42 @@
             "description": "ID of the account to delete"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -1997,17 +2885,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2077,17 +2990,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -2195,17 +3133,42 @@
             "description": "ID of the deposit to fetch"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2289,17 +3252,42 @@
             "description": "ID of the deposit to delete"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2361,17 +3349,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2432,17 +3445,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -2526,17 +3564,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2601,17 +3664,42 @@
             "description": "ID of the capital to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -2716,17 +3804,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2777,17 +3890,42 @@
             "description": "ID of the capital to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           },
@@ -2888,17 +4026,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2923,17 +4086,42 @@
             "type": "string"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -2967,17 +4155,42 @@
             "description": "ID of the stock to fetch"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -3009,17 +4222,42 @@
             "description": "ID of the stock to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -3051,17 +4289,42 @@
             "description": "ID of the stock to delete"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -3128,17 +4391,484 @@
             "description": "ID of the stock to update"
           },
           {
-            "name": "tradeDate",
+            "name": "startDate",
             "in": "query",
             "type": "string"
           },
           {
-            "name": "stockSymbol",
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
             "in": "query",
             "type": "string"
           },
           {
             "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/comments/": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get List of Comments",
+        "description": "Fetch a list of all comments",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Create a New Comment",
+        "description": "Create a new comment and associate it with a trade",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tradeId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/${VERSION}/comments/{id}": {
+      "get": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Get Comment Details",
+        "description": "Fetch details of a single comment by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the comment to fetch"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Update a Comment",
+        "description": "Update an existing comment by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the comment to update"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Delete a Comment",
+        "description": "Delete a comment by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the comment to delete"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Comment   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Comment successfully deleted"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Comment not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Comment not found!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "Update a Comment",
+        "description": "Update an existing comment by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the comment to update"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
             "in": "query",
             "type": "string"
           }
@@ -3171,7 +4901,23 @@
             }
           }
         },
-        "stockSymbol": {
+        "stockId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "ref": {
+              "type": "string",
+              "example": "Stock"
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "symbol": {
           "type": "object",
           "properties": {
             "type": {
@@ -3181,7 +4927,7 @@
               "type": "boolean",
               "example": true
             },
-            "upperCase": {
+            "uppercase": {
               "type": "boolean",
               "example": true
             },
@@ -3191,7 +4937,7 @@
             }
           }
         },
-        "quantity": {
+        "totalQuantity": {
           "type": "object",
           "properties": {
             "type": {
@@ -3204,10 +4950,6 @@
             "default": {
               "type": "number",
               "example": 0
-            },
-            "min": {
-              "type": "number",
-              "example": 1
             }
           }
         },
@@ -3302,14 +5044,26 @@
             "required": {
               "type": "boolean",
               "example": true
+            }
+          }
+        },
+        "stockId": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
             },
-            "index": {
+            "ref": {
+              "type": "string",
+              "example": "Stock"
+            },
+            "required": {
               "type": "boolean",
               "example": true
             }
           }
         },
-        "stockSymbol": {
+        "symbol": {
           "type": "object",
           "properties": {
             "type": {
@@ -3319,20 +5073,35 @@
               "type": "boolean",
               "example": true
             },
+            "uppercase": {
+              "type": "boolean",
+              "example": true
+            },
             "required": {
               "type": "boolean",
               "example": true
             }
           }
         },
-        "tradeDate": {
+        "transactionType": {
           "type": "object",
           "properties": {
             "type": {
               "type": "function"
             },
-            "default": {
-              "type": "function"
+            "enum": {
+              "type": "array",
+              "example": [
+                "BUY",
+                "SELL"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "required": {
+              "type": "boolean",
+              "example": true
             }
           }
         },
@@ -3372,7 +5141,18 @@
             }
           }
         },
-        "type": {
+        "transactionDate": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "default": {
+              "type": "function"
+            }
+          }
+        },
+        "status": {
           "type": "object",
           "properties": {
             "type": {
@@ -3381,16 +5161,17 @@
             "enum": {
               "type": "array",
               "example": [
-                "BUY",
-                "SELL"
+                "OPEN",
+                "COMPLETED",
+                "CANCELLED"
               ],
               "items": {
                 "type": "string"
               }
             },
-            "required": {
-              "type": "boolean",
-              "example": true
+            "default": {
+              "type": "string",
+              "example": "OPEN"
             }
           }
         },
@@ -3418,26 +5199,54 @@
             }
           }
         },
-        "status": {
+        "entryPrice": {
           "type": "object",
           "properties": {
             "type": {
               "type": "function"
             },
-            "enum": {
-              "type": "array",
-              "example": [
-                "OPEN",
-                "COMPLETED",
-                "CANCELLED"
-              ],
-              "items": {
-                "type": "string"
-              }
+            "default": {
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "exitPrice": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
             },
             "default": {
-              "type": "string",
-              "example": "OPEN"
+              "type": "number",
+              "example": 0
+            }
+          }
+        },
+        "notes": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "trim": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Comment"
+              }
             }
           }
         }

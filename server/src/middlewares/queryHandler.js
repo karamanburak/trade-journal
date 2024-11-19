@@ -18,16 +18,24 @@ module.exports = async (req, res, next) => {
     if (isNaN(startDate.getTime())) {
       throw new CustomError("Invalid start date", 400);
     }
-    filterCriteria.tradeDate = { $gte: startDate };
+    filterCriteria.transactionDate = { $gte: startDate };
   }
-
   if (filter.endDate) {
     const endDate = new Date(filter.endDate);
     if (isNaN(endDate.getTime())) {
       throw new CustomError("Invalid end date", 400);
     }
-    filterCriteria.tradeDate = filterCriteria.tradeDate || {};
-    filterCriteria.tradeDate.$lte = endDate;
+    filterCriteria.transactionDate = filterCriteria.transactionDate || {};
+    filterCriteria.transactionDate.$lte = endDate;
+  }
+
+  // Filter by tradeDuration (if provided in the filter object)
+  if (filter.tradeDuration) {
+    const duration = Number(filter.tradeDuration);
+    if (isNaN(duration) || duration < 0) {
+      throw new CustomError("Invalid trade duration", 400);
+    }
+    filterCriteria.tradeDuration = duration;
   }
 
   // Stock Symbol Filter
@@ -44,6 +52,25 @@ module.exports = async (req, res, next) => {
       throw new CustomError("Invalid trade type", 400);
     }
     filterCriteria.type = filter.type.toUpperCase();
+  }
+
+  if (filter.stock) {
+    if (typeof filter.stock !== "string" || filter.stock.trim() === "") {
+      throw new CustomError("Invalid stock ID", 400);
+    }
+    const stocks = filter.stock.split(",").map((stock) => stock.trim());
+
+    const Stock = require("../models/stock");
+
+    const stockId = await Stock.find({
+      name: { $in: stocks.map((c) => new RegExp(c, "i")) }, // case insensitive
+    });
+
+    const matchingStockId = stockId.map((stock) => stock._id);
+
+    if (matchingStockId.length) {
+      filterCriteria.stockId = { $in: matchingStockId };
+    }
   }
 
   // Completed Status Filter
@@ -105,18 +132,28 @@ module.exports = async (req, res, next) => {
   let skip = page * limit;
 
   /* EXTENDED HANDLER */
+  // Run for output:
   res.getModelList = async (Model, customFilter = {}, populate = null) => {
+    if (Model.modelName === "Stock") {
+      return await Model.find({
+        ...filterCriteria,
+        ...searchCriteria,
+        ...customFilter,
+      }).populate(populate);
+    }
+
     return await Model.find({
       ...filterCriteria,
       ...searchCriteria,
       ...customFilter,
     })
-      .sort(sortCriteria)
+      .sort(sort)
       .skip(skip)
       .limit(limit)
       .populate(populate);
   };
 
+  // Details:
   res.getModelListDetails = async (Model, customFilter = {}) => {
     const data = await Model.find({
       ...filterCriteria,
@@ -124,17 +161,38 @@ module.exports = async (req, res, next) => {
       ...customFilter,
     });
 
-    const totalRecords = data.length;
+    let details = {};
 
-    return {
-      filter,
-      search,
-      sort,
-      page: page + 1,
-      limit,
-      totalRecords,
-      totalPages: Math.ceil(totalRecords / limit),
-    };
+    if (Model.modelName === "Stock") {
+      details = {
+        filter,
+        search,
+        sort,
+        totalRecords: data.length,
+      };
+    } else {
+      details = {
+        filter,
+        search,
+        sort,
+        skip,
+        limit,
+        page,
+        pages: {
+          previous: page > 0 ? page : false,
+          current: page + 1,
+          next: page + 2,
+          total: Math.ceil(data.length / limit),
+        },
+        totalRecords: data.length,
+      };
+
+      details.pages.next =
+        details.pages.next > details.pages.total ? false : details.pages.next;
+      if (details.totalRecords <= limit) details.pages = false;
+    }
+
+    return details;
   };
 
   next();

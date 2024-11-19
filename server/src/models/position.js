@@ -17,7 +17,7 @@ const PositionSchema = new mongoose.Schema(
     symbol: {
       type: String,
       required: true,
-      unique: true,
+      uppercase: true,
       trim: true,
     },
     totalQuantity: {

@@ -83,7 +83,7 @@ module.exports = async function () {
 
   // Create initial orders (buy/sell)
   await Trade.create({
-    userId: "65343222b67e9681f937f002",
+    createdBy: "65343222b67e9681f937f002",
     stockId: stock1._id,
     symbol: "AAPL",
     transactionType: "BUY",
@@ -92,7 +92,7 @@ module.exports = async function () {
     date: new Date("2024-11-18T10:00:00Z"),
   });
   await Trade.create({
-    userId: "65343222b67e9681f937f002",
+    createdBy: "65343222b67e9681f937f002",
     stockId: stock2._id,
     symbol: "MSFT",
     transactionType: "SELL",

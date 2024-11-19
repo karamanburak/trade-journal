@@ -9,7 +9,6 @@ const TradeSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      index: true,
     },
     stockId: {
       type: mongoose.Schema.Types.ObjectId,

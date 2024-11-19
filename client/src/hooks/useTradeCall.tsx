@@ -1,0 +1,98 @@
+import { useDispatch } from "react-redux";
+import toastNotify from "../utils/toastNotify";
+import { axiosWithPublic } from "./useAxios";
+import {
+    fetchSingleTradeSuccess,
+    fetchStockSuccess,
+    fetchTradeFail,
+    fetchTradeStart,
+    fetchTradeSuccess,
+} from "../features/tradeSlice";
+import { useNavigate } from "react-router-dom";
+
+const useTradeCall = () => {
+
+    const dispatch = useDispatch();
+
+    const getTrades = async (userId: string): Promise<ITrade[]> => {
+        try {
+            const { data } = await axiosWithPublic(`/trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
+            dispatch(fetchTradeSuccess(data.data));
+            // console.log(data.data);
+            return data.data;
+        } catch (error) {
+            console.log("Error getting trades:", error);
+            return [];
+        }
+    };
+
+    const getStocks = async (): Promise<IStock[]> => {
+        try {
+            const { data } = await axiosWithPublic("/stocks");
+            dispatch(fetchStockSuccess(data.data));
+            // console.log(data.data);
+            return data.data;
+        } catch (error) {
+            console.log("Error getting stocks:", error);
+            return [];
+        }
+    };
+
+    const getSingleTrade = async (tradeId: string): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic(`trades/${tradeId}`);
+            // console.log(data.data);
+            dispatch(fetchSingleTradeSuccess(data.data));
+        } catch (error) {
+            console.log("Error getting single trade:", error);
+            dispatch(fetchTradeFail());
+        }
+    };
+
+    const postTrade = async (tradeInfo: ITrade): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic.post("trades", tradeInfo);
+            toastNotify("success", data.message);
+        } catch (error) {
+            console.log("Error posting trade:", error);
+            dispatch(fetchTradeFail());
+
+        }
+    };
+
+    const editTrade = async (tradeId: string, tradeInfo: ITrade): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic.put(`trades/${tradeId}`, tradeInfo);
+            dispatch(fetchSingleTradeSuccess(data.new));
+            toastNotify("success", data.message);
+        } catch (error) {
+            console.log("Error editing trade:", error);
+            dispatch(fetchTradeFail());
+        }
+    };
+
+    const deleteTrade = async (tradeId: string): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic.delete(`trades/${tradeId}`);
+            toastNotify("success", data.message);
+        } catch (error) {
+            console.log("Error deleting trade:", error);
+            dispatch(fetchTradeFail());
+        }
+    };
+
+    return {
+        getTrades,
+        getStocks,
+        getSingleTrade,
+        postTrade,
+        editTrade,
+        deleteTrade,
+    };
+};
+
+export default useTradeCall;

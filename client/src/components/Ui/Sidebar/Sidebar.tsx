@@ -1,6 +1,6 @@
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineStock } from "react-icons/ai";
-import { ImCoinDollar } from "react-icons/im";
+import { GrTransaction } from "react-icons/gr";
 import { useState } from "react";
 
 const links = [
@@ -15,9 +15,9 @@ const links = [
         icon: <AiOutlineStock />,
     },
     {
-        title: "Investors",
-        key: "investors",
-        icon: <ImCoinDollar />,
+        title: "Transactions",
+        key: "transactions",
+        icon: <GrTransaction />,
     },
 ];
 
@@ -29,12 +29,12 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
 
     return (
         <div className="relative w-[90px] sm:w-[240px] h-[89vh] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2 ">
-            <div className="hidden sm:flex items-center justify-center py-6 bg-dark-background1 text-2xl font-semibold ">
+            <div className="hidden sm:flex items-center justify-center pt-6 bg-dark-background1 text-2xl font-semibold ">
                 Trade Journal
             </div>
 
-            <div className="hidden sm:flex items-center justify-center w-40 m-auto relative">
-                <div className="absolute inset-0 flex items-center">
+            <div className="hidden sm:flex items-center justify-center w-40 m-auto relative pt-4">
+                <div className="absolute inset-0 flex items-center pt-4">
                     <div className="w-full border-t border-light-border dark:border-dark-border"></div>
                 </div>
                 <div className="relative bg-light-secondary dark:bg-dark-background2 px-2">

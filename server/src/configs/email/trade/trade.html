@@ -62,7 +62,7 @@
             width: 100%;
             padding: 12px 0;
             text-align: center;
-            background-color: #D6F5E6;
+            background-color: #5B9ED8;
             text-decoration: none;
             font-size: 16px;
             font-weight: bold;
@@ -71,7 +71,7 @@
         }
 
         .cta-button:hover {
-            background-color: #EAF4FC;
+            background-color: #3A6E98;
 
         }
 
@@ -109,19 +109,19 @@
 
 <body>
     <div class="container">
-        <h1>Welcome, {{firstName}}!</h1>
+        <h1>Dear, {{firstName}}!</h1>
         <p>We are excited to inform you that a new trade has been successfully created in your account:</p>
         <ul>
             <li><strong>Stock Symbol:</strong> {{stockSymbol}}</li>
             <li><strong>Stock Price:</strong> {{tradePrice}} €</li>
             <li><strong>Stock Quantity:</strong> {{tradeQuantity}}</li>
             <li><strong>Stock Total Price:</strong> {{tradeTotalPrice}} €</li>
-            <li><strong>Trade Type:</strong> {{tradeType}}</li>
+            <li><strong>Trade Transaction Type:</strong> {{tradeType}}</li>
             <li><strong>Trade Status:</strong> {{tradeStatus}}</li>
             <li><strong>Trade Date:</strong> {{tradeDate}}</li>
         </ul>
         <p>To view more details or manage your trades, simply click the button below:</p>
-        <a href="{{clientUrl}}/" target="_blank" class="cta-button">View My Trades</a>
+        <a href="{{clientUrl}}/" target="_blank" class="cta-button" style="color: #D6F5E6;">View My Trades</a>
         <div class="divider"></div>
         <p>Thank you for choosing <strong>Trade Journal</strong>!</p>
         <div class="footer">

@@ -37,6 +37,12 @@ module.exports = {
         path: "userId",
         select: "username firstName lastName email",
       },
+      {
+        path: "stockId",
+      },
+      {
+        path: "comments",
+      },
     ]);
     res.status(200).send({
       error: false,
@@ -92,9 +98,9 @@ module.exports = {
     // }
 
     try {
-      const { userId, stockSymbol, quantity, price, type } = req.body;
+      const { userId, stockId, symbol, quantity, price, transactionType } =
+        req.body;
 
-      // Kullanıcı doğrulama
       const user = await User.findById(userId);
       if (!user) {
         return res.status(404).send({
@@ -103,56 +109,58 @@ module.exports = {
         });
       }
 
-      // Pozisyon sorgusu
-      const position = await Position.findOne({ userId, stockSymbol });
-      console.log("Position found:", position);
-
-      // Yeni işlem oluşturma
+      const position = await Position.findOne({ userId, symbol });
       const newTrade = new Trade(req.body);
 
-      if (type === "BUY") {
-        // Satın alma işlemi
+      if (transactionType === "BUY") {
         if (position) {
-          // Pozisyon mevcutsa güncelle
           const totalQuantity = position.quantity + quantity;
-          position.averagePrice =
+
+          if (
+            isNaN(position.averagePrice) ||
+            position.averagePrice === undefined
+          ) {
+            position.averagePrice = price;
+          }
+
+          if (isNaN(quantity) || isNaN(price)) {
+            throw new CustomError("Invalid quantity or price.", 400);
+          }
+
+          const newAveragePrice =
             (position.quantity * position.averagePrice + quantity * price) /
             totalQuantity;
+
+          if (isNaN(newAveragePrice)) {
+            position.averagePrice = price;
+          } else {
+            position.averagePrice = newAveragePrice;
+          }
+
           position.quantity = totalQuantity;
           await position.save();
         } else {
-          // Yeni pozisyon oluştur
           await Position.create({
             userId,
-            stockSymbol,
+            symbol,
+            stockId,
             quantity,
             averagePrice: price,
+            transactionType,
           });
         }
 
-        newTrade.status = "COMPLETED";
+        newTrade.status = "OPEN";
         await newTrade.save();
-      } else if (type === "SELL") {
-        // Satış işlemi
+      } else if (transactionType === "SELL") {
         if (!position || position.quantity < quantity) {
-          console.log(
-            "Insufficient quantity:",
-            position ? position.quantity : 0,
-            "Requested:",
-            quantity
-          );
-          return res.status(400).send({
-            error: true,
-            message: "Insufficient quantity in position to sell",
-          });
+          throw new CustomError("Insufficient stock quantity.", 400);
         }
 
-        // Kar/Zarar ve süre hesaplama
         const profitOrLoss = (price - position.averagePrice) * quantity;
         const tradeDuration =
           (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
 
-        // Pozisyon güncelle
         position.quantity -= quantity;
         if (position.quantity === 0) {
           await position.remove();
@@ -160,35 +168,24 @@ module.exports = {
           await position.save();
         }
 
-        // Trade güncelle
         newTrade.profitOrLoss = profitOrLoss;
         newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
-        newTrade.status = "COMPLETED";
+
+        newTrade.status = "OPEN";
         await newTrade.save();
-      } else {
-        return res.status(400).send({
-          error: true,
-          message: "Invalid trade type. Only 'BUY' or 'SELL' allowed.",
-        });
       }
 
-      // Kullanıcıya e-posta bildirimi gönder
       const emailSubject = "New Trade Created!";
       const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
       await sendEmail(user.email, emailSubject, emailHtml);
 
-      // Başarı yanıtı
       return res.status(201).send({
         error: false,
         message: "Trade created successfully",
         data: newTrade,
       });
     } catch (error) {
-      console.error("Error creating trade:", error);
-      return res.status(500).send({
-        error: true,
-        message: "An error occurred while processing the trade.",
-      });
+      next(error);
     }
   },
   read: async (req, res) => {
