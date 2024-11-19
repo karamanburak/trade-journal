@@ -29,7 +29,6 @@ const Dashboard = () => {
             <Header />
             <div className="flex flex-grow">
                 <Sidebar onNavigate={handleTabChange} />
-
                 <div className="flex-grow bg-light-background dark:bg-dark-background p-4">
                     {activeTab === "dashboard" && <Home />}
                     {activeTab === "stocks" && <Stocks />}

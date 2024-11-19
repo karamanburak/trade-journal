@@ -28,3 +28,26 @@ body {
   @apply bg-dark-background;
   @apply text-dark-text;
 }
+
+/*Custom-scrollbar*/
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: #f1f3f9;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #9d9ea1;
+    border-radius: 10px;
+    border: 2px solid #f1f3f9;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #5b9ed8;
+  }
+}

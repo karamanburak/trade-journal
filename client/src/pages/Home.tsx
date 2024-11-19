@@ -22,7 +22,7 @@ const Home = () => {
         <>
             <div className="flex justify-between md:px-12">
                 <div className="w-[80%] h-full flex flex-col m-auto mt-16 mb-24 relative">
-                    <Table />
+                    {/* <Table /> */}
                 </div>
 
             </div>

@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage"
 import authReducer from "../features/authSlice"
 import themeReducer from "../features/themeSlice"
+import tradeSlice from "../features/tradeSlice"
 
 const persistConfig = {
     key: "root",
@@ -24,6 +25,7 @@ const store = configureStore({
     reducer: {
         auth: persistedReducer,
         theme: themeReducer,
+        trade: tradeSlice
 
     },
     middleware: (getDefaultMiddleware) =>

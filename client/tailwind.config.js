@@ -8,6 +8,8 @@ export default {
         // Light Mode Colors
         light: {
           background: "#FFFFFF",
+          background2: "#F0F0F0",
+          background3: "#E0E0E0",
           primary: "#5B9ED8",
           secondary: "#F9FAFB",
           text: "#434A54",
@@ -44,6 +46,10 @@ export default {
         poppins: ["Poppins", "sans-serif"],
         "bad-script": ["Bad Script", "cursive"],
         quattrocento: ["Quattrocento", "serif"],
+      },
+      gridTemplateRows: {
+        7: "repeat(7, minmax(0, 1fr))",
+        8: "repeat(8, minmax(0, 1fr))",
       },
     },
   },

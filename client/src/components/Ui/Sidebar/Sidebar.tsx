@@ -28,7 +28,7 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
         activeKey === key ? "bg-[#E5E8EB] dark:bg-[#1d2a44]" : "hover:bg-[#E5E8EB] dark:hover:bg-[#1d2a44]";
 
     return (
-        <div className="relative w-[90px] sm:w-[240px] h-[89vh] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2 ">
+        <div className="relative w-[90px] sm:w-[240px] h-[calc(100vh-90px)] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2 ">
             <div className="hidden sm:flex items-center justify-center pt-6 bg-dark-background1 text-2xl font-semibold ">
                 Trade Journal
             </div>

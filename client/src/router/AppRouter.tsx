@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
+import StockDetails from "../pages/StockDetails";
 
 const AppRouter = () => {
     return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
+                <Route path="/stocks/:stockId" element={<StockDetails />} />
                 <Route path="*" element={<NotFound />} />
 
                 <Route path="" element={<PrivateRouter />}>

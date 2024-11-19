@@ -7,6 +7,7 @@ const tradeSlice = createSlice({
         trades: [],
         stocks: [],
         singleTrade: null,
+        singleStock: null,
         loading: false,
         error: false,
     },
@@ -25,6 +26,11 @@ const tradeSlice = createSlice({
             state.error = false
             state.singleTrade = data
         },
+        fetchSingleStockSuccess: (state, { payload: data }) => {
+            state.loading = false
+            state.error = false
+            state.singleStock = data
+        },
         fetchStockSuccess: (state, { payload: data }) => {
             state.loading = false
             state.error = false
@@ -42,6 +48,7 @@ export const {
     fetchTradeStart,
     fetchTradeSuccess,
     fetchSingleTradeSuccess,
+    fetchSingleStockSuccess,
     fetchStockSuccess,
     fetchTradeFail,
 } = tradeSlice.actions

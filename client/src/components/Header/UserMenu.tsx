@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import useAuthCall from "../../hooks/useAuthCall";
 import useTheme from "../../hooks/useTheme";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MenuButton from "../Ui/Buttons/MenuButton";
 
 const UserMenu = () => {
@@ -16,6 +16,7 @@ const UserMenu = () => {
     const [isOpen, setIsOpen] = useState(false)
     const menuRef = useRef<HTMLDivElement>(null)
     const navigate = useNavigate()
+    const location = useLocation()
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
@@ -51,7 +52,9 @@ const UserMenu = () => {
                         <div className="mt-2">
                             {currentUser ? (
                                 <>
-                                    <MenuButton onClick={() => navigate(`/`)}>Home</MenuButton>
+                                    {location.pathname !== "/" && (
+                                        <MenuButton onClick={() => navigate(`/`)}>Home</MenuButton>
+                                    )}
                                     <MenuButton onClick={() => navigate(`/profile/${currentUser._id}`)}>
                                         Profile
                                     </MenuButton>
@@ -66,7 +69,7 @@ const UserMenu = () => {
                             <div className="border-b border-light-blue dark:border-gray-2 my-2"></div>
 
                             <button
-                                className="flex items-center w-full text-left p-1 hover:text-primary-blue"
+                                className="flex items-center w-full text-left p-1 hover:text-dark-primary"
                                 onClick={toggleTheme}
                             >
                                 {mode === "dark" ? (

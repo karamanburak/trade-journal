@@ -3,15 +3,14 @@ import toastNotify from "../utils/toastNotify";
 import { axiosWithPublic } from "./useAxios";
 import {
     fetchSingleTradeSuccess,
+    fetchSingleStockSuccess,
     fetchStockSuccess,
     fetchTradeFail,
     fetchTradeStart,
     fetchTradeSuccess,
 } from "../features/tradeSlice";
-import { useNavigate } from "react-router-dom";
 
 const useTradeCall = () => {
-
     const dispatch = useDispatch();
 
     const getTrades = async (userId: string): Promise<ITrade[]> => {
@@ -49,6 +48,17 @@ const useTradeCall = () => {
             dispatch(fetchTradeFail());
         }
     };
+    const getSingleStock = async (stockId: string): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic(`stocks/${stockId}`);
+            console.log(data.data);
+            dispatch(fetchSingleStockSuccess(data.data));
+        } catch (error) {
+            console.log("Error getting single trade:", error);
+            dispatch(fetchTradeFail());
+        }
+    };
 
     const postTrade = async (tradeInfo: ITrade): Promise<void> => {
         dispatch(fetchTradeStart());
@@ -74,10 +84,10 @@ const useTradeCall = () => {
         }
     };
 
-    const deleteTrade = async (tradeId: string): Promise<void> => {
+    const deleteTrade = async (stockId: string): Promise<void> => {
         dispatch(fetchTradeStart());
         try {
-            const { data } = await axiosWithPublic.delete(`trades/${tradeId}`);
+            const { data } = await axiosWithPublic.delete(`trades/${stockId}`);
             toastNotify("success", data.message);
         } catch (error) {
             console.log("Error deleting trade:", error);
@@ -89,6 +99,7 @@ const useTradeCall = () => {
         getTrades,
         getStocks,
         getSingleTrade,
+        getSingleStock,
         postTrade,
         editTrade,
         deleteTrade,
