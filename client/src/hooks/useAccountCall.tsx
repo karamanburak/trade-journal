@@ -5,7 +5,17 @@ const useAccountCall = () => {
 
     const getAccount = async (userId: string) => {
         try {
-            const { data } = await axiosWithToken.get(`/accounts?filter[userId]=${userId}`);
+            const { data } = await axiosWithToken.get(`accounts?filter[userId]=${userId}`);
+            // console.log(data.data);
+            return data;
+        } catch (error) {
+            console.error("Error getting account:", error);
+            return null;
+        }
+    };
+    const updateAccount = async (accountId: string) => {
+        try {
+            const { data } = await axiosWithToken.get(`accounts/${accountId}`);
             console.log(data.data);
             return data;
         } catch (error) {
@@ -16,6 +26,7 @@ const useAccountCall = () => {
 
     return {
         getAccount,
+        updateAccount
     };
 };
 

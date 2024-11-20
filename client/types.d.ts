@@ -40,19 +40,31 @@ interface ITermsModal {
 }
 
 // Fetch Data
-
 interface ITrade {
-  _id: string
+  _id?: string
+  userId: string | undefined
+  stockId?: string
   symbol: string
-  transactionType: string
+  transactionType: "BUY" | "SELL"
   quantity: number
-  price: number
+  price?: number
   status: string
   profitOrLoss: number
   tradeDuration: number
-  entryPrice: number
+  entryPrice?: number
   exitPrice: number
   transactionDate: Date
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+interface ITradeState {
+  trades: ITrade[]
+  stocks: IStock[]
+  singleTrade: ITrade | null
+  singleStock: IStock | null
+  loading: boolean
+  error: boolean
 }
 
 interface IStock {
@@ -75,4 +87,19 @@ interface IAccount {
   avarageProfit: number
   avarageLoss: number
   avarageHoldDuration: number
+}
+
+interface ITradePayload {
+  userId: string | undefined
+  stockId: string
+  symbol: string
+  price: number
+  transactionType: "BUY" | "SELL"
+  quantity: number
+  status: string
+  profitOrLoss: number
+  tradeDuration: number
+  entryPrice: number
+  exitPrice: number
+  transactionDate: Date
 }

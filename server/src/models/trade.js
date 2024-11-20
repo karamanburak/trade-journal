@@ -1,7 +1,6 @@
 "use strict";
 
 const { mongoose } = require("../configs/dbConnection");
-const Trade = require("./trade");
 
 const TradeSchema = new mongoose.Schema(
   {

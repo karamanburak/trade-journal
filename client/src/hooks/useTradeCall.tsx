@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toastNotify from "../utils/toastNotify";
 import { axiosWithPublic } from "./useAxios";
 import {
@@ -9,13 +9,18 @@ import {
     fetchTradeStart,
     fetchTradeSuccess,
 } from "../features/tradeSlice";
+import { useNavigate } from "react-router-dom";
+import type { RootState } from "../app/store";
+import { AxiosError } from "axios";
 
 const useTradeCall = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { currentUser } = useSelector((state: RootState) => state.auth);
 
     const getTrades = async (userId: string): Promise<ITrade[]> => {
         try {
-            const { data } = await axiosWithPublic(`/trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
+            const { data } = await axiosWithPublic(`trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
             dispatch(fetchTradeSuccess(data.data));
             // console.log(data.data);
             return data.data;
@@ -27,7 +32,7 @@ const useTradeCall = () => {
 
     const getStocks = async (): Promise<IStock[]> => {
         try {
-            const { data } = await axiosWithPublic("/stocks");
+            const { data } = await axiosWithPublic("stocks");
             dispatch(fetchStockSuccess(data.data));
             // console.log(data.data);
             return data.data;
@@ -65,10 +70,17 @@ const useTradeCall = () => {
         try {
             const { data } = await axiosWithPublic.post("trades", tradeInfo);
             toastNotify("success", data.message);
+            navigate(`/profile/${currentUser?._id}`);
         } catch (error) {
-            console.log("Error posting trade:", error);
-            dispatch(fetchTradeFail());
-
+            if (error instanceof AxiosError) {
+                console.log("Error posting trade:", error);
+                dispatch(fetchTradeFail());
+                toastNotify("error", error.response?.data?.message || "An error occurred.");
+            } else {
+                console.log("Unknown error:", error);
+                dispatch(fetchTradeFail());
+                toastNotify("error", "An unexpected error occurred.");
+            }
         }
     };
 

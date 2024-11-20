@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+
 const tradeSlice = createSlice({
     name: "trade",
 

@@ -1,15 +1,18 @@
+import { FiExternalLink } from "react-icons/fi";
 import React, { useEffect, useRef, useState } from "react";
 import { formatDateWithTime } from "../../helpers/formatDate";
 import { GrDocumentMissing } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 
 const TradeHistory = () => {
-    const { trades } = useSelector((state: RootState) => state.trade);
+    const { trades, singleStock } = useSelector((state: RootState) => state.trade);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedType, setSelectedType] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     const transactionTypes = ["BUY", "SELL"];
 
@@ -41,7 +44,7 @@ const TradeHistory = () => {
 
     return (
 
-        <div className="w-full md:w-2/3 lg:w-3/4 p-6 space-y-6">
+        <div className="w-full md:w-2/3 lg:w-3/4 p-6 space-y-6 ">
             <h2 className="text-2xl font-semibold mb-4">Trade History</h2>
             <div className="flex flex-row justify-between items-start md:items-center mb-6">
                 {/* Search Input */}
@@ -96,6 +99,12 @@ const TradeHistory = () => {
                                 <p><strong>Status:</strong> {trade.status}</p>
                             </div>
                             <div className="text-right">
+                                {singleStock &&
+                                    <FiExternalLink
+                                        className="ml-auto text-xl mb-7 cursor-pointer"
+                                        onClick={() => navigate(`/stocks/${singleStock._id}`)}
+                                    />
+                                }
                                 <p><strong>Price:</strong> ${trade.price}</p>
                                 <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
                             </div>
