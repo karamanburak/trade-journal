@@ -34,10 +34,6 @@ const StockDetails: React.FC = () => {
     const { exchange, lastPrice, marketCap, name, symbol, _id } = singleStock;
 
     const handleOpenModal = (type: "BUY" | "SELL") => {
-        if (!currentUser) {
-            toastNotify("warn", "Please sign up or log in to perform this action.");
-            return;
-        }
         setTransactionType(type);
         setModalOpen(true);
     };

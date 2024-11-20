@@ -41,7 +41,7 @@ const UserMenu = () => {
 
     return (
         <div className="relative" ref={menuRef}>
-            <div className="flex items-center justify-center border-2 dark:border-gray-2 border-dark-primary rounded-full py-1 px-2 cursor-pointer"
+            <div className="flex items-center justify-center border-2 dark:border-gray-2 border-light-background3 dark:border-dark-background3 rounded-full py-1 px-2 cursor-pointer"
                 onClick={toggleMenu}>
                 <FaBars className="dark:text-gray-2  h-5 w- mr-2" />
                 <FaUser className="text-lg dark:border-gray-2 rounded-lg shadow-lg z-10" />

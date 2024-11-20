@@ -34,7 +34,6 @@ export default function KpiCards() {
         fetchAccountData();
     }, [currentUser]);
 
-    console.log(account);
 
     const data = account
         ? [
@@ -51,11 +50,13 @@ export default function KpiCards() {
             {
                 name: 'Average Profit',
                 value: `${account.avarageProfit.toFixed(2)} €`,
+                change: account.winRate > 0 ? `+${account.winRate.toFixed(2)}%` : `${account.winRate.toFixed(2)}%`,
                 changeType: 'positive',
             },
             {
                 name: 'Average Loss',
                 value: `${account.avarageLoss.toFixed(2)} €`,
+                change: account.winRate > 0 ? `+${account.winRate.toFixed(2)}%` : `${account.winRate.toFixed(2)}%`,
                 changeType: 'negative',
             },
             {
@@ -68,7 +69,7 @@ export default function KpiCards() {
 
             {
                 name: 'Average Hold Duration',
-                value: `${account.avarageHoldDuration} days`,
+                value: `${account.avarageHoldDuration.toFixed(5)} days`,
                 changeType: 'neutral',
             },
         ]

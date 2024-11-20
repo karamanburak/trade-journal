@@ -101,8 +101,8 @@ const Profile = () => {
     return (
         <>
             <Header />
-            <div className="w-full h-[calc(100vh-90px)] shadow-lg bg-white dark:bg-dark-background flex flex-col md:flex-row ">
-                <div className="w-full md:w-1/3 lg:w-1/4 bg-light-secondary dark:bg-dark-background2 p-6 space-y-6">
+            <div className="w-full h-[calc(100vh-90px)] shadow-lg bg-white dark:bg-dark-background flex flex-col md:flex-row">
+                <div className="w-full md:w-1/3 lg:w-1/4 bg-light-secondary dark:bg-dark-background2 p-6 space-y-6 ">
                     <div className="flex flex-col items-center space-y-6">
                         {/* Profile Information */}
                         <div className="flex flex-col w-full">
@@ -162,7 +162,7 @@ const Profile = () => {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className=" font-medium"><strong>Average Hold Duration:</strong></p>
-                                    <p className="">{account.avarageHoldDuration.toFixed(7)} days</p>
+                                    <p className="">{account.avarageHoldDuration.toFixed(5)} days</p>
                                 </div>
                             </div>
                         ) : (

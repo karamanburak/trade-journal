@@ -34,7 +34,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ stocks, onSelectStock }) => {
     };
 
     return (
-        <div className="relative w-full md:w-80 pt-5 ml-auto">
+        <div className="relative w-full md:w-80 pt-5 ml-auto mr-8">
             <input
                 type="text"
                 value={input}

@@ -97,6 +97,20 @@ const useTradeCall = () => {
             dispatch(fetchTradeFail());
         }
     };
+    const editStock = async (stockId: string, stockInfo: IStock): Promise<void> => {
+        dispatch(fetchTradeStart());
+        try {
+            const { data } = await axiosWithPublic.put(`stocks/${stockId}`, stockInfo);
+            dispatch(fetchSingleStockSuccess(data.data));
+            console.log(data.data);
+            toastNotify("success", data.message);
+        } catch (error) {
+            console.log("Error editing trade:", error);
+            dispatch(fetchTradeFail());
+        } finally {
+            getStocks()
+        }
+    };
 
     const deleteTrade = async (stockId: string): Promise<void> => {
         dispatch(fetchTradeStart());
@@ -116,6 +130,7 @@ const useTradeCall = () => {
         getSingleStock,
         postTrade,
         editTrade,
+        editStock,
         deleteTrade,
     };
 };

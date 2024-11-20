@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaRegEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
+import useTradeCall from "../../../hooks/useTradeCall";
+import EditStockModal from "../Modals/EditStockModal";
 
 interface TableProps {
     stocks: IStock[];
 }
 
-
 const Table: React.FC<TableProps> = ({ stocks }) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { editStock } = useTradeCall();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedStock, setSelectedStock] = useState<IStock | null>(null);
+
     if (!stocks || stocks.length === 0) {
         return (
             <div className="flex justify-center items-center p-10 text-lg">
@@ -16,13 +24,16 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
         );
     }
 
+    const handleEditClick = (stock: IStock) => {
+        setSelectedStock(stock);
+        setModalOpen(true);
+    };
     return (
         <div className="h-[calc(100vh-225px)] overflow-y-auto scrollbar">
             <div className="mb-2">
                 {stocks.length} stocks found. Click on the BUY/SELL button to view more details.
             </div>
             <table className="w-full mx-auto table-auto text-sm sm:text-base">
-
                 <thead className="bg-light-secondary dark:bg-dark-background3 w-full">
                     <tr className="text-left">
                         <th className="py-3 px-4 font-semibold">Symbol</th>
@@ -30,6 +41,7 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                         <th className="py-3 px-4 font-semibold">Price</th>
                         <th className="py-3 px-4 hidden lg:table-cell font-semibold">Market Cap</th>
                         <th className="py-3 px-4 font-semibold">BUY/SELL</th>
+                        <th className="py-3 px-4">Edit</th>
                     </tr>
                 </thead>
 
@@ -42,7 +54,7 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                             <td className="py-3 px-4">{symbol}</td>
                             <td className="py-3 px-4 hidden md:table-cell">{name}</td>
                             <td className="py-3 px-4">${lastPrice.toFixed(2)}</td>
-                            <td className="py-3 px-4 hidden lg:table-cell">${marketCap.toLocaleString()}</td>
+                            <td className="py-3 px-4 hidden lg:table-cell">${marketCap?.toLocaleString()}</td>
                             <td className="py-3 px-4">
                                 <button
                                     onClick={() => navigate(`stocks/${_id}`)}
@@ -51,11 +63,31 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                                     BUY/SELL
                                 </button>
                             </td>
+                            <td className="py-3 px-4">
+                                <FaRegEdit
+                                    className="text-xl cursor-pointer"
+                                    onClick={() => handleEditClick({ symbol, name, lastPrice, marketCap, _id })}
+                                />
+                            </td>
                         </tr>
                     ))}
                 </tbody>
-            </table >
-        </div >
+            </table>
+
+            {modalOpen && selectedStock && (
+                <EditStockModal
+                    stock={selectedStock}
+                    onClose={() => setModalOpen(false)}
+                    onUpdate={(updatedStock) => {
+
+                        if (selectedStock) {
+                            editStock(selectedStock._id, updatedStock);
+                        }
+                        setModalOpen(false);
+                    }}
+                />
+            )}
+        </div>
     );
 };
 

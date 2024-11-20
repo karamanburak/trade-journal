@@ -62,16 +62,19 @@ const TradeModal: React.FC<TradeModalProps> = ({
                         label="Symbol"
                         value={tradeData.symbol}
                         fullWidth
+                        disabled
                     />
                     <TextField
                         label="Price"
                         value={tradeData.price}
                         fullWidth
+                        disabled
                     />
                     <TextField
                         label="Transaction Type"
                         value={tradeData.transactionType}
                         fullWidth
+                        disabled
 
                     />
                     <TextField

@@ -71,8 +71,8 @@ interface IStock {
   _id: string
   symbol: string
   name: string
-  type: string
-  exchange: string
+  type?: string
+  exchange?: string
   lastPrice: number
   marketCap: number
 }

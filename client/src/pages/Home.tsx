@@ -4,22 +4,10 @@ import { useSelector } from "react-redux";
 import useTradeCall from "../hooks/useTradeCall";
 import type { RootState } from "../app/store";
 import KpiCards from "../components/Dashboard/KpiCards";
-import Charts from "../components/Dashboard/Charts";
+import { Charts } from "../components/Dashboard/Charts";
 
 const Home = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
-    const { trades } = useSelector((state: RootState) => state.trade);
-    const { stocks } = useSelector((state: RootState) => state.trade);
-    const { getTrades, getStocks } = useTradeCall()
-
-
-    // useEffect(() => {
-    // getTrades()
-    // getStocks()
-    // }, [])
-
-    // console.log("trades", trades);
-    // console.log("stocks", stocks);
 
     return (
         <>
