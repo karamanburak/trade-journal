@@ -7,6 +7,7 @@ import {
     Button,
     Stack,
 } from "@mui/material";
+import toastNotify from "../../../utils/toastNotify";
 
 
 interface TradeModalProps {
@@ -30,7 +31,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
 
     const handleSubmit = () => {
         if (quantity <= 0) {
-            alert("Please enter a valid quantity.");
+            toastNotify("warn", "Please enter a valid quantity.");
             return;
         }
         onSubmit({ quantity });
@@ -52,7 +53,7 @@ const TradeModal: React.FC<TradeModalProps> = ({
                     borderRadius: 2,
                 }}
             >
-                <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+                <Typography variant="h6" component="h2" sx={{ mb: 2, color: "gray" }}>
                     {tradeData.transactionType} {tradeData.symbol}
                 </Typography>
 

@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
 import { AxiosError } from "axios";
+import { handleAxiosError } from "./handleAxiosError";
 
 const useTradeCall = () => {
     const navigate = useNavigate();
@@ -26,7 +27,8 @@ const useTradeCall = () => {
             return data.data;
         } catch (error) {
             console.log("Error getting trades:", error);
-            return [];
+            handleAxiosError(error)
+            return []
         }
     };
 
@@ -38,7 +40,8 @@ const useTradeCall = () => {
             return data.data;
         } catch (error) {
             console.log("Error getting stocks:", error);
-            return [];
+            handleAxiosError(error)
+            return []
         }
     };
 
@@ -51,6 +54,8 @@ const useTradeCall = () => {
         } catch (error) {
             console.log("Error getting single trade:", error);
             dispatch(fetchTradeFail());
+            handleAxiosError(error)
+
         }
     };
     const getSingleStock = async (stockId: string): Promise<void> => {
@@ -62,6 +67,8 @@ const useTradeCall = () => {
         } catch (error) {
             console.log("Error getting single trade:", error);
             dispatch(fetchTradeFail());
+            handleAxiosError(error)
+
         }
     };
 
@@ -79,7 +86,8 @@ const useTradeCall = () => {
             } else {
                 console.log("Unknown error:", error);
                 dispatch(fetchTradeFail());
-                toastNotify("error", "An unexpected error occurred.");
+                handleAxiosError(error)
+
             }
         }
     };

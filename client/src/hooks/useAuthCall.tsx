@@ -1,18 +1,11 @@
 import { useDispatch } from "react-redux";
 import { fetchStart, fetchFail, loginSuccess, logoutSuccess, registerSuccess } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
 import useAxios, { axiosWithPublic } from "./useAxios";
 import toastNotify from "../utils/toastNotify";
+import { handleAxiosError } from "./handleAxiosError";
 
-const handleAxiosError = (error: unknown) => {
-    if (error instanceof AxiosError && error.response) {
-        const message = error.response.data?.message || "An unexpected error occurred";
-        toastNotify("error", message);
-    } else {
-        toastNotify("error", "An unexpected error occurred");
-    }
-};
+
 
 const useAuthCall = () => {
     const dispatch = useDispatch();

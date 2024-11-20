@@ -153,9 +153,32 @@ module.exports = {
             }
         }
     */
+    const { transactionType, totalValue } = req.body;
+
+    if (transactionType !== "deposit" && transactionType !== "withdrawal") {
+      return res.status(400).send({
+        error: true,
+        message: "Invalid transaction type. Use 'deposit' or 'withdrawal'.",
+      });
+    }
+
+    if (transactionType === "withdrawal" && totalValue <= 0) {
+      return res.status(400).send({
+        error: true,
+        message: "Withdrawal amount must be greater than zero.",
+      });
+    }
+
+    const updateQuery =
+      transactionType === "deposit"
+        ? { $inc: { totalValue } }
+        : transactionType === "withdrawal"
+        ? { $inc: { totalValue: -totalValue } }
+        : {};
+
     const updatedAccount = await Account.findOneAndUpdate(
       { userId: req.body.userId },
-      { $inc: { totalValue: req.body.totalValue } },
+      updateQuery,
       { new: true }
     );
 

@@ -32,12 +32,15 @@ const document = {
   security: [{ Token: [] }],
   definitions: {
     // Models:
-    // Deposit: require("./src/models/deposit").schema.obj,
-    Position: require("./src/models/position").schema.obj,
-    Token: require("./src/models/token").schema.obj,
-    Trade: require("./src/models/trade").schema.obj,
-    // TradeEvaluation: require("./src/models/tradeEvaluation").schema.obj,
     User: require("./src/models/user").schema.obj,
+    Trade: require("./src/models/trade").schema.obj,
+    Position: require("./src/models/position").schema.obj,
+    Account: require("./src/models/account").schema.obj,
+    Deposit: require("./src/models/deposit").schema.obj,
+    Capital: require("./src/models/capital").schema.obj,
+    Stock: require("./src/models/stock").schema.obj,
+    Comment: require("./src/models/comment").schema.obj,
+    Token: require("./src/models/token").schema.obj,
   },
 };
 

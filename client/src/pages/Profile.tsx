@@ -9,36 +9,90 @@ import TradeHistory from "../components/Profile/TradeHistory";
 const Profile = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
     const { getTrades } = useTradeCall();
-    const { getAccount } = useAccountCall();
+    const { getAccount, updateAccount } = useAccountCall();
     const [account, setAccount] = useState<IAccount>();
+    const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+    const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
+    const [depositAmount, setDepositAmount] = useState<number>(0);
+    const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
+
+    const fetchAccountData = async () => {
+        try {
+            if (currentUser?._id) {
+                getTrades(currentUser._id);
+                const accountData = await getAccount(currentUser._id);
+                setAccount(accountData.data[0]);
+            } else {
+                console.log("No user ID found for the current user.");
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (currentUser?._id) {
-                    getTrades(currentUser._id);
-                    const accountData = await getAccount(currentUser._id);
-                    setAccount(accountData.data[0]);
-                } else {
-                    console.log("No user ID found for the current user.");
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchData();
+        fetchAccountData();
     }, [currentUser]);
 
-    console.log(currentUser);
+    const handleDeposit = async () => {
+        if (currentUser?._id && account?._id && depositAmount > 0) {
+            try {
+                const accountData = {
+                    accountId: account._id,
+                    userId: currentUser._id,
+                    totalValue: depositAmount,
+                    transactionType: "deposit",
+                };
 
+                const response = await updateAccount(accountData);
+
+                if (response?.data) {
+                    await fetchAccountData();
+                    setIsDepositModalOpen(false);
+                    setDepositAmount(0);
+                }
+            } catch (error) {
+                console.error("Error depositing money:", error);
+            }
+        } else {
+            console.error("Invalid deposit amount");
+        }
+    };
+
+    const handleWithdraw = async () => {
+        if (currentUser?._id && account?._id && withdrawAmount > 0) {
+            if (withdrawAmount > account.totalValue) {
+                alert("Insufficient funds!");
+                return;
+            }
+            try {
+                const accountData = {
+                    accountId: account._id,
+                    userId: currentUser._id,
+                    totalValue: depositAmount,
+                    transactionType: "withdrawal",
+                };
+
+                const response = await updateAccount(accountData);
+
+                if (response?.data) {
+                    await fetchAccountData();
+                    setIsWithdrawModalOpen(false);
+                    setWithdrawAmount(0);
+                }
+            } catch (error) {
+                console.error("Error withdrawing money:", error);
+            }
+        } else {
+            console.error("Invalid withdraw amount");
+        }
+    };
     return (
         <>
             <Header />
             <div className="w-full h-[calc(100vh-90px)] shadow-lg bg-white dark:bg-dark-background flex flex-col md:flex-row ">
                 <div className="w-full md:w-1/3 lg:w-1/4 bg-light-secondary dark:bg-dark-background2 p-6 space-y-6">
                     <div className="flex flex-col items-center space-y-6">
-
                         {/* Profile Information */}
                         <div className="flex flex-col w-full">
                             <div className="flex flex-col space-y-2 py-8 items-center">
@@ -61,9 +115,23 @@ const Profile = () => {
                     <div>
                         {account ? (
                             <div className="space-y-6">
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        className="px-3 py-1 bg-light-primary hover:bg-light-primary/70 rounded text-white"
+                                        onClick={() => setIsDepositModalOpen(true)}
+                                    >
+                                        Deposit
+                                    </button>
+                                    <button
+                                        className="px-3 py-1 bg-dark-danger hover:bg-dark-danger/70 rounded text-white"
+                                        onClick={() => setIsWithdrawModalOpen(true)}
+                                    >
+                                        Withdraw
+                                    </button>
+                                </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Total Value:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">${account.totalValue}</p>
+                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.totalValue} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Closed Transactions:</strong></p>
@@ -79,7 +147,7 @@ const Profile = () => {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Average Loss:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">${account.avarageLoss}</p>
+                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.avarageLoss} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Average Hold Duration:</strong></p>
@@ -87,14 +155,80 @@ const Profile = () => {
                                 </div>
                             </div>
                         ) : (
-                            <p className="text-center text-gray-500 dark:text-gray-400">Account data is loading...</p>
+                            <p className="text-center text-dark-secondary">Account data is loading...</p>
                         )}
                     </div>
                 </div>
                 <TradeHistory />
-            </div >
+
+                {/* Deposit Modal */}
+                {isDepositModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 dark:bg-dark-background3">
+                            <h2 className="text-lg font-medium mb-4">Deposit Money</h2>
+                            <input
+                                type="number"
+                                className="w-full p-2 border rounded mb-4 text-dark-secondary"
+                                placeholder="Enter amount"
+                                value={depositAmount}
+                                onChange={(e) => setDepositAmount(Number(e.target.value))}
+                            />
+                            <div className="flex justify-end space-x-4">
+                                <button
+                                    className="px-4 py-2 bg-dark-danger rounded text-white"
+                                    onClick={() => {
+                                        setIsDepositModalOpen(false);
+                                        setDepositAmount(0);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white"
+                                    onClick={handleDeposit}
+                                >
+                                    Deposit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Withdraw Modal */}
+                {isWithdrawModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 dark:bg-dark-background3">
+                            <h2 className="text-lg font-medium mb-4">Withdraw Money</h2>
+                            <input
+                                type="number"
+                                className="w-full p-2 border rounded mb-4 text-dark-secondary"
+                                placeholder="Enter amount"
+                                value={withdrawAmount}
+                                onChange={(e) => setWithdrawAmount(Number(e.target.value))}
+                            />
+                            <div className="flex justify-end space-x-4">
+                                <button
+                                    className="px-4 py-2 bg-dark-danger rounded text-white"
+                                    onClick={() => {
+                                        setIsWithdrawModalOpen(false);
+                                        setWithdrawAmount(0);
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white"
+                                    onClick={handleWithdraw}
+                                >
+                                    Withdraw
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </>
     );
 };
 
-export default Profile;
+export default Profile; 

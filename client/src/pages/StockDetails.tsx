@@ -5,6 +5,7 @@ import useTradeCall from "../hooks/useTradeCall";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
 import TradeModal from "../components/Ui/Modals/TradeModal";
+import toastNotify from "../utils/toastNotify";
 
 const StockDetails: React.FC = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -31,6 +32,10 @@ const StockDetails: React.FC = () => {
     const { exchange, lastPrice, marketCap, name, symbol, _id } = singleStock;
 
     const handleOpenModal = (type: "BUY" | "SELL") => {
+        if (!currentUser) {
+            toastNotify("warn", "Please sign up or log in to perform this action.");
+            return;
+        }
         setTransactionType(type);
         setModalOpen(true);
     };

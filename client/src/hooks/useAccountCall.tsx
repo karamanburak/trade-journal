@@ -1,3 +1,5 @@
+import toastNotify from "../utils/toastNotify";
+import { handleAxiosError } from "./handleAxiosError";
 import useAxios from "./useAxios";
 
 const useAccountCall = () => {
@@ -10,23 +12,26 @@ const useAccountCall = () => {
             return data;
         } catch (error) {
             console.error("Error getting account:", error);
+            handleAxiosError(error)
             return null;
         }
     };
-    const updateAccount = async (accountId: string) => {
+
+    const updateAccount = async (accountData: { accountId: string, userId: string, totalValue: number, transactionType: string }) => {
         try {
-            const { data } = await axiosWithToken.get(`accounts/${accountId}`);
-            console.log(data.data);
+            const { data } = await axiosWithToken.put(`accounts/${accountData.accountId}`, accountData);
+            toastNotify("success", "Value updated successfully.");
             return data;
         } catch (error) {
             console.error("Error getting account:", error);
+            handleAxiosError(error)
             return null;
         }
     };
 
     return {
         getAccount,
-        updateAccount
+        updateAccount,
     };
 };
 

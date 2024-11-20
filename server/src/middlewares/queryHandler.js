@@ -12,23 +12,6 @@ module.exports = async (req, res, next) => {
   const filter = req.query?.filter || {};
   const filterCriteria = {};
 
-  // Trade Date Filter
-  if (filter.startDate) {
-    const startDate = new Date(filter.startDate);
-    if (isNaN(startDate.getTime())) {
-      throw new CustomError("Invalid start date", 400);
-    }
-    filterCriteria.transactionDate = { $gte: startDate };
-  }
-  if (filter.endDate) {
-    const endDate = new Date(filter.endDate);
-    if (isNaN(endDate.getTime())) {
-      throw new CustomError("Invalid end date", 400);
-    }
-    filterCriteria.transactionDate = filterCriteria.transactionDate || {};
-    filterCriteria.transactionDate.$lte = endDate;
-  }
-
   // Filter by tradeDuration (if provided in the filter object)
   if (filter.tradeDuration) {
     const duration = Number(filter.tradeDuration);
