@@ -109,7 +109,6 @@ module.exports = {
       });
     }
 
-    // Find the user's account
     const account = await Account.findOne({ userId: userId });
     if (!account) {
       return res.status(400).send({
@@ -119,13 +118,10 @@ module.exports = {
       });
     }
 
-    // Calculate the required value for the trade (quantity * price)
     const requiredValue = quantity * price;
 
-    // Create the trade (we define it here to use it later)
     const newTrade = new Trade(req.body);
 
-    // Check if it's a BUY transaction and validate funds
     if (transactionType === "BUY") {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
@@ -136,7 +132,6 @@ module.exports = {
 
       const position = await Position.findOne({ userId, symbol });
 
-      // If the position exists, update it
       if (position) {
         const totalQuantity = position.totalQuantity + quantity;
         const newAveragePrice =
@@ -148,7 +143,6 @@ module.exports = {
 
         await position.save();
       } else {
-        // Otherwise, create a new position
         await Position.create({
           userId,
           symbol,
@@ -159,17 +153,12 @@ module.exports = {
         });
       }
 
-      // Deduct the required value from the user's account for a BUY transaction
       account.totalValue -= requiredValue;
       await account.save();
 
-      // Set trade status to OPEN and save it
       newTrade.status = "OPEN";
       await newTrade.save();
-    }
-
-    // Check if it's a SELL transaction
-    else if (transactionType === "SELL") {
+    } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
 
       if (!position || position.totalQuantity < quantity) {
@@ -179,11 +168,11 @@ module.exports = {
         });
       }
 
+      const saleProceeds = quantity * price;
       const profitOrLoss = (price - position.averagePrice) * quantity;
       const tradeDuration =
         (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
 
-      // Update position after sale
       position.totalQuantity -= quantity;
       position.totalInvestment -= quantity * position.averagePrice;
 
@@ -193,14 +182,13 @@ module.exports = {
         await position.save();
       }
 
-      // Set the profit or loss and trade duration for the SELL trade
       newTrade.profitOrLoss = profitOrLoss;
       newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
       newTrade.status = "CLOSED";
       await newTrade.save();
 
-      // Update account after SELL transaction
       account.completedTransactions += 1;
+      account.totalValue += saleProceeds;
       account.totalValue += profitOrLoss;
 
       if (profitOrLoss > 0) {
@@ -218,14 +206,18 @@ module.exports = {
       const profitCount = profitOrLoss > 0 ? 1 : 0;
       const lossCount = profitOrLoss < 0 ? 1 : 0;
       account.winRate = (profitCount / account.completedTransactions) * 100;
-      account.profitFactor = profitCount / lossCount;
+      account.profitFactor =
+        lossCount > 0 ? profitCount / lossCount : profitCount;
 
       await account.save();
     }
 
-    // Send a notification email to the user
     const emailSubject = "New Trade Created!";
-    const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade);
+    const emailHtml = getTradeCreatedEmailHtml(
+      user.firstName,
+      newTrade,
+      account
+    );
     await sendEmail(user.email, emailSubject, emailHtml);
 
     return res.status(201).send({

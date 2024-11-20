@@ -52,9 +52,7 @@ const UserMenu = () => {
                         <div className="mt-2">
                             {currentUser ? (
                                 <>
-                                    {location.pathname !== "/" && (
-                                        <MenuButton onClick={() => navigate(`/`)}>Home</MenuButton>
-                                    )}
+                                    <MenuButton onClick={() => navigate(`/`)}>Home</MenuButton>
                                     <MenuButton onClick={() => navigate(`/profile/${currentUser._id}`)}>
                                         Profile
                                     </MenuButton>

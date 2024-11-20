@@ -5,6 +5,7 @@ import type { RootState } from "../app/store";
 import Header from "../components/Header/Header";
 import useAccountCall from "../hooks/useAccountCall";
 import TradeHistory from "../components/Profile/TradeHistory";
+import toastNotify from "../utils/toastNotify";
 
 const Profile = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
@@ -35,7 +36,11 @@ const Profile = () => {
     }, [currentUser]);
 
     const handleDeposit = async () => {
-        if (currentUser?._id && account?._id && depositAmount > 0) {
+        if (currentUser?._id && account?._id) {
+            if (depositAmount <= 0) {
+                toastNotify("error", "Deposit amount must be greater than zero.");
+                return;
+            }
             try {
                 const accountData = {
                     accountId: account._id,
@@ -53,6 +58,7 @@ const Profile = () => {
                 }
             } catch (error) {
                 console.error("Error depositing money:", error);
+                toastNotify("error", "Failed to deposit money.");
             }
         } else {
             console.error("Invalid deposit amount");
@@ -60,16 +66,20 @@ const Profile = () => {
     };
 
     const handleWithdraw = async () => {
-        if (currentUser?._id && account?._id && withdrawAmount > 0) {
+        if (currentUser?._id && account?._id) {
+            if (withdrawAmount <= 0) {
+                toastNotify("error", "Withdrawal amount must be greater than zero.");
+                return;
+            }
             if (withdrawAmount > account.totalValue) {
-                alert("Insufficient funds!");
+                toastNotify("warn", "Insufficient funds!");
                 return;
             }
             try {
                 const accountData = {
                     accountId: account._id,
                     userId: currentUser._id,
-                    totalValue: depositAmount,
+                    totalValue: withdrawAmount,
                     transactionType: "withdrawal",
                 };
 
@@ -82,6 +92,7 @@ const Profile = () => {
                 }
             } catch (error) {
                 console.error("Error withdrawing money:", error);
+                toastNotify("error", "Failed to withdraw money.");
             }
         } else {
             console.error("Invalid withdraw amount");
@@ -170,7 +181,7 @@ const Profile = () => {
                                 type="number"
                                 className="w-full p-2 border rounded mb-4 text-dark-secondary"
                                 placeholder="Enter amount"
-                                value={depositAmount}
+                                defaultValue=""
                                 onChange={(e) => setDepositAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">
@@ -203,7 +214,7 @@ const Profile = () => {
                                 type="number"
                                 className="w-full p-2 border rounded mb-4 text-dark-secondary"
                                 placeholder="Enter amount"
-                                value={withdrawAmount}
+                                defaultValue=""
                                 onChange={(e) => setWithdrawAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">

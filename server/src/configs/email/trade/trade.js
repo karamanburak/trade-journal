@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { CLIENT_URL } = require("../../../../setups");
 
-const getTradeCreatedEmailHtml = (firstName, trade) => {
+const getTradeCreatedEmailHtml = (firstName, trade, account) => {
   let html = fs.readFileSync(path.join(__dirname, "trade.html"), "utf8");
   html = html.replace("{{firstName}}", firstName);
   html = html.replace("{{stockSymbol}}", trade.symbol);
@@ -18,6 +18,10 @@ const getTradeCreatedEmailHtml = (firstName, trade) => {
     trade.price * trade.quantity || "Unknown Total Price"
   );
   html = html.replace("{{tradeStatus}}", trade.status || "Unknown Status");
+  html = html.replace(
+    "{{totalValue}}",
+    account.totalValue || "Unknown Total Value"
+  );
   html = html.replace(/{{clientUrl}}/g, CLIENT_URL);
 
   return html;

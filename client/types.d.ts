@@ -20,7 +20,7 @@ interface IAuthState {
   currentUser: IMyRegisterFormValues | null
   loading: boolean
   error: boolean
-  token: null
+  token: string | null
 }
 
 interface IMyLoginFormValues {
@@ -43,7 +43,7 @@ interface ITermsModal {
 interface ITrade {
   _id?: string
   userId: string | undefined
-  stockId?: string
+  stockId: IStock | string
   symbol: string
   transactionType: "BUY" | "SELL"
   quantity: number
