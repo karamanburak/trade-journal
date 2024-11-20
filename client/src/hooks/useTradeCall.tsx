@@ -79,16 +79,10 @@ const useTradeCall = () => {
             toastNotify("success", data.message);
             navigate(`/profile/${currentUser?._id}`);
         } catch (error) {
-            if (error instanceof AxiosError) {
-                console.log("Error posting trade:", error);
-                dispatch(fetchTradeFail());
-                toastNotify("error", error.response?.data?.message || "An error occurred.");
-            } else {
-                console.log("Unknown error:", error);
-                dispatch(fetchTradeFail());
-                handleAxiosError(error)
+            console.log("Unknown error:", error);
+            dispatch(fetchTradeFail());
+            handleAxiosError(error)
 
-            }
         }
     };
 

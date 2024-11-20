@@ -18,8 +18,8 @@ const Home = () => {
     // getStocks()
     // }, [])
 
-    console.log("trades", trades);
-    console.log("stocks", stocks);
+    // console.log("trades", trades);
+    // console.log("stocks", stocks);
 
     return (
         <>

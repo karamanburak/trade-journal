@@ -141,28 +141,28 @@ const Profile = () => {
                                     </button>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Total Value:</strong></p>
-                                    <p className="text-lg">{account.totalValue} €</p>
+                                    <p className=" font-medium"><strong>Total Value:</strong></p>
+                                    <p className="">{account.totalValue.toFixed(2)} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Closed Transactions:</strong></p>
-                                    <p className="text-lg">{account.completedTransactions}</p>
+                                    <p className=" font-medium"><strong>Closed Transactions:</strong></p>
+                                    <p className="">{account.completedTransactions}</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Win Rate:</strong></p>
-                                    <p className="text-lg">{account.winRate}%</p>
+                                    <p className=" font-medium"><strong>Win Rate:</strong></p>
+                                    <p className="">{account.winRate.toFixed(2)}%</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Average Profit:</strong></p>
-                                    <p className="text-lg">${account.avarageProfit}</p>
+                                    <p className=" font-medium"><strong>Average Profit:</strong></p>
+                                    <p className="">{account.avarageProfit.toFixed(2)} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Average Loss:</strong></p>
-                                    <p className="text-lg">{account.avarageLoss} €</p>
+                                    <p className=" font-medium"><strong>Average Loss:</strong></p>
+                                    <p className="">{account.avarageLoss.toFixed(2)} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <p className="text-lg font-medium"><strong>Average Hold Duration:</strong></p>
-                                    <p className="text-lg">{account.avarageHoldDuration} days</p>
+                                    <p className=" font-medium"><strong>Average Hold Duration:</strong></p>
+                                    <p className="">{account.avarageHoldDuration.toFixed(7)} days</p>
                                 </div>
                             </div>
                         ) : (

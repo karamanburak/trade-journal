@@ -90,25 +90,32 @@ const TradeHistory = () => {
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
                 <div className="space-y-4 h-[calc(100vh-285px)] overflow-y-auto scrollbar">
-                    {filteredTrades.map((trade: ITrade) => (
-                        <div key={trade._id} className="flex justify-between items-center p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md">
-                            <div>
-                                <p><strong>Symbol:</strong> {trade.symbol}</p>
-                                <p><strong>Transaction Type:</strong> {trade.transactionType}</p>
-                                <p><strong>Quantity:</strong> {trade.quantity}</p>
-                                <p><strong>Status:</strong> {trade.status}</p>
+                    {filteredTrades.map((trade: ITrade) => {
+                        const { stockId } = trade || {};
+                        const stockIdString = typeof stockId === 'string' ? stockId : stockId?._id;
+                        return (
+                            <div
+                                key={trade._id}
+                                className="flex justify-between items-center p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md"
+                            >
+                                <div>
+                                    <p><strong>Symbol:</strong> {trade.symbol}</p>
+                                    <p><strong>Transaction Type:</strong> {trade.transactionType}</p>
+                                    <p><strong>Quantity:</strong> {trade.quantity}</p>
+                                    <p><strong>Status:</strong> {trade.status}</p>
+                                </div>
+                                <div className="text-right flex flex-col justify-between">
+                                    <p><strong>Price:</strong> {trade.price?.toFixed(2)} €</p>
+                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
+                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
+                                    <FiExternalLink
+                                        className="ml-auto text-xl mt-7 cursor-pointer"
+                                        onClick={() => navigate(`/stocks/${stockIdString}`)}
+                                    />
+                                </div>
                             </div>
-                            <div className="text-right">
-                                <FiExternalLink
-                                    className="ml-auto text-xl mb-7 cursor-pointer"
-                                // onClick={() => navigate(`/stocks/${}`)}
-                                />
-                                <p><strong>Price:</strong> {trade.price} €</p>
-                                <p><strong>Total Price:</strong> {(trade.price ?? 0) * trade.quantity} €</p>
-                                <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             ) : (
                 <p className="h-[50vh] flex flex-col justify-center items-center text-lg"><GrDocumentMissing className="text-6xl" />  No trades available.</p>

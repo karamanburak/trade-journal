@@ -1,3 +1,4 @@
+```
 Projekt: Trade Journal
 Produktvision
 Das Projekt "Trade Journal" zielt darauf ab, eine webbasierte Plattform bereitzustellen,
@@ -48,7 +49,7 @@ Funktional
    gehostet)
    ● Technologien sind frei wählbar
 
----
+```
 
 # Trade-Plattform - Full Stack Developer Aufgabe
 

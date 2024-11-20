@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import useTradeCall from "../hooks/useTradeCall";
 import { useSelector } from "react-redux";
@@ -11,6 +12,7 @@ const StockDetails: React.FC = () => {
     const { stockId } = useParams<{ stockId: string }>();
     const { singleStock } = useSelector((state: RootState) => state.trade);
     const { currentUser } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
     const { getSingleStock, postTrade } = useTradeCall();
     const [modalOpen, setModalOpen] = useState(false);
     const [transactionType, setTransactionType] = useState<"BUY" | "SELL" | null>(null);
@@ -64,29 +66,32 @@ const StockDetails: React.FC = () => {
     return (
         <>
             <Header />
-            <div className="p-6 max-w-5xl mx-auto rounded-xl mt-8 bg-light-background3 dark:bg-dark-background3">
+            <div className="ml-4 text-lg font-semibold flex mt-4">
+                <MdKeyboardArrowLeft className="text-3xl -mt-0.5 cursor-pointer" onClick={() => navigate(-1)} />    Back
+            </div>
+            <div className="p-6 max-w-5xl mx-auto rounded-xl bg-light-background3 dark:bg-dark-background3">
                 <h1 className="text-4xl font-extrabold mb-6 text-center">
                     {name} ({symbol})
                 </h1>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div className="bg-light-secondary dark:bg-dark-background2 p-6 rounded-lg shadow-lg">
                         <p className="text-sm">Last Price</p>
-                        <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                        <p className="text-3xl font-bold">
                             {lastPrice}
                         </p>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <div className="bg-light-secondary dark:bg-dark-background2 p-6 rounded-lg shadow-lg">
                         <p className="text-sm">Exchange</p>
-                        <p className="text-xl font-medium text-gray-800 dark:text-gray-100">
+                        <p className="text-xl font-medium ">
                             {exchange}
                         </p>
                     </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+                <div className="bg-light-secondary dark:bg-dark-background2 p-6 rounded-lg shadow-lg mb-6">
                     <p className="text-sm">Market Cap</p>
-                    <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                    <p className="text-2xl font-semibold ">
                         ${(marketCap as number).toLocaleString()}
                     </p>
                 </div>

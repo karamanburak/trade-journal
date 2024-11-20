@@ -120,6 +120,24 @@ module.exports = {
 
     const requiredValue = quantity * price;
 
+    // Find existing trade with the same symbol for this user
+    const existingTrade = await Trade.findOne({
+      userId,
+      symbol,
+      transactionType,
+    });
+
+    if (existingTrade) {
+      // Update existing trade
+      existingTrade.quantity += quantity;
+      existingTrade.price =
+        (existingTrade.price * existingTrade.quantity + price * quantity) /
+        (existingTrade.quantity + quantity);
+      existingTrade.transactionDate = new Date(); // Update to current date
+
+      await existingTrade.save();
+    }
+
     const newTrade = new Trade(req.body);
 
     if (transactionType === "BUY") {
@@ -191,6 +209,7 @@ module.exports = {
       account.totalValue += saleProceeds;
       account.totalValue += profitOrLoss;
 
+      // Update average profit and loss
       if (profitOrLoss > 0) {
         account.avarageProfit =
           (account.avarageProfit * (account.completedTransactions - 1) +
@@ -199,15 +218,32 @@ module.exports = {
       } else {
         account.avarageLoss =
           (account.avarageLoss * (account.completedTransactions - 1) +
-            profitOrLoss) /
+            Math.abs(profitOrLoss)) /
           account.completedTransactions;
       }
 
-      const profitCount = profitOrLoss > 0 ? 1 : 0;
-      const lossCount = profitOrLoss < 0 ? 1 : 0;
-      account.winRate = (profitCount / account.completedTransactions) * 100;
+      // Calculate winRate: (profitable trades / total trades) * 100
+      const profitableTrades =
+        account.completedTransactions -
+        (account.winRate / 100) * account.completedTransactions;
+      const newProfitableTrades =
+        profitOrLoss > 0 ? profitableTrades + 1 : profitableTrades;
+      account.winRate =
+        (newProfitableTrades / account.completedTransactions) * 100;
+
+      // Calculate profitFactor: (total profits / total losses)
+      const totalProfits = account.avarageProfit * newProfitableTrades;
+      const totalLoses =
+        account.avarageLoss *
+        (account.completedTransactions - newProfitableTrades);
       account.profitFactor =
-        lossCount > 0 ? profitCount / lossCount : profitCount;
+        totalLoses > 0 ? totalProfits / totalLoses : totalProfits;
+
+      // Update average hold duration: (average hold duration * (total trades - 1) + current trade duration) / total trades
+      account.avarageHoldDuration =
+        (account.avarageHoldDuration * (account.completedTransactions - 1) +
+          newTrade.tradeDuration) /
+        account.completedTransactions;
 
       await account.save();
     }
