@@ -86,7 +86,7 @@ const TradeHistory = () => {
                 </div>
             </div>
             <div className="mb-2">
-                {trades?.length} trade(s) found.
+                {filteredTrades?.length || 0} trade(s) found.
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
                 <div className="space-y-4 h-[calc(100vh-285px)] overflow-y-auto scrollbar">
@@ -99,13 +99,12 @@ const TradeHistory = () => {
                                 <p><strong>Status:</strong> {trade.status}</p>
                             </div>
                             <div className="text-right">
-                                {singleStock &&
-                                    <FiExternalLink
-                                        className="ml-auto text-xl mb-7 cursor-pointer"
-                                        onClick={() => navigate(`/stocks/${singleStock._id}`)}
-                                    />
-                                }
-                                <p><strong>Price:</strong> ${trade.price}</p>
+                                <FiExternalLink
+                                    className="ml-auto text-xl mb-7 cursor-pointer"
+                                // onClick={() => navigate(`/stocks/${}`)}
+                                />
+                                <p><strong>Price:</strong> {trade.price} €</p>
+                                <p><strong>Total Price:</strong> {(trade.price ?? 0) * trade.quantity} €</p>
                                 <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
                             </div>
                         </div>

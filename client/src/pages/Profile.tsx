@@ -142,27 +142,27 @@ const Profile = () => {
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Total Value:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.totalValue} €</p>
+                                    <p className="text-lg">{account.totalValue} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Closed Transactions:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.completedTransactions}</p>
+                                    <p className="text-lg">{account.completedTransactions}</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Win Rate:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.winRate}%</p>
+                                    <p className="text-lg">{account.winRate}%</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Average Profit:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">${account.avarageProfit}</p>
+                                    <p className="text-lg">${account.avarageProfit}</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Average Loss:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.avarageLoss} €</p>
+                                    <p className="text-lg">{account.avarageLoss} €</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <p className="text-lg font-medium"><strong>Average Hold Duration:</strong></p>
-                                    <p className="text-lg text-gray-600 dark:text-gray-400">{account.avarageHoldDuration} days</p>
+                                    <p className="text-lg">{account.avarageHoldDuration} days</p>
                                 </div>
                             </div>
                         ) : (
