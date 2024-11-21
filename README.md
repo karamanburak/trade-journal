@@ -94,6 +94,7 @@ pnpm dev
 ```dotnetcli
 cd server
 npm install
+nodemon
 ```
 
 npm install -g nodemon
@@ -114,14 +115,12 @@ MongoDB
 
 ![ERD](./server/trade-journal-erd.png)
 
-Hinweis: Für alle sicherheitsrelevanten Informationen (wie Passwörter) bitte die .env-Datei überprüfen.
-
 Verwendung
 Benutzer müssen sich registrieren und anmelden.
 Nach der Anmeldung kann der Benutzer auf die Profilseite zugreifen.
 Auf der Profilseite kann der Benutzer Geld auf sein Konto einzahlen.
 Anschließend kann er beliebige Trade-Transaktionen durchführen.
-E-Mail-Benachrichtigungen
+E-Mail-Benachrichtigungen von tradejournalpjm@gmail.com
 Wenn ein Benutzer sich registriert, erhält er eine Bestätigungs-E-Mail.
 Sobald der Benutzer eine Trade-Transaktion durchführt, wird eine Transaktionsbestätigung per E-Mail gesendet.
 Diese Funktion wird mit Nodemailer implementiert.
@@ -129,6 +128,6 @@ Diese Funktion wird mit Nodemailer implementiert.
 ## Documentations
 
 - [View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sAYBRGuMA)
-- [View Swagger Documentation](http://127.0.0.1:8000/api/v1/documentations/swagger/)
-- [View Redoc Documentation](http://127.0.0.1:8000/api/v1/documentations/redoc)
-- [View Json Documentation](http://127.0.0.1:8000/api/v1/documentations/json)
+- [View Swagger Documentation](http://127.0.0.1:8000/api/v1/documentations/swagger/) // Local
+- [View Redoc Documentation](http://127.0.0.1:8000/api/v1/documentations/redoc) // Local
+- [View Json Documentation](http://127.0.0.1:8000/api/v1/documentations/json) // Local

@@ -17,9 +17,6 @@ export default function KpiCards({ account }: KpiCardsProps) {
 
     const { winRate, completedTransactions, avarageProfit, avarageLoss, avarageHoldDuration, totalValue } = account;
 
-
-
-
     const data = account
         ? [
             {
@@ -35,13 +32,13 @@ export default function KpiCards({ account }: KpiCardsProps) {
             {
                 name: 'Average Profit',
                 value: `${avarageProfit.toFixed(2)} €`,
-                change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
+                // change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
                 changeType: 'positive',
             },
             {
                 name: 'Average Loss',
                 value: `${avarageLoss.toFixed(2)} €`,
-                change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
+                // change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
                 changeType: 'negative',
             },
             {

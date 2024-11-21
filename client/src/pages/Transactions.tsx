@@ -1,7 +1,10 @@
 import React from "react";
+import TradeHistory from "../components/Profile/TransactionsHistory";
 
 const Transactions = () => {
-    return <div>Transactions Burada daha önce yapilmis olan islemler görüntülenecek isleme tiklaninca detay sayfasina gidilecek</div>;
+    return (
+        <TradeHistory />
+    )
 };
 
 export default Transactions;

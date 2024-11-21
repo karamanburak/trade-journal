@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RootState } from "../app/store";
 import Header from "../components/Header/Header";
 import useAccountCall from "../hooks/useAccountCall";
-import TradeHistory from "../components/Profile/TradeHistory";
+import TradeHistory from "../components/Profile/TransactionsHistory";
 import toastNotify from "../utils/toastNotify";
 
 const Profile = () => {
@@ -98,71 +98,67 @@ const Profile = () => {
             console.error("Invalid withdraw amount");
         }
     };
+
     return (
         <>
             <Header />
-            <div className="w-full h-[calc(100vh-90px)] shadow-lg bg-white dark:bg-dark-background flex flex-col md:flex-row">
-                <div className="w-full md:w-1/3 lg:w-1/4 bg-light-secondary dark:bg-dark-background2 p-6 space-y-6 ">
+            <div className="w-full h-full flex flex-row justify-center bg-light-secondary dark:bg-dark-background p-6">
+                <div className="w-[90vw] md:w-[70vw]  items-center bg-white dark:bg-dark-background2 shadow-lg rounded-lg p-6 space-y-6">
                     <div className="flex flex-col items-center space-y-6">
-                        {/* Profile Information */}
-                        <div className="flex flex-col w-full">
-                            <div className="flex flex-col space-y-2 py-8 items-center">
-                                <div className="w-16 h-16 rounded-full bg-light-background2 dark:bg-dark-background3 flex items-center justify-center text-xl font-bold">
-                                    {currentUser?.firstName[0]}{currentUser?.lastName[0]}
-                                </div>
-                                <div>
-                                    <p className="text-lg font-medium">
-                                        <span>{currentUser?.firstName} {currentUser?.lastName}</span>
-                                    </p>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <span className="text-gray-600 dark:text-gray-400">{currentUser?.email}</span>
-                                </div>
+                        <div className="flex flex-col items-center space-y-2">
+                            <div className="w-24 h-24 rounded-full bg-light-primary dark:bg-dark-background3 flex items-center justify-center text-3xl font-bold text-white">
+                                {currentUser?.firstName[0]}{currentUser?.lastName[0]}
+                            </div>
+                            <div className="text-center">
+                                <p className="text-xl font-semibold text-dark-primary">{currentUser?.firstName} {currentUser?.lastName}</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">{currentUser?.email}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Account Overview */}
-                    <div>
+                    <div className="bg-light-background2 dark:bg-dark-background3 rounded-lg p-4 shadow-md">
                         {account ? (
-                            <div className="space-y-6">
-                                <div className="flex justify-end gap-2">
+                            <div className="space-y-4">
+                                <div className="flex justify-end gap-5">
                                     <button
-                                        className="px-3 py-1 bg-light-primary hover:bg-light-primary/70 rounded text-white"
+                                        className="px-4 py-2 bg-light-primary hover:bg-light-primary/80 rounded text-white"
                                         onClick={() => setIsDepositModalOpen(true)}
                                     >
                                         Deposit
                                     </button>
                                     <button
-                                        className="px-3 py-1 bg-dark-danger hover:bg-dark-danger/70 rounded text-white"
+                                        className="px-4 py-2 bg-dark-danger hover:bg-dark-danger/80 rounded text-white"
                                         onClick={() => setIsWithdrawModalOpen(true)}
                                     >
                                         Withdraw
                                     </button>
                                 </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Total Value:</strong></p>
-                                    <p className="">{account.totalValue.toFixed(2)} €</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Closed Transactions:</strong></p>
-                                    <p className="">{account.completedTransactions}</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Win Rate:</strong></p>
-                                    <p className="">{account.winRate.toFixed(2)}%</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Average Profit:</strong></p>
-                                    <p className="">{account.avarageProfit.toFixed(2)} €</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Average Loss:</strong></p>
-                                    <p className="">{account.avarageLoss.toFixed(2)} €</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <p className=" font-medium"><strong>Average Hold Duration:</strong></p>
-                                    <p className="">{account.avarageHoldDuration.toFixed(5)} days</p>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Total Value</p>
+                                        <p className="font-semibold">{account.totalValue.toFixed(2)} €</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Closed Transactions</p>
+                                        <p>{account.completedTransactions}</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Win Rate</p>
+                                        <p>{account.winRate.toFixed(2)}%</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Average Profit</p>
+                                        <p>{account.avarageProfit.toFixed(2)} €</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Average Loss</p>
+                                        <p>{account.avarageLoss.toFixed(2)} €</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <p className="text-sm font-medium">Average Hold Duration</p>
+                                        <p>{account.avarageHoldDuration.toFixed(5)} days</p>
+                                    </div>
                                 </div>
                             </div>
                         ) : (
@@ -170,18 +166,16 @@ const Profile = () => {
                         )}
                     </div>
                 </div>
-                <TradeHistory />
 
                 {/* Deposit Modal */}
                 {isDepositModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 dark:bg-dark-background3">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-96 dark:bg-dark-background3 ">
                             <h2 className="text-lg font-medium mb-4">Deposit Money</h2>
                             <input
                                 type="number"
                                 className="w-full p-2 border rounded mb-4 text-dark-secondary"
                                 placeholder="Enter amount"
-                                defaultValue=""
                                 onChange={(e) => setDepositAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">
@@ -214,7 +208,6 @@ const Profile = () => {
                                 type="number"
                                 className="w-full p-2 border rounded mb-4 text-dark-secondary"
                                 placeholder="Enter amount"
-                                defaultValue=""
                                 onChange={(e) => setWithdrawAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">
@@ -242,4 +235,4 @@ const Profile = () => {
     );
 };
 
-export default Profile; 
+export default Profile;

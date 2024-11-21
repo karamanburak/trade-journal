@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { useNavigate } from "react-router-dom";
 
-const TradeHistory = () => {
+const TransactionsHistory = () => {
     const { trades, singleStock } = useSelector((state: RootState) => state.trade);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedType, setSelectedType] = useState<string>("");
@@ -44,14 +44,14 @@ const TradeHistory = () => {
 
     return (
 
-        <div className="w-full md:w-2/3 lg:w-3/4 p-6 space-y-6 ">
-            <h2 className="text-2xl font-semibold mb-4">Trade History</h2>
-            <div className="flex flex-row justify-between items-start md:items-center mb-6">
+        <div className="w-full px-6 border-2 h-[calc(100vh-123px)]">
+            <h2 className="text-2xl text-center font-semibold my-4">Transactions History</h2>
+            <div className="flex flex-col md:flex-row items-start md:items-center mb-6 gap-6">
                 {/* Search Input */}
                 <input
                     type="text"
                     placeholder="Symbol or status"
-                    className="p-2 border rounded-md focus:outline-none dark:bg-dark-background2 ml-auto mr-5 min-w-[150px]"
+                    className="p-2 border rounded-md focus:outline-none dark:bg-dark-background2 mr-5"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -59,7 +59,7 @@ const TradeHistory = () => {
                 {/* Transaction Type Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                     <div
-                        className="p-2 border rounded-md cursor-pointer bg-white dark:bg-dark-background2 min-w-[160px]"
+                        className="p-2 border rounded-md cursor-pointer bg-white dark:bg-dark-background2 min-w-[150px]"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     >
                         {selectedType || "Transaction Type"}
@@ -89,14 +89,14 @@ const TradeHistory = () => {
                 {filteredTrades?.length || 0} trade(s) found.
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
-                <div className="space-y-4 h-[calc(100vh-285px)] overflow-y-auto scrollbar">
+                <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-300px)]">
                     {filteredTrades.map((trade: ITrade) => {
                         const { stockId } = trade || {};
                         const stockIdString = typeof stockId === 'string' ? stockId : stockId?._id;
                         return (
                             <div
                                 key={trade._id}
-                                className="flex justify-between items-center p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md"
+                                className="flex flex-col lg:flex-row md:justify-between p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md"
                             >
                                 <div>
                                     <p><strong>Symbol:</strong> {trade.symbol}</p>
@@ -104,12 +104,12 @@ const TradeHistory = () => {
                                     <p><strong>Quantity:</strong> {trade.quantity}</p>
                                     <p><strong>Status:</strong> {trade.status}</p>
                                 </div>
-                                <div className="text-right flex flex-col justify-between">
-                                    <p><strong>Price:</strong> {trade.price?.toFixed(2)} €</p>
-                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
-                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
+                                <div className="">
+                                    <p><strong>Last Price:</strong> {trade.price?.toFixed(2)} €</p>
+
+                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
                                     <FiExternalLink
-                                        className="ml-auto text-xl mt-7 cursor-pointer"
+                                        className="ml-auto text-xl cursor-pointer mt-4"
                                         onClick={() => navigate(`/stocks/${stockIdString}`)}
                                     />
                                 </div>
@@ -124,4 +124,4 @@ const TradeHistory = () => {
     )
 };
 
-export default TradeHistory;
+export default TransactionsHistory;

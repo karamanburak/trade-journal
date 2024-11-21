@@ -7,6 +7,12 @@ const Account = require("../models/account");
 const { CustomError } = require("../errors/customError");
 const { getTradeCreatedEmailHtml } = require("../configs/email/trade/trade");
 const { sendEmail } = require("../configs/email/emailService");
+const {
+  calculateMovingAverage,
+  calculateWinRate,
+  calculateProfitFactor,
+  calculateAverageHoldDuration,
+} = require("../helpers/calculateRates");
 
 module.exports = {
   list: async (req, res) => {
@@ -120,77 +126,90 @@ module.exports = {
 
     const requiredValue = quantity * price;
 
-    // Find existing trade with the same symbol for this user
+    let newTrade = null;
+
     const existingTrade = await Trade.findOne({
       userId,
       symbol,
       transactionType,
     });
 
-    if (existingTrade) {
-      // Update existing trade
-      existingTrade.quantity += quantity;
-      existingTrade.price =
-        (existingTrade.price * existingTrade.quantity + price * quantity) /
-        (existingTrade.quantity + quantity);
-      existingTrade.transactionDate = new Date(); // Update to current date
-
-      await existingTrade.save();
-    }
-
-    const newTrade = new Trade(req.body);
-
     if (transactionType === "BUY") {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
           error: true,
-          message: `Insufficient funds to complete the trade. Please deposit funds first.`,
+          message: "Insufficient funds to buy the stock.",
         });
       }
 
-      const position = await Position.findOne({ userId, symbol });
+      // Find or create a position
+      let position = await Position.findOne({ userId, symbol });
 
-      if (position) {
-        const totalQuantity = position.totalQuantity + quantity;
-        const newAveragePrice =
-          (position.totalInvestment + quantity * price) / totalQuantity;
-
-        position.totalQuantity = totalQuantity;
-        position.averagePrice = newAveragePrice;
-        position.totalInvestment = totalQuantity * newAveragePrice;
-
-        await position.save();
-      } else {
-        await Position.create({
+      if (!position) {
+        // Create new position if doesn't exist
+        position = new Position({
           userId,
           symbol,
           stockId,
-          totalQuantity: quantity,
-          averagePrice: price,
-          totalInvestment: quantity * price,
+          totalQuantity: 0,
+          totalInvestment: 0,
+          averagePrice: 0,
         });
       }
 
+      // Calculate new position details
+      const newQuantity = position.totalQuantity + quantity;
+      const newTotalInvestment = position.totalInvestment + quantity * price;
+      const newAveragePrice = newTotalInvestment / newQuantity;
+
+      // Update position
+      position.totalQuantity = newQuantity;
+      position.totalInvestment = newTotalInvestment;
+      position.averagePrice = newAveragePrice;
+      await position.save();
+
+      // Update account
       account.totalValue -= requiredValue;
       await account.save();
 
-      newTrade.status = "OPEN";
-      await newTrade.save();
+      // Handle trade creation or update
+      if (existingTrade) {
+        // Update existing trade for the same stock
+        existingTrade.quantity += quantity;
+        existingTrade.price = newAveragePrice;
+        existingTrade.transactionDate = new Date();
+        await existingTrade.save();
+      } else {
+        // Create new trade for a different stock
+        newTrade = new Trade({
+          userId,
+          stockId,
+          symbol,
+          quantity,
+          price,
+          transactionType: "BUY",
+          status: "OPEN",
+        });
+        await newTrade.save();
+      }
     } else if (transactionType === "SELL") {
+      // Find existing position
       const position = await Position.findOne({ userId, symbol });
 
       if (!position || position.totalQuantity < quantity) {
         return res.status(400).send({
           error: true,
-          message: "Insufficient stock quantity.",
+          message: `Insufficient stock quantity. User has ${position.totalQuantity} shares of ${symbol} left. Cannot sell the remaining shares.`,
         });
       }
 
+      // Calculate sale proceeds and profit/loss
       const saleProceeds = quantity * price;
       const profitOrLoss = (price - position.averagePrice) * quantity;
       const tradeDuration =
         (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
 
+      // Update position
       position.totalQuantity -= quantity;
       position.totalInvestment -= quantity * position.averagePrice;
 
@@ -200,54 +219,51 @@ module.exports = {
         await position.save();
       }
 
-      newTrade.profitOrLoss = profitOrLoss;
-      newTrade.tradeDuration = Math.round(tradeDuration * 100) / 100;
-      newTrade.status = "CLOSED";
+      // Create new trade for sell transaction
+      newTrade = new Trade({
+        userId,
+        stockId,
+        symbol,
+        quantity,
+        price,
+        transactionType: "SELL",
+        profitOrLoss,
+        tradeDuration: Math.round(tradeDuration * 100) / 100,
+        status: "CLOSED",
+      });
       await newTrade.save();
 
+      // Update account metrics
       account.completedTransactions += 1;
       account.totalValue += saleProceeds;
-      account.totalValue += profitOrLoss;
 
-      // Update average profit and loss
+      // Update profit/loss calculations
       if (profitOrLoss > 0) {
-        account.avarageProfit =
-          (account.avarageProfit * (account.completedTransactions - 1) +
-            profitOrLoss) /
-          account.completedTransactions;
+        account.avarageProfit = calculateMovingAverage(
+          account.avarageProfit,
+          profitOrLoss,
+          account.completedTransactions
+        );
       } else {
-        account.avarageLoss =
-          (account.avarageLoss * (account.completedTransactions - 1) +
-            Math.abs(profitOrLoss)) /
-          account.completedTransactions;
+        account.avarageLoss = calculateMovingAverage(
+          account.avarageLoss,
+          Math.abs(profitOrLoss),
+          account.completedTransactions
+        );
       }
 
-      // Calculate winRate: (profitable trades / total trades) * 100
-      const profitableTrades =
-        account.completedTransactions -
-        (account.winRate / 100) * account.completedTransactions;
-      const newProfitableTrades =
-        profitOrLoss > 0 ? profitableTrades + 1 : profitableTrades;
-      account.winRate =
-        (newProfitableTrades / account.completedTransactions) * 100;
-
-      // Calculate profitFactor: (total profits / total losses)
-      const totalProfits = account.avarageProfit * newProfitableTrades;
-      const totalLoses =
-        account.avarageLoss *
-        (account.completedTransactions - newProfitableTrades);
-      account.profitFactor =
-        totalLoses > 0 ? totalProfits / totalLoses : totalProfits;
-
-      // Update average hold duration: (average hold duration * (total trades - 1) + current trade duration) / total trades
-      account.avarageHoldDuration =
-        (account.avarageHoldDuration * (account.completedTransactions - 1) +
-          newTrade.tradeDuration) /
-        account.completedTransactions;
+      account.winRate = calculateWinRate(account);
+      account.profitFactor = calculateProfitFactor(account);
+      account.avarageHoldDuration = calculateAverageHoldDuration(
+        account.avarageHoldDuration,
+        newTrade.tradeDuration,
+        account.completedTransactions
+      );
 
       await account.save();
     }
 
+    // Send notification email
     const emailSubject = "New Trade Created!";
     const emailHtml = getTradeCreatedEmailHtml(
       user.firstName,

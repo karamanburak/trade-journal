@@ -28,11 +28,7 @@ module.exports = {
 
     let listFilter = {};
 
-    const data = await res.getModelList(User, listFilter, [
-      {
-        path: "userId",
-      },
-    ]);
+    const data = await res.getModelList(User, listFilter);
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(User, listFilter),
