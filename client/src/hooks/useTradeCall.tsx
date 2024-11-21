@@ -62,7 +62,7 @@ const useTradeCall = () => {
         dispatch(fetchTradeStart());
         try {
             const { data } = await axiosWithPublic(`stocks/${stockId}`);
-            console.log(data.data);
+            // console.log(data.data);
             dispatch(fetchSingleStockSuccess(data.data));
         } catch (error) {
             console.log("Error getting single trade:", error);
@@ -102,7 +102,7 @@ const useTradeCall = () => {
         try {
             const { data } = await axiosWithPublic.put(`stocks/${stockId}`, stockInfo);
             dispatch(fetchSingleStockSuccess(data.data));
-            console.log(data.data);
+            // console.log(data.data);
             toastNotify("success", data.message);
         } catch (error) {
             console.log("Error editing trade:", error);

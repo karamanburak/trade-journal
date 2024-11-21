@@ -94,10 +94,9 @@ pnpm dev
 ```dotnetcli
 cd server
 npm install
-nodemon
+npm install -g nodemon (optional)
+nodemon(optioal) or npm start
 ```
-
-npm install -g nodemon
 
 🛠️ Technologien
 Frontend:

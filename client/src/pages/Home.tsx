@@ -32,8 +32,6 @@ const Home = () => {
         fetchAccountData();
     }, [currentUser]);
 
-    console.log(account);
-
 
     return (
         <>

@@ -6,25 +6,13 @@ const app = express();
 const cors = require("cors");
 const { PORT, HOST, VERSION } = require("./setups");
 
-// Cron Job
-// const job = require("./src/helpers/cron");
-// console.log("Cron job is being started...");
-// job.start();
-
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
-//* cors
-// app.use(cors());
-
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
-      "http://localhost:5174",
-    ],
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Authorization", "Content-Type"],
   })
@@ -34,13 +22,6 @@ require("dotenv").config();
 
 // Accept JSON
 app.use(express.json());
-
-// Accept FormData
-// app.use(express.urlencoded({ extended: true }));
-
-// Middlewares
-
-// app.use("/uploads", express.static("./uploads"));
 
 // - Logger
 app.use(require("./src/middlewares/logger"));

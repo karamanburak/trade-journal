@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuButton from "../Buttons/MenuButton";
 
 interface SearchbarProps {
     stocks: IStock[];
@@ -43,12 +44,12 @@ const Searchbar: React.FC<SearchbarProps> = ({ stocks, onSelectStock }) => {
                 className="mb-10 p-2 w-full border rounded-md focus:outline-none  dark:bg-dark-background2"
             />
             {input && (
-                <button
+                <MenuButton
                     onClick={() => setInput("")}
                     className="absolute top-11 right-10 transform -translate-y-1/2 text-sm "
                 >
                     Clear
-                </button>
+                </MenuButton>
             )}
 
             {input && filteredStocks.length > 0 && (

@@ -36,25 +36,26 @@ export const Charts = ({ account }: ChartProps) => {
         <div className="flex flex-col lg:flex-row gap-10 mt-10 px-12 dark:bg-dark-background3 p-2 rounded-lg">
             <div className="flex-1">
                 <AreaChart
-                    className="h-80"
+                    className="h-80 max-w-[700px]"
                     data={chartData}
                     index="date"
-                    categories={["totalValue"]}
+                    categories={["Total Value"]}
                     valueFormatter={(number) =>
                         `${Intl.NumberFormat("us").format(number)}€`
                     }
                 />
             </div>
+            <div className="border"></div>
 
             <div className="flex-1">
                 <AreaChart
-                    className="h-80"
+                    className="h-80 max-w-[700px]"
                     data={chartData}
                     index="date"
-                    categories={["averageLoss", "averageProfit"]}
-                // valueFormatter={(number) =>
-                //     `${Intl.NumberFormat("us").format(number)}€`
-                // }
+                    categories={["Average Loss", "Average Profit"]}
+                    valueFormatter={(number) =>
+                        `${Intl.NumberFormat("us").format(number)}€`
+                    }
                 />
             </div>
         </div>

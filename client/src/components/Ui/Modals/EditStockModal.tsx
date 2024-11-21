@@ -1,6 +1,7 @@
 // EditStockModal.tsx
 
 import React from 'react';
+import MenuButton from '../Buttons/MenuButton';
 
 interface EditStockModalProps {
     stock: IStock;
@@ -72,18 +73,18 @@ const EditStockModal: React.FC<EditStockModalProps> = ({ stock, onClose, onUpdat
                     />
                 </div>
                 <div className="flex justify-between mt-4">
-                    <button
+                    <MenuButton
                         onClick={onClose}
                         className="bg-dark-danger hover:bg-dark-danger/70 py-2 px-4 rounded text-white"
                     >
                         Close
-                    </button>
-                    <button
+                    </MenuButton>
+                    <MenuButton
                         onClick={handleSave}
                         className="bg-dark-primary hover:bg-dark-primary/70 py-2 px-4 rounded text-white"
                     >
                         Save
-                    </button>
+                    </MenuButton>
                 </div>
             </div>
         </div>

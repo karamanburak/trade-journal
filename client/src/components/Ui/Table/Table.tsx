@@ -5,6 +5,7 @@ import useTradeCall from "../../../hooks/useTradeCall";
 import EditStockModal from "../Modals/EditStockModal";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
+import MenuButton from "../Buttons/MenuButton";
 
 interface TableProps {
     stocks: IStock[];
@@ -63,12 +64,12 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                             <td className="py-3 px-4 hidden lg:table-cell">${marketCap?.toLocaleString()}</td>
 
                             <td className="py-3 px-4">
-                                <button
+                                <MenuButton
                                     onClick={() => navigate(`stocks/${_id}`)}
                                     className="bg-light-background3 hover:bg-dark-textSecondary text-dark-background3 text-xs sm:text-sm font-medium py-2 px-4 rounded dark:text-light-secondary dark:bg-dark-background3 hover:dark:bg-dark-background"
                                 >
                                     BUY/SELL
-                                </button>
+                                </MenuButton>
                             </td>
                             {currentUser && currentUser?.userType === "admin" && (
                                 <td className="py-3 px-4">

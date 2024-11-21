@@ -3,13 +3,13 @@ import React from "react";
 interface MenuButtonProps {
     onClick: () => void;
     children: React.ReactNode;
+    className?: string;
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ onClick, children }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({ onClick, children, className }) => {
     return (
         <button
-            className="block w-full text-left p-1 hover:text-dark-primary"
-            onClick={onClick}
+            className={`block p-1 ${className || ""}`} onClick={onClick}
         >
             {children}
         </button>

@@ -4,6 +4,7 @@ import { formatDateWithTime } from "../../helpers/formatDate";
 import { GrDocumentMissing } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
+import { useNavigate } from "react-router-dom";
 
 const TransactionsHistory = () => {
     const { trades, singleStock } = useSelector((state: RootState) => state.trade);
@@ -11,6 +12,7 @@ const TransactionsHistory = () => {
     const [selectedType, setSelectedType] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     const transactionTypes = ["BUY", "SELL"];
 
@@ -41,7 +43,6 @@ const TransactionsHistory = () => {
     }, []);
 
     return (
-
         <div className="w-full px-6 border-2 h-[calc(100vh-123px)]">
             <h2 className="text-2xl text-center font-semibold my-4">Transactions History</h2>
             <div className="flex flex-col md:flex-row items-start md:items-center mb-6 gap-6">
@@ -107,6 +108,10 @@ const TransactionsHistory = () => {
 
                                     <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
                                     <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
+                                    <FiExternalLink
+                                        className="ml-auto text-xl mt-7 cursor-pointer"
+                                        onClick={() => navigate(`/stocks/${stockIdString}`)}
+                                    />
 
                                 </div>
                             </div>

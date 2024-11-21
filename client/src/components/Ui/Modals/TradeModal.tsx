@@ -8,6 +8,7 @@ import {
     Stack,
 } from "@mui/material";
 import toastNotify from "../../../utils/toastNotify";
+import MenuButton from "../Buttons/MenuButton";
 
 
 interface TradeModalProps {
@@ -94,12 +95,12 @@ const TradeModal: React.FC<TradeModalProps> = ({
                         mt: 3,
                     }}
                 >
-                    <Button variant="outlined" onClick={onHide}>
+                    <MenuButton onClick={onHide} className="bg-dark-danger hover:bg-dark-danger/70 py-2 px-4 rounded text-white">
                         Cancel
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={handleSubmit}>
-                        Submit
-                    </Button>
+                    </MenuButton>
+                    <MenuButton className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white" onClick={handleSubmit}>
+                        {tradeData.transactionType === "BUY" ? "Buy" : "Sell"}
+                    </MenuButton>
                 </Box>
             </Box>
         </Modal>

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
+
 import useTradeCall from "../hooks/useTradeCall";
+
 import Searchbar from "../components/Ui/Search/Searchbar";
 import Table from "../components/Ui/Table/Table";
 
 const Stocks = () => {
     const { trades } = useSelector((state: RootState) => state.trade);
     const { stocks } = useSelector((state: RootState) => state.trade);
-    const { getTrades, getStocks } = useTradeCall()
+    const { getStocks } = useTradeCall()
     const [selectedStock, setSelectedStock] = useState<IStock | null>(null);
 
     const handleStockSelect = (stock: IStock) => {
@@ -16,7 +18,6 @@ const Stocks = () => {
     }
 
     useEffect(() => {
-        // getTrades()
         getStocks()
     }, [])
 

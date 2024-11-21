@@ -1,4 +1,4 @@
-import TransactionsHistory from "../components/Profile/TransactionsHistory";
+import TransactionsHistory from "../components/Transaction/TransactionsHistory";
 
 const Transactions = () => {
 

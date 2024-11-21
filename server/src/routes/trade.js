@@ -11,7 +11,7 @@ const { isTradeOwner } = require("../middlewares/permissions");
 router.route("/").get(trade.list).post(trade.create);
 router
   .route("/:id")
-  .all(idValidation, isTradeOwner)
+  .all(idValidation)
   .get(trade.read)
   .put(trade.update)
   .patch(trade.update)

@@ -1,4 +1,5 @@
 import React from "react";
+import MenuButton from "../Ui/Buttons/MenuButton";
 
 interface TransactionModalProps {
     isOpen: boolean;
@@ -31,24 +32,22 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
                     onChange={(e) => setAmount(Number(e.target.value))}
                 />
                 <div className="flex justify-end space-x-4">
-                    <button
-                        className="px-4 py-2 bg-dark-danger rounded text-white"
+                    <MenuButton
                         onClick={() => {
                             setAmount(0);
                             onClose();
                         }}
                     >
                         Cancel
-                    </button>
-                    <button
-                        className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white"
+                    </MenuButton>
+                    <MenuButton
                         onClick={() => {
                             onSubmit(amount);
                             setAmount(0);
                         }}
                     >
                         {type === "deposit" ? "Deposit" : "Withdraw"}
-                    </button>
+                    </MenuButton>
                 </div>
             </div>
         </div>

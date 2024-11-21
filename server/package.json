@@ -4,7 +4,8 @@
   "description": "RESTful-API Trade-Journal",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "karaman.buraak@gmail.com",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.7",
     "redoc-express": "^2.1.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1",

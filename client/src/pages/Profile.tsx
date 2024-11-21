@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import type { RootState } from "../app/store";
 import Header from "../components/Header/Header";
 import useAccountCall from "../hooks/useAccountCall";
-import TradeHistory from "../components/Profile/TransactionsHistory";
+import TradeHistory from "../components/Transaction/TransactionsHistory";
 import toastNotify from "../utils/toastNotify";
+import MenuButton from "../components/Ui/Buttons/MenuButton";
+import { ImSpinner9 } from "react-icons/im";
 
 const Profile = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
@@ -102,8 +104,8 @@ const Profile = () => {
     return (
         <>
             <Header />
-            <div className="w-full h-full flex flex-row justify-center bg-light-background dark:bg-dark-background p-6">
-                <div className="w-[90vw] md:w-[70vw]  items-center bg-white dark:bg-dark-background2 shadow-lg rounded-lg p-6 space-y-6">
+            <div className="w-full h-[calc(100vh-100px)] flex flex-row justify-center bg-light-background dark:bg-dark-background p-6">
+                <div className="w-[90vw] md:w-[70vw]  items-center bg-light-background2 dark:bg-dark-background2 shadow-lg rounded-lg p-6 space-y-6">
                     <div className="flex flex-col items-center space-y-6">
                         <div className="flex flex-col items-center space-y-2">
                             <div className="w-24 h-24 rounded-full bg-light-primary dark:bg-dark-background3 flex items-center justify-center text-3xl font-bold text-white">
@@ -117,22 +119,22 @@ const Profile = () => {
                     </div>
 
                     {/* Account Overview */}
-                    <div className="bg-light-background2 dark:bg-dark-background3 rounded-lg p-4 shadow-md">
+                    <div className="bg-light-background3 dark:bg-dark-background3 rounded-lg px-4 py-12 shadow-md">
                         {account ? (
                             <div className="space-y-4">
-                                <div className="flex justify-end gap-5">
-                                    <button
+                                <div className="flex justify-end gap-5 mb-9">
+                                    <MenuButton
                                         className="px-4 py-2 bg-light-primary hover:bg-light-primary/80 rounded text-white"
                                         onClick={() => setIsDepositModalOpen(true)}
                                     >
                                         Deposit
-                                    </button>
-                                    <button
+                                    </MenuButton>
+                                    <MenuButton
                                         className="px-4 py-2 bg-dark-danger hover:bg-dark-danger/80 rounded text-white"
                                         onClick={() => setIsWithdrawModalOpen(true)}
                                     >
                                         Withdraw
-                                    </button>
+                                    </MenuButton>
                                 </div>
                                 <div className="space-y-2">
                                     <div className="flex justify-between">
@@ -162,7 +164,9 @@ const Profile = () => {
                                 </div>
                             </div>
                         ) : (
-                            <p className="text-center text-dark-secondary">Account data is loading...</p>
+                            <div className="flex h-full justify-center items-center">
+                                <ImSpinner9 className="animate-spin h-8 w-8" />
+                            </div>
                         )}
                     </div>
                 </div>
@@ -179,7 +183,7 @@ const Profile = () => {
                                 onChange={(e) => setDepositAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">
-                                <button
+                                <MenuButton
                                     className="px-4 py-2 bg-dark-danger hover:bg-dark-danger/70 rounded text-white"
                                     onClick={() => {
                                         setIsDepositModalOpen(false);
@@ -187,13 +191,13 @@ const Profile = () => {
                                     }}
                                 >
                                     Cancel
-                                </button>
-                                <button
+                                </MenuButton>
+                                <MenuButton
                                     className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white"
                                     onClick={handleDeposit}
                                 >
                                     Deposit
-                                </button>
+                                </MenuButton>
                             </div>
                         </div>
                     </div>
@@ -211,7 +215,7 @@ const Profile = () => {
                                 onChange={(e) => setWithdrawAmount(Number(e.target.value))}
                             />
                             <div className="flex justify-end space-x-4">
-                                <button
+                                <MenuButton
                                     className="px-4 py-2 bg-dark-danger rounded text-white"
                                     onClick={() => {
                                         setIsWithdrawModalOpen(false);
@@ -219,13 +223,13 @@ const Profile = () => {
                                     }}
                                 >
                                     Cancel
-                                </button>
-                                <button
+                                </MenuButton>
+                                <MenuButton
                                     className="px-4 py-2 bg-dark-primary hover:bg-dark-primary/70 rounded text-white"
                                     onClick={handleWithdraw}
                                 >
                                     Withdraw
-                                </button>
+                                </MenuButton>
                             </div>
                         </div>
                     </div>

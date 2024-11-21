@@ -18,7 +18,7 @@ const useAuthCall = () => {
         dispatch(fetchStart());
         try {
             const { data } = await axiosWithPublic.post(`auth/register`, userInfo);
-            console.log(data);
+            // console.log(data);
             dispatch(registerSuccess(data.data));
             toastNotify("success", data.message)
             navigate("/login");

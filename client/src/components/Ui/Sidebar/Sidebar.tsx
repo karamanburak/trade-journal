@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { useNavigate } from "react-router-dom";
+import { Menu } from "@mui/material";
+import MenuButton from "../Buttons/MenuButton";
 
 const links = [
     {
@@ -36,11 +38,11 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
     return (
         <div className="relative w-[90px] sm:w-[240px] h-[calc(100vh-108px)] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2">
 
-            <button onClick={() => navigate(`/profile/${currentUser?._id}`)} className="hidden sm:block bg-light-background2 hover:bg-light-background2/80 font-semibold dark:bg-dark-background3 py-1.5 px-8 rounded-full">Deposit or Withdraw</button >
+            <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="hidden sm:block bg-light-background2 hover:bg-light-background2/80 font-semibold dark:bg-dark-background3 py-1.5 px-8 rounded-full">Deposit or Withdraw</MenuButton >
 
-            <button onClick={() => navigate(`/profile/${currentUser?._id}`)} className="sm:hidden">
+            <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="sm:hidden">
                 <PiHandDepositFill className="text-3xl ml-5 mt-3" />
-            </button>
+            </MenuButton>
 
             <div className="flex items-center justify-center sm:w-40 m-auto relative py-4">
                 <div className="absolute inset-0 flex items-center py-4">
@@ -54,7 +56,7 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
             <ul className="space-y-1 flex flex-col">
                 {links.map((item) => (
                     <li key={item.key}>
-                        <button
+                        <MenuButton
                             onClick={() => {
                                 setActiveKey(item.key);
                                 onNavigate(item.key);
@@ -65,7 +67,7 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
                         >
                             <span className="text-2xl">{item.icon}</span>
                             <span className="hidden sm:block font-medium">{item.title}</span>
-                        </button>
+                        </MenuButton>
                     </li>
                 ))}
             </ul>

@@ -1,3 +1,4 @@
+"use strict";
 function calculateMovingAverage(currentAverage, newValue, totalCount) {
   return (currentAverage * (totalCount - 1) + newValue) / totalCount;
 }

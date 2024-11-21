@@ -66,7 +66,6 @@ const RegisterForm = () => {
 
     const handleSubmit = (values: IMyRegisterFormValues, { setSubmitting }: FormikHelpers<IMyRegisterFormValues>) => {
         registerUser(values)
-        console.log(values);
         setSubmitting(false);
     };
 
@@ -161,7 +160,9 @@ const RegisterForm = () => {
                             >
                                 {loading ? (
                                     <>
-                                        <ImSpinner9 className="animate-spin" />
+                                        <div className="flex h-full justify-center items-center">
+                                            <ImSpinner9 className="animate-spin h-8 w-8 text-primary-green" />
+                                        </div>
                                         <span className="ml-2">Loading...</span>
                                     </>
                                 ) : (

@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
 import TradeModal from "../components/Ui/Modals/TradeModal";
 import toastNotify from "../utils/toastNotify";
+import MenuButton from "../components/Ui/Buttons/MenuButton";
+import { ImSpinner9 } from "react-icons/im";
 
 const StockDetails: React.FC = () => {
     const { stockId } = useParams<{ stockId: string }>();
@@ -25,8 +27,8 @@ const StockDetails: React.FC = () => {
 
     if (!singleStock) {
         return (
-            <div className="flex justify-center items-center h-screen text-lg">
-                Loading stock details...
+            <div className="flex h-full justify-center items-center">
+                Loading... <ImSpinner9 className="animate-spin h-8 w-8 text-primary-green" />
             </div>
         );
     }
@@ -54,7 +56,7 @@ const StockDetails: React.FC = () => {
             exitPrice: 0,
             transactionDate: new Date(),
         };
-        console.log("Trade Payload:", payload);
+        // console.log("Trade Payload:", payload);
         postTrade(payload);
         setModalOpen(false);
     };
@@ -93,18 +95,18 @@ const StockDetails: React.FC = () => {
                 </div>
 
                 <div className="flex justify-center gap-6">
-                    <button
+                    <MenuButton
                         onClick={() => handleOpenModal("BUY")}
                         className="bg-dark-primary hover:bg-dark-primary/70 text-white font-semibold py-3 px-8 rounded-xl"
                     >
                         Buy
-                    </button>
-                    <button
+                    </MenuButton>
+                    <MenuButton
                         onClick={() => handleOpenModal("SELL")}
                         className="bg-dark-danger hover:bg-dark-danger/70 text-white  font-semibold py-3 px-8 rounded-xl"
                     >
                         Sell
-                    </button>
+                    </MenuButton>
                 </div>
             </div>
 
