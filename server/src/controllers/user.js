@@ -110,11 +110,11 @@ module.exports = {
         throw new CustomError("Email already exists!", 400);
       }
     }
-    const data = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+    const data = await User.findOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
     res.status(202).send({
-      error: False,
+      error: false,
       message: "Profile information has been updated successfully.",
       new: await User.findOne({ _id: req.params.id }),
       data,

@@ -94,6 +94,7 @@ const LoginForm: React.FC = () => {
                                     )}
                                 </div>
                             </div>
+                            <Link to="" className="text-dark-primary text-[0.875rem] mt-3 flex justify-end">Forgot Password?</Link>
 
                         </div>
 

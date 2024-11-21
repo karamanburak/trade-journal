@@ -38,19 +38,8 @@ const Home = () => {
     return (
         <>
             <div>
-                {currentUser ? (
-                    <>
-                        <KpiCards account={account} />
-                        <Charts account={account} />
-                    </>
-                ) : (
-                    <div className="flex flex-col justify-center items-center mt-16 text-2xl">
-                        <div className="text-6xl"><TbInfoTriangleFilled /></div>
-                        <div> Please login to view dashboard</div>
-                    </div>
-                )
-                }
-
+                <KpiCards account={account} />
+                <Charts account={account} />
             </div>
         </>
     )

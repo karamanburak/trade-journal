@@ -1,10 +1,13 @@
-import React from "react";
-import TradeHistory from "../components/Profile/TransactionsHistory";
+import TransactionsHistory from "../components/Profile/TransactionsHistory";
 
 const Transactions = () => {
+
     return (
-        <TradeHistory />
-    )
+        <>
+            <TransactionsHistory />
+
+        </>
+    );
 };
 
 export default Transactions;

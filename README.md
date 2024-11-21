@@ -55,13 +55,13 @@ Funktional
 
 Dieses Projekt wurde erstellt, um eine Beispiel-**Trade-Plattform** zu entwickeln. Es wurde mit den folgenden Technologien realisiert:
 
-- **Frontend:** React, Tailwind CSS, Redux (State Management)
+- **Frontend:** React,TypeScript Tailwind CSS, Redux (State Management)
 - **Backend:** Node.js, MongoDB
 - **Tools:** Vite, pnpm, nodemon
 
 ## 📂 Projektstruktur
 
-- **frontend/**: Frontend entwickelt mit React und Tailwind CSS.
+- **frontend/**: Frontend entwickelt mit React, TypeScript und Tailwind CSS.
 - **backend/**: Backend entwickelt mit Node.js und MongoDB.
 
 ## 🚀 Installation und Ausführung
@@ -115,19 +115,64 @@ MongoDB
 
 ![ERD](./server/trade-journal-erd.png)
 
-Verwendung
-Benutzer müssen sich registrieren und anmelden.
-Nach der Anmeldung kann der Benutzer auf die Profilseite zugreifen.
-Auf der Profilseite kann der Benutzer Geld auf sein Konto einzahlen.
-Anschließend kann er beliebige Trade-Transaktionen durchführen.
-E-Mail-Benachrichtigungen von tradejournalpjm@gmail.com
-Wenn ein Benutzer sich registriert, erhält er eine Bestätigungs-E-Mail.
-Sobald der Benutzer eine Trade-Transaktion durchführt, wird eine Transaktionsbestätigung per E-Mail gesendet.
-Diese Funktion wird mit Nodemailer implementiert.
+🧑‍💻 Verwendung
+Benutzer müssen sich registrieren und anmelden. Nach der Anmeldung kann der Benutzer auf die Profilseite zugreifen und Geld auf sein Konto einzahlen. Anschließend kann er beliebige Trade-Transaktionen durchführen. Die Plattform sendet E-Mail-Benachrichtigungen für verschiedene Aktionen (z. B. bei der Registrierung und bei Transaktionen).
 
-## Documentations
+## Admin-Funktionalität:
 
-- [View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sAYBRGuMA)
+Ab sofort können nur Administratoren den Wert der Aktien ändern. Um als Administrator auf die entsprechenden Funktionen zugreifen zu können, verwenden Sie bitte die folgenden Zugangsdaten:
+
+- Admin E-Mail: admin@gmail.com
+- Admin Passwort: Password1!
+
+  Nur Benutzer mit diesen Zugangsdaten erhalten Zugriff auf den Endpunkt, um die Werte der Aktien zu bearbeiten. Normale Benutzer haben keinen Zugriff auf diese Funktion.
+
+# Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
+
+Alle sicherheitsrelevanten Informationen, wie Passwörter, Datenbankverbindungen, und E-Mail-Konfigurationen (z.B. E-Mail-Adresse und Passwort für Benachrichtigungen), sollten in der .env-Datei gespeichert werden.
+
+Vergewissern Sie sich, dass Sie die .env-Datei entsprechend den folgenden Parametern anpassen:
+
+#### .env Datei für Backend
+
+```
+PORT=
+HOST=
+
+CLIENT_URL=
+VERSION=
+
+SECRET_KEY=
+ACCESS_KEY=
+ACCESS_EXP=
+REFRESH_KEY=
+REFRESH_EXP=
+
+MONGODB_URI=
+PAGE_SIZE =
+
+NODEMAILER_EMAIL=
+NODEMAILER_PASSWORD=
+```
+
+#### .env Datei für Frontend
+
+```
+VITE_BACKEND_URL=
+```
+
+Die .env-Datei sollte nicht in das Versionskontrollsystem (z.B. Git) eingecheckt werden, um sensible Daten zu schützen. Nutzen Sie eine .gitignore-Datei, um diese zu ignorieren.
+
+### Benachrichtigungen via E-Mail:
+
+- Bei der Benutzerregistrierung erhält der Benutzer eine Bestätigungs-E-Mail.
+- Sobald der Benutzer eine Trade-Transaktion durchführt, wird eine Transaktionsbestätigung per E-Mail gesendet.
+
+- Diese Funktionen werden mit Nodemailer implementiert.
+
+3. API-Dokumentation:
+
+- [View Postman Documentation](https://documenter.getpostman.com/view/32987022/2sAYBRGuMA) // Publish
 - [View Swagger Documentation](http://127.0.0.1:8000/api/v1/documentations/swagger/) // Local
 - [View Redoc Documentation](http://127.0.0.1:8000/api/v1/documentations/redoc) // Local
 - [View Json Documentation](http://127.0.0.1:8000/api/v1/documentations/json) // Local

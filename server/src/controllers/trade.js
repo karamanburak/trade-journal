@@ -138,7 +138,8 @@ module.exports = {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
           error: true,
-          message: "Insufficient funds to buy the stock.",
+          message:
+            "You do not have enough funds to purchase this stock. Please deposit additional funds from your Profile.",
         });
       }
 

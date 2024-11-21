@@ -4,7 +4,6 @@ import { formatDateWithTime } from "../../helpers/formatDate";
 import { GrDocumentMissing } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
-import { useNavigate } from "react-router-dom";
 
 const TransactionsHistory = () => {
     const { trades, singleStock } = useSelector((state: RootState) => state.trade);
@@ -12,7 +11,6 @@ const TransactionsHistory = () => {
     const [selectedType, setSelectedType] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const navigate = useNavigate();
 
     const transactionTypes = ["BUY", "SELL"];
 
@@ -89,7 +87,7 @@ const TransactionsHistory = () => {
                 {filteredTrades?.length || 0} trade(s) found.
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
-                <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-300px)]">
+                <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-400px)] md:max-h-[calc(100vh-300px)]">
                     {filteredTrades.map((trade: ITrade) => {
                         const { stockId } = trade || {};
                         const stockIdString = typeof stockId === 'string' ? stockId : stockId?._id;
@@ -107,11 +105,9 @@ const TransactionsHistory = () => {
                                 <div className="">
                                     <p><strong>Last Price:</strong> {trade.price?.toFixed(2)} €</p>
 
-                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
-                                    <FiExternalLink
-                                        className="ml-auto text-xl cursor-pointer mt-4"
-                                        onClick={() => navigate(`/stocks/${stockIdString}`)}
-                                    />
+                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
+                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
+
                                 </div>
                             </div>
                         );

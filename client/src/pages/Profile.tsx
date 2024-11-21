@@ -102,7 +102,7 @@ const Profile = () => {
     return (
         <>
             <Header />
-            <div className="w-full h-full flex flex-row justify-center bg-light-secondary dark:bg-dark-background p-6">
+            <div className="w-full h-full flex flex-row justify-center bg-light-background dark:bg-dark-background p-6">
                 <div className="w-[90vw] md:w-[70vw]  items-center bg-white dark:bg-dark-background2 shadow-lg rounded-lg p-6 space-y-6">
                     <div className="flex flex-col items-center space-y-6">
                         <div className="flex flex-col items-center space-y-2">
@@ -180,7 +180,7 @@ const Profile = () => {
                             />
                             <div className="flex justify-end space-x-4">
                                 <button
-                                    className="px-4 py-2 bg-dark-danger rounded text-white"
+                                    className="px-4 py-2 bg-dark-danger hover:bg-dark-danger/70 rounded text-white"
                                     onClick={() => {
                                         setIsDepositModalOpen(false);
                                         setDepositAmount(0);

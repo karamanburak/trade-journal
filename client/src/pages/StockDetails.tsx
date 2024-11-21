@@ -95,13 +95,13 @@ const StockDetails: React.FC = () => {
                 <div className="flex justify-center gap-6">
                     <button
                         onClick={() => handleOpenModal("BUY")}
-                        className="bg-dark-success/80 hover:bg-dark-success/90 text-white font-semibold py-3 px-8 rounded-xl"
+                        className="bg-dark-primary hover:bg-dark-primary/70 text-white font-semibold py-3 px-8 rounded-xl"
                     >
                         Buy
                     </button>
                     <button
                         onClick={() => handleOpenModal("SELL")}
-                        className="bg-dark-danger/80 hover:bg-dark-danger/90 text-white  font-semibold py-3 px-8 rounded-xl"
+                        className="bg-dark-danger hover:bg-dark-danger/70 text-white  font-semibold py-3 px-8 rounded-xl"
                     >
                         Sell
                     </button>

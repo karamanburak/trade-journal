@@ -7,6 +7,7 @@ interface IMyRegisterFormValues {
   password: string
   confirmPassword: string
   _id?: string
+  userType: "individual" | "admin"
 }
 
 interface ICurrentUserValues {

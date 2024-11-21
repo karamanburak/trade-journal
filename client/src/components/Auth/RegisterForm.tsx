@@ -15,7 +15,6 @@ interface IMyRegisterFormValues {
     lastName: string;
     email: string;
     password: string;
-    confirmPassword: string;
     terms: boolean;
 }
 
@@ -23,7 +22,6 @@ const RegisterForm = () => {
     const { register: registerUser } = useAuthCall();
     const { loading } = useSelector((state: RootState) => state.auth);
     const [showPassword, setShowPassword] = useState<"password" | "text">("password");
-    const [showConfirmPassword, setShowConfirmPassword] = useState<"password" | "text">("password"); // State for confirm password visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const validationSchema = Yup.object({
@@ -48,11 +46,8 @@ const RegisterForm = () => {
             .matches(/\d+/, "Password must contain at least one number")
             .matches(/[a-z]/, "Password must contain at least one lowercase letter")
             .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-            .matches(/[@$?!%&*]+/, "Password must contain at least one special character")
+            .matches(/[@$?!%&*]+/, "Password must contain at least one special character (.@/)")
             .required("Password is required"),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref('password')], 'Please make sure your passwords match')
-            .required("Confirm password is required!"),
         terms: Yup.boolean()
             .oneOf([true], "You must accept the terms and conditions")
             .required("You must accept the terms and conditions"),
@@ -67,10 +62,6 @@ const RegisterForm = () => {
 
     const togglePasswordVisibility = () => {
         setShowPassword(prev => (prev === "password" ? "text" : "password"));
-    };
-
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(prev => (prev === "password" ? "text" : "password"));
     };
 
     const handleSubmit = (values: IMyRegisterFormValues, { setSubmitting }: FormikHelpers<IMyRegisterFormValues>) => {
@@ -88,7 +79,6 @@ const RegisterForm = () => {
                     lastName: "",
                     email: "",
                     password: "",
-                    confirmPassword: "",
                     terms: false,
                 }}
                 validationSchema={validationSchema}
@@ -139,31 +129,6 @@ const RegisterForm = () => {
                             </div>
                         </div>
 
-                        {/* Confirm Password Field */}
-                        <div className="relative">
-                            <div className="flex items-center justify-between mb-2">
-                                <label htmlFor="confirmPassword" className="text-[0.875rem] md:text-[1rem]">Confirm Password</label>
-                                <div className="absolute inset-y-0 right-3 pr-3 flex items-center pt-3 text-2xl cursor-pointer text-dark-primary">
-                                    {showConfirmPassword === "password" ? (
-                                        <MdVisibilityOff onClick={toggleConfirmPasswordVisibility} />
-                                    ) : (
-                                        <MdVisibility onClick={toggleConfirmPasswordVisibility} />
-                                    )}
-                                </div>
-                            </div>
-                            <Field
-                                type={showConfirmPassword === "password" ? "password" : "text"}
-                                name="confirmPassword"
-                                placeholder="Confirm your password"
-                                className="w-full border dark:border-white rounded-lg text-[1rem] p-3 h-[42px] md:h-[48px] focus:outline-none dark:text-dark-secondary"
-
-                            />
-                            <div className="h-[20px]">
-                                {touched.confirmPassword && errors.confirmPassword && (
-                                    <p className="text-dark-danger text-[0.875rem]">{errors.confirmPassword}</p>
-                                )}
-                            </div>
-                        </div>
 
                         {/* Terms & Conditions */}
                         <div className="flex items-center">

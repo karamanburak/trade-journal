@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema(
       enum: {
         values: ["admin", "individual"],
         message: "Invalid userType. Valid values are: admin, individual.",
+        immutable: true,
       },
       default: "individual",
       required: [true, "UserType is required."],

@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
 import useTradeCall from "../../../hooks/useTradeCall";
 import EditStockModal from "../Modals/EditStockModal";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
 
 interface TableProps {
     stocks: IStock[];
 }
 
 const Table: React.FC<TableProps> = ({ stocks }) => {
+    const { currentUser } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const { editStock } = useTradeCall();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedStock, setSelectedStock] = useState<IStock | null>(null);
+    console.log(currentUser);
+
+
 
     if (!stocks || stocks.length === 0) {
         return (
@@ -41,7 +45,9 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                         <th className="py-3 px-4 font-semibold">Price</th>
                         <th className="py-3 px-4 hidden lg:table-cell font-semibold">Market Cap</th>
                         <th className="py-3 px-4 font-semibold">BUY/SELL</th>
-                        <th className="py-3 px-4">Edit</th>
+                        {currentUser && currentUser?.userType === "admin" && (
+                            <th className="py-3 px-4">Edit</th>
+                        )}
                     </tr>
                 </thead>
 
@@ -55,6 +61,7 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                             <td className="py-3 px-4 hidden md:table-cell">{name}</td>
                             <td className="py-3 px-4">${lastPrice.toFixed(2)}</td>
                             <td className="py-3 px-4 hidden lg:table-cell">${marketCap?.toLocaleString()}</td>
+
                             <td className="py-3 px-4">
                                 <button
                                     onClick={() => navigate(`stocks/${_id}`)}
@@ -63,12 +70,15 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                                     BUY/SELL
                                 </button>
                             </td>
-                            <td className="py-3 px-4">
-                                <FaRegEdit
-                                    className="text-xl cursor-pointer"
-                                    onClick={() => handleEditClick({ symbol, name, lastPrice, marketCap, _id })}
-                                />
-                            </td>
+                            {currentUser && currentUser?.userType === "admin" && (
+                                <td className="py-3 px-4">
+                                    <FaRegEdit
+                                        className="text-xl cursor-pointer"
+                                        onClick={() => handleEditClick({ symbol, name, lastPrice, marketCap, _id })}
+                                    />
+                                </td>
+                            )}
+
                         </tr>
                     ))}
                 </tbody>

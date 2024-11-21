@@ -32,6 +32,7 @@ const Dashboard = () => {
                 <div className="flex-grow bg-light-background dark:bg-dark-background p-4">
                     {activeTab === "dashboard" && <Home />}
                     {activeTab === "stocks" && <Stocks />}
+
                     {activeTab === "transactions" && <Transactions />}
                 </div>
             </div>
