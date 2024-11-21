@@ -1,91 +1,64 @@
+import React from "react";
+import { AreaChart } from "@tremor/react";
 
-import { AreaChart } from '@tremor/react';
+interface ChartProps {
+    account?: IAccount;
+}
+const generateDateRange = (startDate: Date, endDate: Date) => {
+    const dates = [];
+    let currentDate = new Date(startDate);
 
-const chartdata = [
-    {
-        date: "Jan 23",
-        SolarPanels: 2890,
-        Inverters: 2338,
-    },
-    {
-        date: "Feb 23",
-        SolarPanels: 2756,
-        Inverters: 2103,
-    },
-    {
-        date: "Mar 23",
-        SolarPanels: 3322,
-        Inverters: 2194,
-    },
-    {
-        date: "Apr 23",
-        SolarPanels: 3470,
-        Inverters: 2108,
-    },
-    {
-        date: "May 23",
-        SolarPanels: 3475,
-        Inverters: 1812,
-    },
-    {
-        date: "Jun 23",
-        SolarPanels: 3129,
-        Inverters: 1726,
-    },
-    {
-        date: "Jul 23",
-        SolarPanels: 3490,
-        Inverters: 1982,
-    },
-    {
-        date: "Aug 23",
-        SolarPanels: 2903,
-        Inverters: 2012,
-    },
-    {
-        date: "Sep 23",
-        SolarPanels: 2643,
-        Inverters: 2342,
-    },
-    {
-        date: "Oct 23",
-        SolarPanels: 2837,
-        Inverters: 2473,
-    },
-    {
-        date: "Nov 23",
-        SolarPanels: 2954,
-        Inverters: 3848,
-    },
-    {
-        date: "Dec 23",
-        SolarPanels: 3239,
-        Inverters: 3736,
-    },
-]
+    while (currentDate <= endDate) {
+        dates.push(new Date(currentDate).toISOString().split("T")[0]);
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
 
-export const Charts = () => (
-    <div className='flex flex-col md:flex-row gap-3'>
-        <AreaChart
-            className="h-80"
-            data={chartdata}
-            index="date"
-            categories={["SolarPanels", "Inverters"]}
-            valueFormatter={(number: number) =>
-                `$${Intl.NumberFormat("us").format(number).toString()}`
-            }
-            onValueChange={(v) => console.log(v)}
-        />
-        <AreaChart
-            className="h-80"
-            data={chartdata}
-            index="date"
-            categories={["SolarPanels", "Inverters"]}
-            valueFormatter={(number: number) =>
-                `$${Intl.NumberFormat("us").format(number).toString()}`
-            }
-            onValueChange={(v) => console.log(v)}
-        />
-    </div>
+    return dates;
+};
 
-)
+export const Charts = ({ account }: ChartProps) => {
+    if (!account) {
+        return <div>No account data available</div>;
+    }
+
+    const { createdAt, updatedAt, totalValue, avarageProfit, avarageLoss } = account;
+
+    const dateRange = generateDateRange(new Date(createdAt ?? Date.now()), new Date(updatedAt ?? Date.now()));
+
+    const chartData = dateRange.map((date, index) => ({
+        date,
+        totalValue: totalValue || 0,
+        averageProfit: avarageProfit || 0,
+        averageLoss: avarageLoss || 0,
+    }));
+
+    return (
+        <div className="flex flex-col lg:flex-row gap-10 mt-10 px-12 dark:bg-dark-background3 p-2 rounded-lg">
+            <div className="flex-1">
+                <AreaChart
+                    className="h-80"
+                    data={chartData}
+                    index="date"
+                    categories={["totalValue"]}
+                    valueFormatter={(number) =>
+                        `${Intl.NumberFormat("us").format(number)}€`
+                    }
+                />
+            </div>
+
+            <div className="flex-1">
+                <AreaChart
+                    className="h-80"
+                    data={chartData}
+                    index="date"
+                    categories={["averageLoss", "averageProfit"]}
+                // valueFormatter={(number) =>
+                //     `${Intl.NumberFormat("us").format(number)}€`
+                // }
+                />
+            </div>
+        </div>
+    );
+};
+
+export default Charts;

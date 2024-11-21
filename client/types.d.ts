@@ -87,6 +87,8 @@ interface IAccount {
   avarageProfit: number
   avarageLoss: number
   avarageHoldDuration: number
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 interface ITradePayload {

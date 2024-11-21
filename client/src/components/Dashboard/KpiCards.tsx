@@ -1,75 +1,60 @@
 
 import { Card } from '@tremor/react';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import useTradeCall from '../../hooks/useTradeCall';
-import useAccountCall from '../../hooks/useAccountCall';
-import type { RootState } from '../../app/store';
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function KpiCards() {
-    const { currentUser } = useSelector((state: RootState) => state.auth);
-    const { getTrades } = useTradeCall();
-    const { getAccount, updateAccount } = useAccountCall();
-    const [account, setAccount] = useState<IAccount>();
+interface KpiCardsProps {
+    account?: IAccount;
+}
 
-    const fetchAccountData = async () => {
-        try {
-            if (currentUser?._id) {
-                getTrades(currentUser._id);
-                const accountData = await getAccount(currentUser._id);
-                setAccount(accountData.data[0]);
-            } else {
-                console.log("No user ID found for the current user.");
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+export default function KpiCards({ account }: KpiCardsProps) {
 
-    useEffect(() => {
-        fetchAccountData();
-    }, [currentUser]);
+    if (!account) {
+        return <div>Loading...</div>;
+    }
+
+    const { winRate, completedTransactions, avarageProfit, avarageLoss, avarageHoldDuration, totalValue } = account;
+
+
 
 
     const data = account
         ? [
             {
                 name: 'Total Value',
-                value: `${account.totalValue.toFixed(2)} €`,
+                value: `${totalValue.toFixed(2)} €`,
                 changeType: 'neutral',
             },
             {
                 name: 'Completed Transactions',
-                value: `${account.completedTransactions}`,
+                value: `${completedTransactions}`,
                 changeType: 'positive',
             },
             {
                 name: 'Average Profit',
-                value: `${account.avarageProfit.toFixed(2)} €`,
-                change: account.winRate > 0 ? `+${account.winRate.toFixed(2)}%` : `${account.winRate.toFixed(2)}%`,
+                value: `${avarageProfit.toFixed(2)} €`,
+                change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
                 changeType: 'positive',
             },
             {
                 name: 'Average Loss',
-                value: `${account.avarageLoss.toFixed(2)} €`,
-                change: account.winRate > 0 ? `+${account.winRate.toFixed(2)}%` : `${account.winRate.toFixed(2)}%`,
+                value: `${avarageLoss.toFixed(2)} €`,
+                change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
                 changeType: 'negative',
             },
             {
                 name: 'Win Rate',
-                value: `${account.winRate.toFixed(2)}%`,
-                change: account.winRate > 0 ? `+${account.winRate.toFixed(2)}%` : `${account.winRate.toFixed(2)}%`,
-                changeType: account.winRate > 0 ? 'positive' : 'negative',
+                value: `${winRate.toFixed(2)}%`,
+                change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
+                changeType: winRate > 0 ? 'positive' : 'negative',
             },
 
 
             {
                 name: 'Average Hold Duration',
-                value: `${account.avarageHoldDuration.toFixed(5)} days`,
+                value: `${avarageHoldDuration.toFixed(5)} days`,
                 changeType: 'neutral',
             },
         ]
