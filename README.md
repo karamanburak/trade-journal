@@ -74,28 +74,23 @@ Stellen Sie sicher, dass die folgenden Tools auf Ihrem System installiert sind:
 
 - **Node.js** (v16 oder höher)
 - **pnpm** (Paketmanager)
-- **MongoDB** (Lokal oder Cloud-Instanz)
+- **MongoDB** (optional)
 
-### 2. Klonen des Projekts
-
-Klonen Sie das Projekt von GitHub oder einer anderen Quelle:
-
-```bash
-git clone https://github.com/karamanburak/trade-journal.git
-cd <repository-folder>
-```
+##### Einrichtung und Betrieb des Frontends:
 
 ```dotnetcli
-cd client
+cd ./client
 pnpm install
 pnpm dev
 ```
 
+##### Einrichtung und Betrieb des Backends:
+
 ```dotnetcli
-cd server
+cd ./server
 npm install
 npm install -g nodemon (optional)
-nodemon(optioal) or npm start
+npm start or nodemon(optional)
 ```
 
 🛠️ Technologien
@@ -107,10 +102,8 @@ Vite
 Backend:
 Node.js
 MongoDB
-[Express](https
-.js/)
 
-### ERD:
+### ERD-Diagram
 
 ![ERD](./server/trade-journal-erd.png)
 
@@ -129,7 +122,10 @@ Nur der Administrator kann alle Informationen zu den Aktien ändern. Bitte verwe
 
 # Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
 
-Alle sicherheitsrelevanten Informationen, wie Passwörter, Datenbankverbindungen, und E-Mail-Konfigurationen (z.B. E-Mail-Adresse und Passwort für Benachrichtigungen), sollten in der .env-Datei gespeichert werden.
+⚠️ Wichtiger Sicherheitshinweis:
+Alle sicherheitsrelevanten Informationen (wie Passwörter, Datenbankverbindungen, E-Mail-Konfigurationen usw.) werden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese Informationen sorgfältig auf und konfigurieren Sie Ihre .env-Datei entsprechend.
+
+- Die .env-Datei sollte nicht im src-Verzeichnis abgelegt werden. Sie sollte sich stattdessen im Root-Verzeichnis des Projekts befinden.
 
 Vergewissern Sie sich, dass Sie die .env-Datei entsprechend den folgenden Parametern anpassen:
 
