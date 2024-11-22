@@ -12,6 +12,7 @@ const {
   calculateWinRate,
   calculateProfitFactor,
   calculateAverageHoldDuration,
+  calculateLossRate,
 } = require("../helpers/calculateRates");
 
 module.exports = {
@@ -53,11 +54,7 @@ module.exports = {
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Trade, {}),
-      data: data.map((trade) => ({
-        ...trade._doc,
-        profitOrLoss: trade.profitOrLoss || 0,
-        tradeDuration: trade.tradeDuration || 0,
-      })),
+      data,
     });
   },
   create: async (req, res) => {
@@ -100,6 +97,19 @@ module.exports = {
     const { userId, stockId, symbol, quantity, price, transactionType } =
       req.body;
 
+    if (
+      !userId ||
+      !stockId ||
+      !symbol ||
+      !quantity ||
+      !price ||
+      !transactionType
+    ) {
+      return res.status(400).send({
+        error: true,
+        message: "Missing required fields in request body.",
+      });
+    }
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send({
@@ -125,7 +135,6 @@ module.exports = {
       transactionType,
     });
 
-    // Alım işlemi
     if (transactionType === "BUY") {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
@@ -176,13 +185,9 @@ module.exports = {
         });
         await newTrade.save();
       }
-    }
-    // Satış işlemi
-    else if (transactionType === "SELL") {
-      // Position kontrolü
+    } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
 
-      // Eğer position yoksa veya kapalıysa
       if (!position) {
         return res.status(400).send({
           error: true,
@@ -190,7 +195,6 @@ module.exports = {
         });
       }
 
-      // Position var ama yeterli miktar yoksa
       if (position.totalQuantity < quantity) {
         return res.status(400).send({
           error: true,
@@ -203,18 +207,9 @@ module.exports = {
       const tradeDuration =
         (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
 
-      // Update position after the sale
       position.totalQuantity -= quantity;
       position.totalInvestment -= quantity * position.averagePrice;
 
-      // If position's quantity is now 0, delete the position
-      if (position.totalQuantity === 0) {
-        await Position.deleteOne({ _id: position._id });
-      } else {
-        await position.save();
-      }
-
-      // Create the new trade record
       newTrade = new Trade({
         userId,
         stockId,
@@ -228,23 +223,17 @@ module.exports = {
       });
       await newTrade.save();
 
-      // Update account statistics
       account.completedTransactions += 1;
       account.totalValue += saleProceeds;
 
       if (profitOrLoss > 0) {
-        account.avarageProfit = calculateMovingAverage(
-          account.avarageProfit,
-          profitOrLoss,
-          account.completedTransactions
-        );
-      } else {
-        account.avarageLoss = calculateMovingAverage(
-          account.avarageLoss,
-          Math.abs(profitOrLoss),
-          account.completedTransactions
-        );
+        account.profitableTrades = (account.profitableTrades || 0) + 1;
+      } else if (profitOrLoss < 0) {
+        account.losingTrades = (account.losingTrades || 0) + 1;
       }
+
+      account.winRate = calculateWinRate(account);
+      account.lossRate = calculateLossRate(account);
 
       account.winRate = calculateWinRate(account);
       account.profitFactor = calculateProfitFactor(account);
@@ -258,11 +247,9 @@ module.exports = {
     }
 
     const emailSubject = "New Trade Created!";
-    const emailHtml = getTradeCreatedEmailHtml(
-      user.firstName,
-      newTrade,
-      account.totalValue
-    );
+    const emailHtml = getTradeCreatedEmailHtml(user.firstName, newTrade || {}, {
+      totalValue: account.totalValue,
+    });
     await sendEmail(user.email, emailSubject, emailHtml);
 
     return res.status(201).send({
@@ -295,7 +282,7 @@ module.exports = {
             }
         }
     */
-    const data = await Trade.findById(req.params.id);
+    const data = await Trade.findOne({ _id: req.params.id });
 
     res.status(200).send({
       error: false,

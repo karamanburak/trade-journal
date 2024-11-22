@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
 import StockDetails from "../pages/StockDetails";
+import TransactionDetails from "../pages/TransactionDetails";
 
 const AppRouter = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="profile/:userId" element={<Profile />} />
                     <Route path="/stocks/:stockId" element={<StockDetails />} />
+                    <Route path="/trades/:tradeId" element={<TransactionDetails />} />
                 </Route>
             </Routes>
         </Router>

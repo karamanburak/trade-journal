@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import toastNotify from "../utils/toastNotify";
 import { axiosWithPublic } from "./useAxios";
 import {
@@ -10,16 +10,15 @@ import {
     fetchTradeSuccess,
 } from "../features/tradeSlice";
 import { useNavigate } from "react-router-dom";
-import type { RootState } from "../app/store";
-import { AxiosError } from "axios";
 import { handleAxiosError } from "./handleAxiosError";
 
 const useTradeCall = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { currentUser } = useSelector((state: RootState) => state.auth);
+
 
     const getTrades = async (userId: string): Promise<ITrade[]> => {
+        dispatch(fetchTradeStart())
         try {
             const { data } = await axiosWithPublic(`trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
             dispatch(fetchTradeSuccess(data.data));
@@ -28,11 +27,13 @@ const useTradeCall = () => {
         } catch (error) {
             console.log("Error getting trades:", error);
             handleAxiosError(error)
+            dispatch(fetchTradeFail());
             return []
         }
     };
 
     const getStocks = async (): Promise<IStock[]> => {
+        dispatch(fetchTradeStart());
         try {
             const { data } = await axiosWithPublic("stocks");
             dispatch(fetchStockSuccess(data.data));
@@ -40,6 +41,7 @@ const useTradeCall = () => {
             return data.data;
         } catch (error) {
             console.log("Error getting stocks:", error);
+            dispatch(fetchTradeFail());
             handleAxiosError(error)
             return []
         }
@@ -47,10 +49,12 @@ const useTradeCall = () => {
 
     const getSingleTrade = async (tradeId: string): Promise<void> => {
         dispatch(fetchTradeStart());
+
         try {
             const { data } = await axiosWithPublic(`trades/${tradeId}`);
-            // console.log(data.data);
+            console.log(data.data);
             dispatch(fetchSingleTradeSuccess(data.data));
+            return data.data;
         } catch (error) {
             console.log("Error getting single trade:", error);
             dispatch(fetchTradeFail());

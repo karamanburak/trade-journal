@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const initialState: ITradeState = {
+    trades: [],
+    stocks: [],
+    singleTrade: null,
+    singleStock: null,
+    loading: false,
+    error: false,
+
+}
 
 const tradeSlice = createSlice({
     name: "trade",
 
-    initialState: {
-        trades: [],
-        stocks: [],
-        singleTrade: null,
-        singleStock: null,
-        loading: false,
-        error: false,
-    },
+    initialState,
     reducers: {
         fetchTradeStart: (state) => {
             state.loading = true

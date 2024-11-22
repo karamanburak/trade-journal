@@ -5,9 +5,10 @@ import { GrDocumentMissing } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { useNavigate } from "react-router-dom";
+import { ImSpinner9 } from "react-icons/im";
 
 const TransactionsHistory = () => {
-    const { trades, singleStock } = useSelector((state: RootState) => state.trade);
+    const { trades } = useSelector((state: RootState) => state.trade);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedType, setSelectedType] = useState<string>("");
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -41,6 +42,14 @@ const TransactionsHistory = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    if (!trades) {
+        return (
+            <div className="flex h-screen justify-center items-center text-xl">
+                Loading...  <ImSpinner9 className="animate-spin ml-3 h-8 w-8 text-dark-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="w-full px-6 border-2 h-[calc(100vh-123px)]">
@@ -89,40 +98,34 @@ const TransactionsHistory = () => {
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
                 <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-400px)] md:max-h-[calc(100vh-300px)]">
-                    {filteredTrades.map((trade: ITrade) => {
-                        const { stockId } = trade || {};
-                        const stockIdString = typeof stockId === 'string' ? stockId : stockId?._id;
-                        return (
-                            <div
-                                key={trade._id}
-                                className="flex flex-col lg:flex-row md:justify-between p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md"
-                            >
-                                <div>
-                                    <p><strong>Symbol:</strong> {trade.symbol}</p>
-                                    <p><strong>Transaction Type:</strong> {trade.transactionType}</p>
-                                    <p><strong>Quantity:</strong> {trade.quantity}</p>
-                                    <p><strong>Status:</strong> {trade.status}</p>
-                                </div>
-                                <div className="">
-                                    <p><strong>Last Price:</strong> {trade.price?.toFixed(2)} €</p>
-
-                                    <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
-                                    <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
-                                    <FiExternalLink
-                                        className="ml-auto text-xl mt-7 cursor-pointer"
-                                        onClick={() => navigate(`/stocks/${stockIdString}`)}
-                                    />
-
-                                </div>
+                    {filteredTrades.map((trade: ITrade) => (
+                        <div
+                            key={trade._id}
+                            className="flex flex-col lg:flex-row md:justify-between p-4 bg-light-secondary dark:bg-dark-background2 rounded-lg shadow-sm hover:shadow-md"
+                        >
+                            <div>
+                                <p><strong>Symbol:</strong> {trade.symbol}</p>
+                                <p><strong>Transaction Type:</strong> {trade.transactionType}</p>
+                                <p><strong>Quantity:</strong> {trade.quantity}</p>
+                                <p><strong>Status:</strong> {trade.status}</p>
                             </div>
-                        );
-                    })}
+                            <div className="">
+                                <p><strong>Last Price:</strong> {trade.price?.toFixed(2)} €</p>
+                                <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
+                                <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
+                                <FiExternalLink
+                                    className="ml-auto text-xl mt-7 cursor-pointer"
+                                    onClick={() => navigate(`/trades/${trade?._id}`)}
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
                 <p className="h-[50vh] flex flex-col justify-center items-center text-lg"><GrDocumentMissing className="text-6xl" />  No trades available.</p>
             )}
         </div>
-    )
+    );
 };
 
 export default TransactionsHistory;

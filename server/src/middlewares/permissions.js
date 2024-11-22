@@ -124,20 +124,21 @@ module.exports = {
   /* ---------------------------------- */
 
   isTradeOwner: async (req, res, next) => {
-    const trade = await Trade.findById(req.params.id);
+    try {
+      console.log(req.user);
+      const trade = await Trade.findById(req.params.id);
 
-    if (!trade) {
-      throw new CustomError("Trade not found", 404);
-    }
+      if (!trade) {
+        throw new CustomError("Trade not found", 404);
+      }
 
-    if (!req.user || !req.user._id) {
-      throw new CustomError("User not authenticated", 401);
-    }
-
-    if (String(trade.userId) === String(req.user._id)) {
-      return next();
-    } else {
-      throw new CustomError("You are not the owner of this trade", 403);
+      if (String(trade.userId) === String(req.user._id)) {
+        return next();
+      } else {
+        throw new CustomError("You are not the owner of this trade", 403);
+      }
+    } catch (error) {
+      next(error);
     }
   },
 

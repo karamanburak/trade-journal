@@ -125,6 +125,7 @@ Ab sofort können nur Administratoren den Wert der Aktien ändern. Um als Admini
 - Admin Passwort: Password1!
 
   Nur Benutzer mit diesen Zugangsdaten erhalten Zugriff auf den Endpunkt, um die Werte der Aktien zu bearbeiten. Normale Benutzer haben keinen Zugriff auf diese Funktion.
+  Wenn Sie die Aktienkurse ändern möchten, um die Gewinn- oder Verlustsituation zu überprüfen, müssen Sie sich bitte als Administrator anmelden.
 
 # Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
 

@@ -1,38 +1,33 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaRegEdit } from "react-icons/fa";
-import useTradeCall from "../../../hooks/useTradeCall";
-import EditStockModal from "../Modals/EditStockModal";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../app/store";
-import MenuButton from "../Buttons/MenuButton";
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { FaRegEdit } from "react-icons/fa"
+import useTradeCall from "../../../hooks/useTradeCall"
+import EditStockModal from "../Modals/EditStockModal"
+import { useSelector } from "react-redux"
+import type { RootState } from "../../../app/store"
+import MenuButton from "../Buttons/MenuButton"
 
 interface TableProps {
-    stocks: IStock[];
+    stocks: IStock[]
 }
 
 const Table: React.FC<TableProps> = ({ stocks }) => {
-    const { currentUser } = useSelector((state: RootState) => state.auth);
-    const navigate = useNavigate();
-    const { editStock } = useTradeCall();
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedStock, setSelectedStock] = useState<IStock | null>(null);
-    console.log(currentUser);
-
-
+    const { currentUser } = useSelector((state: RootState) => state.auth)
+    const navigate = useNavigate()
+    const { editStock } = useTradeCall()
+    const [modalOpen, setModalOpen] = useState(false)
+    const [selectedStock, setSelectedStock] = useState<IStock | null>(null)
 
     if (!stocks || stocks.length === 0) {
         return (
-            <div className="flex justify-center items-center p-10 text-lg">
-                No stock data available.
-            </div>
-        );
+            <div className="flex justify-center items-center p-10 text-lg">No stock data available.</div>
+        )
     }
 
     const handleEditClick = (stock: IStock) => {
-        setSelectedStock(stock);
-        setModalOpen(true);
-    };
+        setSelectedStock(stock)
+        setModalOpen(true)
+    }
     return (
         <div className="h-[calc(100vh-225px)] overflow-y-auto scrollbar">
             <div className="mb-2">
@@ -79,7 +74,6 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                                     />
                                 </td>
                             )}
-
                         </tr>
                     ))}
                 </tbody>
@@ -90,16 +84,15 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
                     stock={selectedStock}
                     onClose={() => setModalOpen(false)}
                     onUpdate={(updatedStock) => {
-
                         if (selectedStock) {
-                            editStock(selectedStock._id, updatedStock);
+                            editStock(selectedStock._id, updatedStock)
                         }
-                        setModalOpen(false);
+                        setModalOpen(false)
                     }}
                 />
             )}
         </div>
-    );
-};
+    )
+}
 
-export default Table;
+export default Table

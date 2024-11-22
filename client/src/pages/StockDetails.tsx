@@ -6,7 +6,6 @@ import useTradeCall from "../hooks/useTradeCall";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
 import TradeModal from "../components/Ui/Modals/TradeModal";
-import toastNotify from "../utils/toastNotify";
 import MenuButton from "../components/Ui/Buttons/MenuButton";
 import { ImSpinner9 } from "react-icons/im";
 
@@ -27,7 +26,7 @@ const StockDetails: React.FC = () => {
 
     if (!singleStock) {
         return (
-            <div className="flex h-full justify-center items-center">
+            <div className="flex h-screen justify-center items-center">
                 Loading... <ImSpinner9 className="animate-spin h-8 w-8 text-primary-green" />
             </div>
         );

@@ -5,6 +5,7 @@ function calculateMovingAverage(currentAverage, newValue, totalCount) {
 
 function calculateWinRate(account) {
   const profitableTrades = account.profitableTrades || 0;
+
   const totalTransactions = account.completedTransactions || 0;
 
   if (totalTransactions === 0) {
@@ -12,6 +13,18 @@ function calculateWinRate(account) {
   }
 
   return (profitableTrades / totalTransactions) * 100;
+}
+
+function calculateLossRate(account) {
+  const losingTrades = account.losingTrades || 0;
+  const totalTransactions = account.completedTransactions || 0;
+
+  if (totalTransactions === 0) {
+    return 0;
+  }
+
+  // Zarar işlemlerinin oranı
+  return (losingTrades / totalTransactions) * 100;
 }
 
 function calculateProfitFactor(account) {
@@ -27,6 +40,7 @@ function calculateAverageHoldDuration(currentAverage, newDuration, totalCount) {
 module.exports = {
   calculateMovingAverage,
   calculateWinRate,
+  calculateLossRate,
   calculateProfitFactor,
   calculateAverageHoldDuration,
 };

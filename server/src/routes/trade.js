@@ -4,7 +4,6 @@ const router = require("express").Router();
 
 const trade = require("../controllers/trade");
 const idValidation = require("../middlewares/idValidation");
-const { isTradeOwner } = require("../middlewares/permissions");
 
 //URL: /trades
 

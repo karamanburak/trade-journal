@@ -76,11 +76,8 @@ module.exports = {
     */
 
     // console.log(req.user);
-    const { stockSymbol, quantity, averagePrice } = req.body;
+    const { symbol, quantity, averagePrice } = req.body;
 
-    const formattedStockSymbol = stockSymbol.toUpperCase();
-
-    // Check if quantity and price (averagePrice) are provided
     if (!quantity || !averagePrice) {
       throw new CustomError("Quantity and price are required", 400);
     }
@@ -88,27 +85,23 @@ module.exports = {
     const quantityNum = Number(quantity);
     const priceNum = Number(averagePrice);
 
-    // Check if the quantity and price are valid numbers
     if (isNaN(quantityNum) || isNaN(priceNum)) {
       throw new CustomError("Quantity or price is invalid", 400);
     }
 
-    // Check if the position already exists
     const existingPosition = await Position.findOne({
       userId: req.user._id,
-      stockSymbol: formattedStockSymbol,
     });
 
     if (existingPosition) {
       throw new CustomError("Position already exists", 400);
     }
 
-    // Calculate total investment
     const totalInvestment = quantityNum * priceNum;
 
     const newPosition = await Position.create({
       userId: req.user._id,
-      stockSymbol: formattedStockSymbol,
+      symbol,
       quantity: quantityNum,
       averagePrice: priceNum,
       totalInvestment,

@@ -38,7 +38,7 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
     return (
         <div className="relative w-[90px] sm:w-[240px] h-[calc(100vh-108px)] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2">
 
-            <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="hidden sm:block bg-light-background2 hover:bg-light-background2/80 font-semibold dark:bg-dark-background3 py-1.5 px-8 rounded-full">Deposit or Withdraw</MenuButton >
+            <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="hidden sm:block bg-light-background2 hover:bg-light-background2/80 font-semibold dark:bg-dark-background3 py-1.5 px-8 mt-5 rounded-full">Deposit or Withdraw</MenuButton >
 
             <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="sm:hidden">
                 <PiHandDepositFill className="text-3xl ml-5 mt-3" />

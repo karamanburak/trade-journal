@@ -6,6 +6,7 @@ import type { RootState } from "../app/store";
 import KpiCards from "../components/Dashboard/KpiCards";
 import { Charts } from "../components/Dashboard/Charts";
 import useAccountCall from "../hooks/useAccountCall";
+import { ImSpinner9 } from "react-icons/im";
 
 const Home = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
@@ -31,6 +32,12 @@ const Home = () => {
     useEffect(() => {
         fetchAccountData();
     }, [currentUser]);
+
+    if (!account) {
+        <div className="flex h-screen justify-center items-center text-xl">
+            Loading...  <ImSpinner9 className="animate-spin ml-3 h-8 w-8 text-dark-primary" />
+        </div>
+    }
 
 
     return (

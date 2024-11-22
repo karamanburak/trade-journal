@@ -17,7 +17,6 @@ const TradeSchema = new mongoose.Schema(
     symbol: {
       type: String,
       trim: true,
-      uppercase: true,
       required: true,
     },
     transactionType: {
