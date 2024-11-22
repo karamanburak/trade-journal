@@ -75,6 +75,43 @@ Stellen Sie sicher, dass die folgenden Tools auf Ihrem System installiert sind:
 - **Node.js** (v16 oder höher)
 - **pnpm** (Paketmanager)
 - **MongoDB** (optional)
+-
+- # Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
+
+⚠️ Wichtiger Sicherheitshinweis:
+Alle sicherheitsrelevanten Informationen (wie Passwörter, Datenbankverbindungen, E-Mail-Konfigurationen usw.) werden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese Informationen sorgfältig auf und konfigurieren Sie Ihre .env-Datei entsprechend.
+
+- Die .env-Datei sollte nicht im src-Verzeichnis abgelegt werden. Sie sollte sich stattdessen im Root-Verzeichnis des Projekts befinden.
+
+Vergewissern Sie sich, dass Sie die .env-Datei entsprechend den folgenden Parametern anpassen:
+
+#### .env Datei für Backend
+
+```
+PORT=
+HOST=
+
+CLIENT_URL=
+VERSION=
+
+SECRET_KEY=
+ACCESS_KEY=
+ACCESS_EXP=
+REFRESH_KEY=
+REFRESH_EXP=
+
+MONGODB_URI=
+PAGE_SIZE =
+
+NODEMAILER_EMAIL=
+NODEMAILER_PASSWORD=
+```
+
+#### .env Datei für Frontend
+
+```
+VITE_BACKEND_URL=
+```
 
 ##### Einrichtung und Betrieb des Backends:
 
@@ -117,47 +154,6 @@ Nur der Administrator kann alle Informationen zu den Aktien ändern. Bitte verwe
 - Verwalter-E-Mail: admin@gmail.com
 - Administrator-Kennwort Kennwort1.
   Nur Benutzer mit diesen Zugangsdaten können auf die Funktion zur Bearbeitung aller Angaben zu den Aktien zugreifen. Normale Benutzer haben keinen Zugriff auf diese Funktion. Wenn Sie Aktienkurse ändern möchten, um den Gewinn- oder Verluststatus zu überprüfen, melden Sie sich bitte als Administrator an.
-
-Übersetzt mit DeepL.com (kostenlose Version)
-
-# Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
-
-⚠️ Wichtiger Sicherheitshinweis:
-Alle sicherheitsrelevanten Informationen (wie Passwörter, Datenbankverbindungen, E-Mail-Konfigurationen usw.) werden Ihnen per E-Mail zugesendet. Bitte bewahren Sie diese Informationen sorgfältig auf und konfigurieren Sie Ihre .env-Datei entsprechend.
-
-- Die .env-Datei sollte nicht im src-Verzeichnis abgelegt werden. Sie sollte sich stattdessen im Root-Verzeichnis des Projekts befinden.
-
-Vergewissern Sie sich, dass Sie die .env-Datei entsprechend den folgenden Parametern anpassen:
-
-#### .env Datei für Backend
-
-```
-PORT=
-HOST=
-
-CLIENT_URL=
-VERSION=
-
-SECRET_KEY=
-ACCESS_KEY=
-ACCESS_EXP=
-REFRESH_KEY=
-REFRESH_EXP=
-
-MONGODB_URI=
-PAGE_SIZE =
-
-NODEMAILER_EMAIL=
-NODEMAILER_PASSWORD=
-```
-
-#### .env Datei für Frontend
-
-```
-VITE_BACKEND_URL=
-```
-
-Die .env-Datei sollte nicht in das Versionskontrollsystem (z.B. Git) eingecheckt werden, um sensible Daten zu schützen. Nutzen Sie eine .gitignore-Datei, um diese zu ignorieren.
 
 ### Benachrichtigungen via E-Mail:
 
