@@ -52,9 +52,8 @@ const TransactionsHistory = () => {
     }
 
     return (
-        <div className="w-full px-6 border-2 h-[calc(100vh-123px)]">
-            <h2 className="text-2xl text-center font-semibold my-4">Transactions History</h2>
-            <div className="flex flex-col md:flex-row items-start md:items-center mb-6 gap-6">
+        <div className="w-full px-6 border-2 h-[calc(100vh-122px)]">
+            <div className="flex flex-col md:flex-row items-start md:items-center my-6 gap-6">
                 {/* Search Input */}
                 <input
                     type="text"
@@ -97,7 +96,7 @@ const TransactionsHistory = () => {
                 {filteredTrades?.length || 0} trade(s) found.
             </div>
             {filteredTrades && filteredTrades.length > 0 ? (
-                <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-400px)] md:max-h-[calc(100vh-300px)]">
+                <div className="space-y-4 overflow-y-auto scrollbar max-h-[calc(100vh-320px)] md:max-h-[calc(100vh-250px)]">
                     {filteredTrades.map((trade: ITrade) => (
                         <div
                             key={trade._id}

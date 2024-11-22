@@ -188,6 +188,7 @@ module.exports = {
       }
     } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
+      console.log(position);
 
       if (!position) {
         return res.status(400).send({

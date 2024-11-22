@@ -15,7 +15,7 @@ export default function KpiCards({ account }: KpiCardsProps) {
         return <div>Loading...</div>;
     }
 
-    const { winRate, completedTransactions, avarageProfit, avarageLoss, avarageHoldDuration, totalValue } = account;
+    const { winRate, completedTransactions, avarageHoldDuration, totalValue } = account;
 
     const data = account
         ? [
@@ -29,18 +29,7 @@ export default function KpiCards({ account }: KpiCardsProps) {
                 value: `${completedTransactions}`,
                 changeType: 'positive',
             },
-            {
-                name: 'Average Profit',
-                value: `${avarageProfit.toFixed(2)} €`,
-                // change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
-                changeType: 'positive',
-            },
-            {
-                name: 'Average Loss',
-                value: `${avarageLoss.toFixed(2)} €`,
-                // change: winRate > 0 ? `+${winRate.toFixed(2)}%` : `${winRate.toFixed(2)}%`,
-                changeType: 'negative',
-            },
+
             {
                 name: 'Win Rate',
                 value: `${winRate.toFixed(2)}%`,
@@ -61,7 +50,7 @@ export default function KpiCards({ account }: KpiCardsProps) {
 
     return (
         <>
-            <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mb-5 items-center">
                 {data?.map((item) => (
                     <Card key={item.name} className='border border-gray-300 rounded-lg shadow'>
                         <dd className="flex items-start justify-between">

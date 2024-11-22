@@ -29,7 +29,7 @@ const Table: React.FC<TableProps> = ({ stocks }) => {
         setModalOpen(true)
     }
     return (
-        <div className="h-[calc(100vh-225px)] overflow-y-auto scrollbar">
+        <div className="h-[calc(100vh-250px)] overflow-y-auto scrollbar">
             <div className="mb-2">
                 {stocks.length} stocks found. Click on the BUY/SELL button to view more details.
             </div>
