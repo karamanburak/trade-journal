@@ -52,16 +52,16 @@ const UserMenu = () => {
                         <div className="mt-2">
                             {currentUser ? (
                                 <>
-                                    <MenuButton onClick={() => navigate(`/`)} className="hover:text-dark-primary">Home</MenuButton>
-                                    <MenuButton onClick={() => navigate(`/profile/${currentUser._id}`)} className="hover:text-dark-primary">
+                                    <MenuButton onClick={() => navigate(`/`)} className="w-full text-left hover:text-dark-primary">Home</MenuButton>
+                                    <MenuButton onClick={() => navigate(`/profile/${currentUser._id}`)} className="w-full text-left hover:text-dark-primary">
                                         Profile
                                     </MenuButton>
-                                    <MenuButton onClick={handleLogout} className="hover:text-dark-primary">Logout</MenuButton>
+                                    <MenuButton onClick={handleLogout} className="w-full text-left hover:text-dark-primary">Logout</MenuButton>
                                 </>
                             ) : (
                                 <>
-                                    <MenuButton onClick={() => navigate("/login")} className="hover:text-dark-primary">Login</MenuButton>
-                                    <MenuButton onClick={() => navigate("/register")} className="hover:text-dark-primary">Register</MenuButton>
+                                    <MenuButton onClick={() => navigate("/login")} className="w-full text-left hover:text-dark-primary">Login</MenuButton>
+                                    <MenuButton onClick={() => navigate("/register")} className="w-full text-left hover:text-dark-primary">Register</MenuButton>
                                 </>
                             )}
                             <div className="border-b border-light-blue dark:border-gray-2 my-2"></div>
