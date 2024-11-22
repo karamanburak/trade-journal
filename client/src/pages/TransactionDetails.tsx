@@ -6,7 +6,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import useTradeCall from "../hooks/useTradeCall";
 import Header from "../components/Header/Header";
 import MenuButton from "../components/Ui/Buttons/MenuButton";
-import Charts from "../components/Dashboard/Charts";
 
 const TransactionDetails = () => {
     const { singleTrade } = useSelector((state: RootState) => state.trade);
@@ -38,6 +37,8 @@ const TransactionDetails = () => {
         transactionType,
         quantity,
         price,
+        entryPrice,
+        exitPrice,
         profitOrLoss,
         tradeDuration,
     } = singleTrade;
@@ -45,10 +46,11 @@ const TransactionDetails = () => {
     const items = [
         { label: "Transaction Type", value: transactionType },
         { label: "Symbol", value: symbol },
+        { label: "Price", value: price?.toFixed(2) },
         { label: "Quantity", value: quantity },
-        { label: "Price", value: price },
+        { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Profit/Loss", value: profitOrLoss.toFixed(2) },
-        { label: "Duration", value: tradeDuration },
+        { label: "Duration", value: `${tradeDuration.toFixed(5)} in days` },
     ];
 
     return (
@@ -74,7 +76,6 @@ const TransactionDetails = () => {
                         ))}
                     </div>
 
-                    <Charts account={singleTrade} />
 
                     <div className="mt-8 text-center">
 

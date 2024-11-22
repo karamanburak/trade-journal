@@ -74,7 +74,7 @@ const Profile = () => {
                 return;
             }
             if (withdrawAmount > account.totalValue) {
-                toastNotify("warn", "Insufficient funds!");
+                toastNotify("warn", `Insufficient funds to withdraw.You has ${account.totalValue} available.`);
                 return;
             }
             try {

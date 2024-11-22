@@ -52,7 +52,7 @@ const useTradeCall = () => {
 
         try {
             const { data } = await axiosWithPublic(`trades/${tradeId}`);
-            console.log(data.data);
+            // console.log(data.data);
             dispatch(fetchSingleTradeSuccess(data.data));
             return data.data;
         } catch (error) {

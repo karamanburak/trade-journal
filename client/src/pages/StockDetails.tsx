@@ -39,19 +39,19 @@ const StockDetails: React.FC = () => {
         setModalOpen(true);
     };
 
-    const handleModalSubmit = (tradeDetails: { quantity: number }) => {
+    const handleModalSubmit = (tradeDetails: { quantity: number, price: number }) => {
         const transactionTypeToUse = transactionType || "BUY";
         const payload = {
             ...tradeDetails,
             userId: currentUser?._id,
             stockId: _id,
             symbol,
-            price: lastPrice,
+            price: tradeDetails.price,
             transactionType: transactionTypeToUse,
             status: "OPEN",
             profitOrLoss: 0,
             tradeDuration: 0,
-            entryPrice: lastPrice,
+            entryPrice: tradeDetails.price,
             exitPrice: 0,
             transactionDate: new Date(),
         };

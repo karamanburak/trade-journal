@@ -52,7 +52,7 @@ interface ITrade {
   status: string
   profitOrLoss: number
   tradeDuration: number
-  entryPrice?: number
+  entryPrice: number
   exitPrice: number
   transactionDate: Date
   createdAt?: Date

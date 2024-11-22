@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { TbInfoTriangleFilled } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import useTradeCall from "../hooks/useTradeCall";
 import type { RootState } from "../app/store";
 import KpiCards from "../components/Dashboard/KpiCards";
-import { Charts } from "../components/Dashboard/Charts";
 import useAccountCall from "../hooks/useAccountCall";
 import { ImSpinner9 } from "react-icons/im";
+import { useEffect, useState } from "react";
 
 const Home = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
@@ -44,7 +42,6 @@ const Home = () => {
         <>
             <div>
                 <KpiCards account={account} />
-                <Charts account={account} />
             </div>
         </>
     )

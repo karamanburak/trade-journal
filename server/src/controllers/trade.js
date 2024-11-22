@@ -143,18 +143,19 @@ module.exports = {
         });
       }
 
-      let position = await Position.findOne({ userId, symbol });
-      if (!position) {
-        position = new Position({
-          userId,
-          symbol,
-          stockId,
-          totalQuantity: 0,
-          totalInvestment: 0,
-          averagePrice: 0,
-        });
-      }
-
+      let position = await Position.findOneAndUpdate(
+        { userId, symbol },
+        {
+          $set: {
+            totalQuantity: newQuantity,
+            totalInvestment: newTotalInvestment,
+            averagePrice: newAveragePrice,
+            entryPrice: price,
+          },
+        },
+        { new: true }
+      );
+      console.log("Position after update:", position);
       const newQuantity = position.totalQuantity + quantity;
       const newTotalInvestment = position.totalInvestment + quantity * price;
       const newAveragePrice = newTotalInvestment / newQuantity;
@@ -163,6 +164,7 @@ module.exports = {
       position.totalInvestment = newTotalInvestment;
       position.averagePrice = newAveragePrice;
       await position.save();
+      console.log("Position Updated:", position);
 
       account.totalValue -= requiredValue;
       await account.save();
@@ -173,6 +175,7 @@ module.exports = {
         existingTrade.transactionDate = new Date();
         await existingTrade.save();
         newTrade = existingTrade;
+        console.log("Updated existing trade:", existingTrade);
       } else {
         newTrade = new Trade({
           userId,
@@ -182,8 +185,10 @@ module.exports = {
           price,
           transactionType: "BUY",
           status: "OPEN",
+          entryPrice: price,
         });
         await newTrade.save();
+        console.log("New trade created:", newTrade);
       }
     } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
@@ -220,6 +225,7 @@ module.exports = {
         profitOrLoss,
         tradeDuration: Math.round(tradeDuration * 100) / 100,
         status: "CLOSED",
+        exitPrice: price,
       });
       await newTrade.save();
 

@@ -41,7 +41,6 @@ const EditStockModal: React.FC<EditStockModalProps> = ({ stock, onClose, onUpdat
                         value={updatedStock.symbol}
                         onChange={handleChange}
                         className="border p-2 mb-4 w-full"
-                        disabled
                     />
                     <label>Name</label>
                     <input
@@ -50,7 +49,6 @@ const EditStockModal: React.FC<EditStockModalProps> = ({ stock, onClose, onUpdat
                         value={updatedStock.name}
                         onChange={handleChange}
                         className="border p-2 mb-4 w-full"
-                        disabled
 
                     />
                     <label>Price</label>
@@ -68,7 +66,6 @@ const EditStockModal: React.FC<EditStockModalProps> = ({ stock, onClose, onUpdat
                         value={updatedStock.marketCap}
                         onChange={handleChange}
                         className="border p-2 mb-4 w-full"
-                        disabled
 
                     />
                 </div>

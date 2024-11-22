@@ -119,13 +119,13 @@ Benutzer müssen sich registrieren und anmelden. Nach der Anmeldung kann der Ben
 
 ## Admin-Funktionalität:
 
-Ab sofort können nur Administratoren den Wert der Aktien ändern. Um als Administrator auf die entsprechenden Funktionen zugreifen zu können, verwenden Sie bitte die folgenden Zugangsdaten:
+Nur der Administrator kann alle Informationen zu den Aktien ändern. Bitte verwenden Sie die folgenden Zugangsdaten, um auf die entsprechenden Funktionen zuzugreifen:
 
-- Admin E-Mail: admin@gmail.com
-- Admin Passwort: Password1!
+- Verwalter-E-Mail: admin@gmail.com
+- Administrator-Kennwort Kennwort1.
+  Nur Benutzer mit diesen Zugangsdaten können auf die Funktion zur Bearbeitung aller Angaben zu den Aktien zugreifen. Normale Benutzer haben keinen Zugriff auf diese Funktion. Wenn Sie Aktienkurse ändern möchten, um den Gewinn- oder Verluststatus zu überprüfen, melden Sie sich bitte als Administrator an.
 
-  Nur Benutzer mit diesen Zugangsdaten erhalten Zugriff auf den Endpunkt, um die Werte der Aktien zu bearbeiten. Normale Benutzer haben keinen Zugriff auf diese Funktion.
-  Wenn Sie die Aktienkurse ändern möchten, um die Gewinn- oder Verlustsituation zu überprüfen, müssen Sie sich bitte als Administrator anmelden.
+Übersetzt mit DeepL.com (kostenlose Version)
 
 # Wichtiger Hinweis zu sicherheitsrelevanten Informationen:
 

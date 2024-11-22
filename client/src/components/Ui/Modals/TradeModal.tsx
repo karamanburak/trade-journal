@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Box,
     Modal,
     Typography,
     TextField,
-    Button,
     Stack,
 } from "@mui/material";
 import toastNotify from "../../../utils/toastNotify";
 import MenuButton from "../Buttons/MenuButton";
-
 
 interface TradeModalProps {
     show: boolean;
@@ -19,7 +17,7 @@ interface TradeModalProps {
         price: number;
         transactionType: "BUY" | "SELL";
     };
-    onSubmit: (data: { quantity: number }) => void;
+    onSubmit: (data: { quantity: number, price: number }) => void;
 }
 
 const TradeModal: React.FC<TradeModalProps> = ({
@@ -29,13 +27,15 @@ const TradeModal: React.FC<TradeModalProps> = ({
     onSubmit,
 }) => {
     const [quantity, setQuantity] = useState<number>(0);
+    const [price, setPrice] = useState<number>(tradeData.price);
+
 
     const handleSubmit = () => {
-        if (quantity <= 0) {
-            toastNotify("warn", "Please enter a valid quantity.");
+        if (quantity <= 0 || price <= 0) {
+            toastNotify("warn", "Please enter valid quantity and price.");
             return;
         }
-        onSubmit({ quantity });
+        onSubmit({ quantity, price });
         onHide();
     };
 
@@ -67,16 +67,16 @@ const TradeModal: React.FC<TradeModalProps> = ({
                     />
                     <TextField
                         label="Price"
-                        value={tradeData.price}
+                        value={price}
+                        type="number"
                         fullWidth
-                        disabled
+                        onChange={(e) => setPrice(parseFloat(e.target.value))}
                     />
                     <TextField
                         label="Transaction Type"
                         value={tradeData.transactionType}
                         fullWidth
                         disabled
-
                     />
                     <TextField
                         label="Quantity"
