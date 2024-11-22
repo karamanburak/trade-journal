@@ -76,14 +76,6 @@ Stellen Sie sicher, dass die folgenden Tools auf Ihrem System installiert sind:
 - **pnpm** (Paketmanager)
 - **MongoDB** (optional)
 
-##### Einrichtung und Betrieb des Frontends:
-
-```dotnetcli
-cd ./client
-pnpm install
-pnpm dev
-```
-
 ##### Einrichtung und Betrieb des Backends:
 
 ```dotnetcli
@@ -91,6 +83,14 @@ cd ./server
 npm install
 npm install -g nodemon (optional)
 npm start or nodemon(optional)
+```
+
+##### Einrichtung und Betrieb des Frontends:
+
+```dotnetcli
+cd ./client
+pnpm install
+pnpm dev
 ```
 
 🛠️ Technologien
