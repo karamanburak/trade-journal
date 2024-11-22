@@ -128,6 +128,7 @@ npm start or nodemon(optional)
 cd ./client
 pnpm install
 pnpm dev
+Drücken Sie o + enter oder klicken Sie ctrl + link im Terminal, um die Website zu öffnen
 ```
 
 🛠️ Technologien
