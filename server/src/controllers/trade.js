@@ -139,7 +139,7 @@ module.exports = {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
           error: true,
-          message: "Insufficient funds to complete the trade.",
+          message: `Insufficient funds to complete the trade. `,
         });
       }
 
@@ -155,7 +155,7 @@ module.exports = {
         },
         { new: true }
       );
-      console.log("Position after update:", position);
+
       const newQuantity = position.totalQuantity + quantity;
       const newTotalInvestment = position.totalInvestment + quantity * price;
       const newAveragePrice = newTotalInvestment / newQuantity;
@@ -164,7 +164,6 @@ module.exports = {
       position.totalInvestment = newTotalInvestment;
       position.averagePrice = newAveragePrice;
       await position.save();
-      console.log("Position Updated:", position);
 
       account.totalValue -= requiredValue;
       await account.save();
@@ -175,7 +174,6 @@ module.exports = {
         existingTrade.transactionDate = new Date();
         await existingTrade.save();
         newTrade = existingTrade;
-        console.log("Updated existing trade:", existingTrade);
       } else {
         newTrade = new Trade({
           userId,
@@ -185,10 +183,8 @@ module.exports = {
           price,
           transactionType: "BUY",
           status: "OPEN",
-          entryPrice: price,
         });
         await newTrade.save();
-        console.log("New trade created:", newTrade);
       }
     } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
@@ -215,6 +211,8 @@ module.exports = {
       position.totalQuantity -= quantity;
       position.totalInvestment -= quantity * position.averagePrice;
 
+      await position.save();
+
       newTrade = new Trade({
         userId,
         stockId,
@@ -229,19 +227,31 @@ module.exports = {
       });
       await newTrade.save();
 
+      if (position.totalQuantity === 0) {
+        await Position.deleteOne({ userId, symbol });
+      }
+
       account.completedTransactions += 1;
       account.totalValue += saleProceeds;
 
       if (profitOrLoss > 0) {
         account.profitableTrades = (account.profitableTrades || 0) + 1;
+        account.avarageProfit = calculateMovingAverage(
+          account.avarageProfit,
+          profitOrLoss,
+          account.completedTransactions
+        );
       } else if (profitOrLoss < 0) {
         account.losingTrades = (account.losingTrades || 0) + 1;
+        account.avarageLoss = calculateMovingAverage(
+          account.avarageLoss,
+          profitOrLoss,
+          account.completedTransactions
+        );
       }
 
       account.winRate = calculateWinRate(account);
       account.lossRate = calculateLossRate(account);
-
-      account.winRate = calculateWinRate(account);
       account.profitFactor = calculateProfitFactor(account);
       account.avarageHoldDuration = calculateAverageHoldDuration(
         account.avarageHoldDuration,

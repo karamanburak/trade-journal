@@ -28,8 +28,13 @@ function calculateLossRate(account) {
 }
 
 function calculateProfitFactor(account) {
-  const totalProfits = account.avarageProfit * account.completedTransactions;
-  const totalLosses = account.avarageLoss * account.completedTransactions;
+  const totalProfits =
+    account.profitableTrades > 0
+      ? account.avarageProfit * account.profitableTrades
+      : 0;
+  const totalLosses =
+    account.losingTrades > 0 ? account.avarageLoss * account.losingTrades : 0;
+
   return totalLosses > 0 ? totalProfits / totalLosses : totalProfits;
 }
 
