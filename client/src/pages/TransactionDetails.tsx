@@ -35,6 +35,7 @@ const TransactionDetails = () => {
     }
 
     const {
+        _id,
         symbol,
         transactionType,
         quantity,
@@ -45,16 +46,16 @@ const TransactionDetails = () => {
         tradeDuration,
     } = singleTrade;
 
-    const items = [
+    const tradeDetails = [
         { label: "Transaction Type", value: transactionType },
-        { label: "Symbol", value: symbol },
-        { label: "Price", value: price?.toFixed(2) },
+        { label: "Stock Symbol", value: symbol },
+        { label: "Current Price", value: price?.toFixed(2) },
         { label: "Quantity", value: quantity },
-        { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
+        { label: "Total Cost", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Entry Price", value: entryPrice?.toFixed(2) },
         { label: "Exit Price", value: exitPrice?.toFixed(2) },
         { label: "Profit/Loss", value: profitOrLoss.toFixed(2) },
-        { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
+        { label: "Trade Duration (mins)", value: `${tradeDuration.toFixed(2)}` },
     ];
 
     // Price comparison data for bar chart
@@ -84,8 +85,8 @@ const TransactionDetails = () => {
                         {/* Trade Information Table */}
                         <div className="mt-6">
                             <div className="grid grid-cols-2 gap-2">
-                                {items.map((item, index) => (
-                                    <div key={index} className="flex items-center">
+                                {tradeDetails.map((item) => (
+                                    <div key={_id} className="flex items-center">
                                         <span className="font-medium text-lg">{item.label}:</span>
                                         <span className="ml-3 text-lg ">{item.value}</span>
                                     </div>

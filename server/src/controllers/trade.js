@@ -139,7 +139,8 @@ module.exports = {
       if (account.totalValue < requiredValue) {
         return res.status(400).send({
           error: true,
-          message: "Insufficient funds to complete the trade.",
+          message:
+            "Insufficient funds to complete the trade. Please add funds to your account.",
         });
       }
 

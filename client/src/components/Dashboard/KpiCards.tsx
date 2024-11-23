@@ -40,7 +40,7 @@ export default function KpiCards({ account }: KpiCardsProps) {
 
             {
                 name: 'Average Hold Duration',
-                value: `${avarageHoldDuration.toFixed(2)} minutes`,
+                value: `${avarageHoldDuration.toFixed(2)} mins`,
                 changeType: 'neutral',
             },
         ]
