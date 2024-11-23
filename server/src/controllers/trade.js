@@ -167,14 +167,21 @@ module.exports = {
       account.totalValue -= requiredValue;
       await account.save();
 
+      let tradeToSave;
+      const existingTrade = await Trade.findOne({
+        userId,
+        symbol,
+        transactionType,
+        status: "OPEN",
+      });
+
       if (existingTrade) {
         existingTrade.quantity += quantity;
         existingTrade.price = newAveragePrice;
         existingTrade.transactionDate = new Date();
-        await existingTrade.save();
-        newTrade = existingTrade;
+        tradeToSave = existingTrade;
       } else {
-        newTrade = new Trade({
+        tradeToSave = new Trade({
           userId,
           stockId,
           symbol,
@@ -182,9 +189,11 @@ module.exports = {
           price,
           transactionType: "BUY",
           status: "OPEN",
+          entryPrice: price,
         });
-        await newTrade.save();
       }
+
+      await tradeToSave.save();
     } else if (transactionType === "SELL") {
       const position = await Position.findOne({ userId, symbol });
 
@@ -205,10 +214,16 @@ module.exports = {
       const saleProceeds = quantity * price;
       const profitOrLoss = (price - position.averagePrice) * quantity;
       const tradeDuration =
-        (new Date() - new Date(position.createdAt)) / (1000 * 60 * 60 * 24);
+        (new Date() - new Date(position.createdAt)) / (1000 * 60);
 
       position.totalQuantity -= quantity;
       position.totalInvestment -= quantity * position.averagePrice;
+
+      if (position.totalQuantity === 0) {
+        position.status = "CLOSED";
+      }
+
+      await position.save();
 
       newTrade = new Trade({
         userId,
@@ -220,6 +235,7 @@ module.exports = {
         profitOrLoss,
         tradeDuration: Math.round(tradeDuration * 100) / 100,
         status: "CLOSED",
+        exitPrice: price,
       });
       await newTrade.save();
 
@@ -234,8 +250,6 @@ module.exports = {
 
       account.winRate = calculateWinRate(account);
       account.lossRate = calculateLossRate(account);
-
-      account.winRate = calculateWinRate(account);
       account.profitFactor = calculateProfitFactor(account);
       account.avarageHoldDuration = calculateAverageHoldDuration(
         account.avarageHoldDuration,

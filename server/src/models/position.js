@@ -35,6 +35,11 @@ const PositionSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    status: {
+      type: String,
+      enum: ["OPEN", "CLOSED"],
+      default: "OPEN",
+    },
   },
   {
     collection: "positions",

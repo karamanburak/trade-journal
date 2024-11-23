@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useTradeCall from "../hooks/useTradeCall";
 import Header from "../components/Header/Header";
 import MenuButton from "../components/Ui/Buttons/MenuButton";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend } from 'recharts';
 
 const TransactionDetails = () => {
     const { singleTrade } = useSelector((state: RootState) => state.trade);
@@ -50,38 +51,90 @@ const TransactionDetails = () => {
         { label: "Quantity", value: quantity },
         { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Profit/Loss", value: profitOrLoss.toFixed(2) },
-        { label: "Duration", value: `${tradeDuration.toFixed(5)} in days` },
+        { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
+    ];
+
+    // Price comparison data for bar chart
+    const priceData = [
+        { name: 'Entry Price', value: entryPrice },
+        { name: 'Exit Price', value: exitPrice },
+        { name: 'Current Price', value: price },
+    ];
+
+    // Trade metrics data for line chart
+    const tradeMetrics = [
+        { name: 'Trade Details', quantity, totalValue: quantity * (price || 0), profitLoss: profitOrLoss }
     ];
 
     return (
         <>
             <Header />
-            <div className="min-h-screen py-8 px-4">
-                <div className="max-w-4xl mx-auto bg-light-background2 dark:bg-dark-background2 rounded-lg shadow-lg p-8">
-                    <div className="flex justify-between items-center mb-6">
-                        <h1 className="text-2xl font-semibold mx-auto">Trade Details</h1>
+            <div className="min-h-screen py-8 px-4 bg-light-background dark:bg-dark-background">
+                <div className="w-full mx-auto bg-white dark:bg-dark-background rounded-lg p-8">
+                    <div className=" w-[50vw] p-6 shadow-lg dark:bg-dark-background2 rounded-md">
+                        <div>
+                            <MenuButton
+                                onClick={() => navigate(-1)}
+                                className="bg-dark-danger text-white px-6 py-2 ml-auto rounded hover:bg-dark-danger/70 transition-colors"
+                            >
+                                Back to Trades
+                            </MenuButton>
+                        </div>
+
+                        {/* Trade Information Table */}
+                        <div className="mt-6">
+                            <div className="grid grid-cols-2 gap-6">
+                                {items.map((item, index) => (
+                                    <div key={index} className="flex items-center">
+                                        <span className="font-medium text-lg">{item.label}:</span>
+                                        <span className="ml-3 text-lg ">{item.value}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                    <MenuButton
-                        onClick={() => navigate(-1)}
-                        className="bg-dark-danger text-white px-6 py-2 ml-auto rounded hover:bg-dark-danger/70"
-                    >
-                        Back to Trades
-                    </MenuButton>
+                    <div className="flex justify-center items-center w-full">
+                        {/* Price Comparison Chart */}
+                        <div className="mt-8 w-1/2">
+                            <h2 className="text-xl font-semibold text-dark-primary dark:text-white mb-4">Price Comparison</h2>
+                            <div className="h-64">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={priceData}>
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Bar dataKey="value" fill="#8884d8" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
 
-                    <div>
-                        {items.map((item, index) => (
-                            <p key={index} className="text-lg mb-2">
-                                <strong>{item.label}:</strong> {item.value}
-                            </p>
-                        ))}
+
+                        {/* Trade Metrics Chart */}
+                        <div className="mt-8 w-1/2">
+                            <h2 className="text-xl font-semibold text-dark-primary dark:text-white mb-4">Trade Metrics</h2>
+                            <div className="h-64">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={tradeMetrics}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
+                                        <Line type="monotone" dataKey="quantity" stroke="#8884d8" name="Quantity" />
+                                        <Line type="monotone" dataKey="totalValue" stroke="#82ca9d" name="Total Value" />
+                                        <Line type="monotone" dataKey="profitLoss" stroke="#ffc658" name="Profit/Loss" />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+
                     </div>
 
 
-                    <div className="mt-8 text-center">
-
-                    </div>
                 </div>
             </div>
+
         </>
     );
 };

@@ -105,7 +105,7 @@ const Profile = () => {
         <>
             <Header />
             <div className="w-full h-[calc(100vh-100px)] flex flex-row justify-center bg-light-background dark:bg-dark-background p-6">
-                <div className="w-[90vw] md:w-[70vw]  items-center bg-light-background2 dark:bg-dark-background2 shadow-lg rounded-lg p-6 space-y-6">
+                <div className="w-[90vw] md:w-[70vw]  items-center rounded-lg p-6 space-y-6">
                     <div className="flex flex-col items-center space-y-6">
                         <div className="flex flex-col items-center space-y-2">
                             <div className="w-24 h-24 rounded-full bg-light-primary dark:bg-dark-background3 flex items-center justify-center text-3xl font-bold text-white">
@@ -113,13 +113,13 @@ const Profile = () => {
                             </div>
                             <div className="text-center">
                                 <p className="text-xl font-semibold text-dark-primary">{currentUser?.firstName} {currentUser?.lastName}</p>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">{currentUser?.email}</p>
+                                <p className="text-sm">{currentUser?.email}</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Account Overview */}
-                    <div className="bg-light-background3 dark:bg-dark-background3 rounded-lg px-4 py-12 shadow-md">
+                    <div className="bg-light-background2 dark:bg-dark-background3 rounded-lg px-4 py-12 shadow-md">
                         {account ? (
                             <div className="space-y-4">
                                 <div className="flex justify-end gap-5 mb-9">
