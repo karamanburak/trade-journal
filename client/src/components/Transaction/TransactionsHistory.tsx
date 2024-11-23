@@ -109,7 +109,7 @@ const TransactionsHistory = () => {
                                 <p><strong>Status:</strong> {trade.status}</p>
                             </div>
                             <div className="">
-                                <p><strong>Avarage Price:</strong> {trade.price?.toFixed(2)} €</p>
+                                <p><strong>Price:</strong> {trade.price?.toFixed(2)} €</p>
                                 <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
                                 <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
                                 <FiExternalLink

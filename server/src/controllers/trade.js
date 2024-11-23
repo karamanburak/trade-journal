@@ -211,6 +211,13 @@ module.exports = {
         });
       }
 
+      if (position.totalQuantity === 0) {
+        return res.status(400).send({
+          error: true,
+          message: `You have no shares of ${symbol} in your portfolio.`,
+        });
+      }
+
       const saleProceeds = quantity * price;
       const profitOrLoss = (price - position.averagePrice) * quantity;
       const tradeDuration =

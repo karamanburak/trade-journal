@@ -53,8 +53,10 @@ const TransactionDetails = () => {
         { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Entry Price", value: entryPrice?.toFixed(2) },
         { label: "Exit Price", value: exitPrice?.toFixed(2) },
-        { label: "Profit/Loss", value: profitOrLoss.toFixed(2) },
-        { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
+        {
+            label: "Profit/Loss",
+            value: `${profitOrLoss.toFixed(2)} (${profitOrLoss >= 0 ? 'Profit' : 'Loss'})`
+        }, { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
     ];
 
     // Price comparison data for bar chart

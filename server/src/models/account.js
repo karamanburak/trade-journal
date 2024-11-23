@@ -36,7 +36,7 @@ const AccountSchema = new mongoose.Schema(
     },
     avarageHoldDuration: {
       type: Number,
-      default: 0, //in days
+      default: 0,
     },
   },
   {

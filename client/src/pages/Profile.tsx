@@ -159,7 +159,7 @@ const Profile = () => {
                                     </div>
                                     <div className="flex justify-between">
                                         <p className="text-sm font-medium">Average Hold Duration</p>
-                                        <p>{account.avarageHoldDuration.toFixed(5)} days</p>
+                                        <p>{account.avarageHoldDuration.toFixed(2)} (mins)</p>
                                     </div>
                                 </div>
                             </div>
