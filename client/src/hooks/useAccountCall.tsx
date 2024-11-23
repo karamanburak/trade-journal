@@ -17,9 +17,9 @@ const useAccountCall = () => {
         }
     };
 
-    const updateAccount = async (accountData: { accountId: string, userId: string, totalValue: number, transactionType: string }) => {
+    const updateAccount = async (depositData: { accountId: string, userId: string, amount: number, transactionType: string }) => {
         try {
-            const { data } = await axiosWithToken.put(`accounts/${accountData.accountId}`, accountData);
+            const { data } = await axiosWithToken.post(`deposits`, depositData);
             toastNotify("success", "Value updated successfully.");
             return data;
         } catch (error) {

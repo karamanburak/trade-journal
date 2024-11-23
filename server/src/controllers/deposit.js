@@ -2,6 +2,7 @@
 
 const Deposit = require("../models/deposit");
 const { CustomError } = require("../errors/customError");
+const Account = require("../models/account");
 
 module.exports = {
   list: async (req, res) => {
@@ -38,25 +39,29 @@ module.exports = {
   create: async (req, res) => {
     /*
         #swagger.tags = ["Deposit"]
-        #swagger.summary = "Create a New Deposit"
-        #swagger.description = "Add a new deposit transaction to the user's account"
+        #swagger.summary = "Create a New Transaction (Deposit or Withdrawal)"
+        #swagger.description = "Add a new transaction (deposit or withdrawal) and update the account balance"
         #swagger.parameters["body"] = {
             in: "body",
             required: true,
             schema: {
+                accountId: "account-id",
                 amount: 5000,
+                transactionType: "DEPOSIT", // or "WITHDRAWAL"
                 date: "2024-11-17",
             },
         }
         #swagger.responses[201] = {
-            description: "Deposit created successfully",
+            description: "Transaction created successfully",
             schema: {
                 error: false,
-                message: "Deposit added successfully",
+                message: "Transaction added successfully",
                 data: {
-                    _id: "deposit-id",
+                    _id: "transaction-id",
+                    accountId: "account-id",
                     userId: "user-id",
                     amount: 5000,
+                    transactionType: "DEPOSIT",
                     date: "2024-11-17",
                 },
             },
@@ -65,14 +70,14 @@ module.exports = {
             description: "Invalid input",
             schema: {
                 error: true,
-                message: "Amount and date are required",
+                message: "Amount, accountId, and transactionType are required",
             },
         }
     */
-    const { amount } = req.body;
+    const { amount, accountId, transactionType } = req.body;
 
-    if (!amount) {
-      throw new CustomError("Amount is required", 400);
+    if (!amount || !accountId || !transactionType) {
+      throw new CustomError("Amount and accountId are required", 400);
     }
 
     const amountNum = Number(amount);
@@ -80,12 +85,39 @@ module.exports = {
       throw new CustomError("Amount must be a positive number", 400);
     }
 
-    const newDeposit = await Deposit.create(req.body);
+    if (!["DEPOSIT", "WITHDRAWAL"].includes(transactionType)) {
+      throw new CustomError(
+        "Invalid transaction type. Must be 'DEPOSIT' or 'WITHDRAWAL'",
+        400
+      );
+    }
+
+    const account = await Account.findById(accountId);
+
+    if (!account) {
+      throw new CustomError("Account not found", 404);
+    }
+
+    if (transactionType === "WITHDRAWAL") {
+      if (account.totalValue < amountNum) {
+        throw new CustomError("Insufficient balance", 400);
+      }
+      account.totalValue -= amountNum;
+    } else if (transactionType === "DEPOSIT") {
+      account.totalValue += amountNum;
+    }
+
+    await account.save();
+
+    const newTransaction = await Deposit.create({
+      ...req.body,
+      userId: req.user._id,
+    });
 
     res.status(201).json({
       error: false,
-      message: "Deposit added successfully",
-      data: newDeposit,
+      message: "Transaction added successfully",
+      data: newTransaction,
     });
   },
 

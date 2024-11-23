@@ -44,14 +44,14 @@ const Profile = () => {
                 return;
             }
             try {
-                const accountData = {
+                const depositData = {
                     accountId: account._id,
                     userId: currentUser._id,
-                    totalValue: depositAmount,
-                    transactionType: "deposit",
+                    amount: depositAmount,
+                    transactionType: "DEPOSIT",
                 };
 
-                const response = await updateAccount(accountData);
+                const response = await updateAccount(depositData);
 
                 if (response?.data) {
                     await fetchAccountData();
@@ -78,14 +78,14 @@ const Profile = () => {
                 return;
             }
             try {
-                const accountData = {
+                const depositData = {
                     accountId: account._id,
                     userId: currentUser._id,
-                    totalValue: withdrawAmount,
-                    transactionType: "withdrawal",
+                    amount: withdrawAmount,
+                    transactionType: "WITHDRAWAL",
                 };
 
-                const response = await updateAccount(accountData);
+                const response = await updateAccount(depositData);
 
                 if (response?.data) {
                     await fetchAccountData();
