@@ -35,7 +35,6 @@ const TransactionDetails = () => {
     }
 
     const {
-        _id,
         symbol,
         transactionType,
         quantity,
@@ -85,8 +84,8 @@ const TransactionDetails = () => {
                         {/* Trade Information Table */}
                         <div className="mt-6">
                             <div className="grid grid-cols-2 gap-2">
-                                {tradeDetails.map((item) => (
-                                    <div key={_id} className="flex items-center">
+                                {tradeDetails.map((item, index) => (
+                                    <div key={index} className="flex items-center">
                                         <span className="font-medium text-lg">{item.label}:</span>
                                         <span className="ml-3 text-lg ">{item.value}</span>
                                     </div>
