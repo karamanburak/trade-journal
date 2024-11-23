@@ -189,7 +189,7 @@ module.exports = {
           price,
           transactionType: "BUY",
           status: "OPEN",
-          entryPrice: price,
+          entryPrice: newAveragePrice,
         });
       }
 
@@ -235,6 +235,7 @@ module.exports = {
         profitOrLoss,
         tradeDuration: Math.round(tradeDuration * 100) / 100,
         status: "CLOSED",
+        entryPrice: position.averagePrice,
         exitPrice: price,
       });
       await newTrade.save();

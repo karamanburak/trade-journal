@@ -7,6 +7,7 @@ import useTradeCall from "../hooks/useTradeCall";
 import Header from "../components/Header/Header";
 import MenuButton from "../components/Ui/Buttons/MenuButton";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend } from 'recharts';
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const TransactionDetails = () => {
     const { singleTrade } = useSelector((state: RootState) => state.trade);
@@ -50,6 +51,8 @@ const TransactionDetails = () => {
         { label: "Price", value: price?.toFixed(2) },
         { label: "Quantity", value: quantity },
         { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
+        { label: "Entry Price", value: entryPrice?.toFixed(2) },
+        { label: "Exit Price", value: exitPrice?.toFixed(2) },
         { label: "Profit/Loss", value: profitOrLoss.toFixed(2) },
         { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
     ];
@@ -59,6 +62,8 @@ const TransactionDetails = () => {
         { name: 'Entry Price', value: entryPrice },
         { name: 'Exit Price', value: exitPrice },
         { name: 'Current Price', value: price },
+
+
     ];
 
     // Trade metrics data for line chart
@@ -70,20 +75,15 @@ const TransactionDetails = () => {
         <>
             <Header />
             <div className="min-h-screen py-8 px-4 bg-light-background dark:bg-dark-background">
+                <div className="text-lg font-semibold flex cursor-pointer mb-4" onClick={() => navigate("/")} >
+                    <MdKeyboardArrowLeft className="text-3xl -mt-0.5" />  Back
+                </div>
                 <div className="w-full mx-auto bg-white dark:bg-dark-background rounded-lg p-8">
-                    <div className=" w-[50vw] p-6 shadow-lg dark:bg-dark-background2 rounded-md">
-                        <div>
-                            <MenuButton
-                                onClick={() => navigate(-1)}
-                                className="bg-dark-danger text-white px-6 py-2 ml-auto rounded hover:bg-dark-danger/70 transition-colors"
-                            >
-                                Back to Trades
-                            </MenuButton>
-                        </div>
+                    <div className="w-[50vw] p-6 shadow-lg dark:bg-dark-background2 rounded-md mb-4">
 
                         {/* Trade Information Table */}
                         <div className="mt-6">
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-2 gap-2">
                                 {items.map((item, index) => (
                                     <div key={index} className="flex items-center">
                                         <span className="font-medium text-lg">{item.label}:</span>

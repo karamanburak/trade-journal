@@ -63,8 +63,8 @@ const StockDetails: React.FC = () => {
     return (
         <>
             <Header />
-            <div className="ml-4 text-lg font-semibold flex mt-4">
-                <MdKeyboardArrowLeft className="text-3xl -mt-0.5 cursor-pointer" onClick={() => navigate("/")} />    Back
+            <div className="ml-4 text-lg font-semibold flex mt-4 cursor-pointer" onClick={() => navigate("/")} >
+                <MdKeyboardArrowLeft className="text-3xl -mt-0.5" />    Back
             </div>
             <div className="p-6 max-w-5xl mx-auto rounded-xl bg-light-background3 dark:bg-dark-background3">
                 <h1 className="text-4xl font-extrabold mb-6 text-center">

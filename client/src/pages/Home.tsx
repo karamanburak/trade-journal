@@ -12,11 +12,12 @@ const Home = () => {
     const { getTrades } = useTradeCall();
     const { getAccount, updateAccount } = useAccountCall();
     const [account, setAccount] = useState<IAccount>();
-
+    const [loading, setLoading] = useState<boolean>(true);
 
     const fetchAccountData = async () => {
         try {
             if (currentUser?._id) {
+                setLoading(true);
                 getTrades(currentUser._id);
                 const accountData = await getAccount(currentUser._id);
                 setAccount(accountData.data[0]);
@@ -25,6 +26,8 @@ const Home = () => {
             }
         } catch (error) {
             console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -32,7 +35,7 @@ const Home = () => {
         fetchAccountData();
     }, [currentUser]);
 
-    if (!account) {
+    if (loading) {
         <div className="flex h-screen justify-center items-center text-xl">
             Loading...  <ImSpinner9 className="animate-spin ml-3 h-8 w-8 text-dark-primary" />
         </div>
