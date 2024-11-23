@@ -5,7 +5,6 @@ import type { RootState } from "../app/store";
 import { useParams, useNavigate } from "react-router-dom";
 import useTradeCall from "../hooks/useTradeCall";
 import Header from "../components/Header/Header";
-import MenuButton from "../components/Ui/Buttons/MenuButton";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend } from 'recharts';
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -45,18 +44,16 @@ const TransactionDetails = () => {
         tradeDuration,
     } = singleTrade;
 
-    const items = [
+    const tradeDetails = [
         { label: "Transaction Type", value: transactionType },
-        { label: "Symbol", value: symbol },
-        { label: "Price", value: price?.toFixed(2) },
+        { label: "Stock Symbol", value: symbol },
+        { label: "Current Price", value: price?.toFixed(2) },
         { label: "Quantity", value: quantity },
-        { label: "Total Price", value: (quantity * (price || 0)).toFixed(2) },
+        { label: "Total Cost", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Entry Price", value: entryPrice?.toFixed(2) },
         { label: "Exit Price", value: exitPrice?.toFixed(2) },
-        {
-            label: "Profit/Loss",
-            value: `${profitOrLoss.toFixed(2)} (${profitOrLoss >= 0 ? 'Profit' : 'Loss'})`
-        }, { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
+        { label: "Profit/Loss", value: `${profitOrLoss.toFixed(2)} (${profitOrLoss >= 0 ? 'Profit' : 'Loss'})` },
+        { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
     ];
 
     // Price comparison data for bar chart
@@ -86,7 +83,7 @@ const TransactionDetails = () => {
                         {/* Trade Information Table */}
                         <div className="mt-6">
                             <div className="grid grid-cols-2 gap-2">
-                                {items.map((item, index) => (
+                                {tradeDetails.map((item, index) => (
                                     <div key={index} className="flex items-center">
                                         <span className="font-medium text-lg">{item.label}:</span>
                                         <span className="ml-3 text-lg ">{item.value}</span>
