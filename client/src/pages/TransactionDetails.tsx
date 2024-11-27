@@ -47,12 +47,11 @@ const TransactionDetails = () => {
     const tradeDetails = [
         { label: "Transaction Type", value: transactionType },
         { label: "Stock Symbol", value: symbol },
-        { label: "Current Price", value: price?.toFixed(2) },
         { label: "Quantity", value: quantity },
         { label: "Total Cost", value: (quantity * (price || 0)).toFixed(2) },
         { label: "Entry Price", value: entryPrice?.toFixed(2) },
-        { label: "Exit Price", value: exitPrice?.toFixed(2) },
         { label: "Profit/Loss", value: `${profitOrLoss.toFixed(2)} (${profitOrLoss >= 0 ? 'Profit' : 'Loss'})` },
+        { label: "Exit Price", value: exitPrice?.toFixed(2) },
         { label: "Duration", value: `${tradeDuration.toFixed(2)} / in minutes` },
     ];
 

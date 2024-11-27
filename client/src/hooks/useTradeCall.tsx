@@ -81,7 +81,7 @@ const useTradeCall = () => {
         try {
             const { data } = await axiosWithPublic.post("trades", tradeInfo);
             toastNotify("success", data.message);
-            navigate(`/`);
+            navigate(`/?tab=transactions`);
         } catch (error) {
             console.log("Unknown error:", error);
             dispatch(fetchTradeFail());

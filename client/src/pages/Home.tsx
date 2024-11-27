@@ -46,7 +46,6 @@ const Home = () => {
         <>
             <div>
                 <KpiCards account={account} />
-                <TransactionsHistory />
             </div>
         </>
     )

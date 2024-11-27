@@ -1,12 +1,12 @@
 import { MdDashboard } from "react-icons/md";
 import { AiOutlineStock } from "react-icons/ai";
 import { PiHandDepositFill } from "react-icons/pi";
+import { GrTransaction } from "react-icons/gr";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../app/store";
 import { useNavigate } from "react-router-dom";
 import MenuButton from "../Buttons/MenuButton";
-
 
 
 const links = [
@@ -19,6 +19,11 @@ const links = [
         title: "Stocks",
         key: "stocks",
         icon: <AiOutlineStock />,
+    },
+    {
+        title: "Transactions",
+        key: "transactions",
+        icon: <GrTransaction />,
     },
 
 ];
@@ -34,7 +39,7 @@ const Sidebar = ({ onNavigate }: { onNavigate: (key: string) => void }) => {
 
 
     return (
-        <div className={`relative w-[90px] sm:w-[240px] ${activeKey === "dashboard" ? "max-h-[calc(100vh+394px)] md:max-h-[calc(100vh+140px)]" : "h-[calc(100vh-105px)]"} px-2 shadow-lg bg-light-secondary dark:bg-dark-background2`}>
+        <div className={`relative w-[90px] sm:w-[240px] h-[calc(100vh-105px)] px-2 shadow-lg bg-light-secondary dark:bg-dark-background2`}>
             <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="hidden sm:block bg-light-background2 hover:bg-light-background2/80 font-semibold dark:bg-dark-background3 py-1.5 px-8 mt-5 rounded-full">Deposit or Withdraw</MenuButton >
 
             <MenuButton onClick={() => navigate(`/profile/${currentUser?._id}`)} className="sm:hidden">
