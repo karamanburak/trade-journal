@@ -23,7 +23,6 @@ function calculateLossRate(account) {
     return 0;
   }
 
-  // Zarar işlemlerinin oranı
   return (losingTrades / totalTransactions) * 100;
 }
 
