@@ -60,10 +60,12 @@ const TradeSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    notes: {
-      type: String,
-      trim: true,
-    },
+    notes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Note",
+      },
+    ],
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

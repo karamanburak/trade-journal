@@ -298,7 +298,7 @@ module.exports = {
             }
         }
     */
-    const data = await Trade.findOne({ _id: req.params.id });
+    const data = await Trade.findOne({ _id: req.params.id }).populate("notes");
 
     res.status(200).send({
       error: false,
