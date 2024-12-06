@@ -57,6 +57,7 @@ interface ITrade {
   transactionDate: Date
   createdAt?: Date
   updatedAt?: Date
+  notes: []
 }
 
 interface ITradeState {

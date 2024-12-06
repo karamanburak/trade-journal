@@ -63,7 +63,7 @@ export default function KpiCardsWithChart({ account }: KpiCardsProps) {
         },
         {
             name: 'Average Hold Duration',
-            value: account.avarageHoldDuration,
+            value: account.avarageHoldDuration.toFixed(2),
             unit: 'mins'
         }
     ];

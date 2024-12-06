@@ -7,6 +7,7 @@ import useTradeCall from "../hooks/useTradeCall";
 import Header from "../components/Header/Header";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend } from 'recharts';
 import { MdKeyboardArrowLeft } from "react-icons/md";
+import Notes from "../components/Transaction/Notes";
 
 const TransactionDetails = () => {
     const { singleTrade } = useSelector((state: RootState) => state.trade);
@@ -33,6 +34,9 @@ const TransactionDetails = () => {
         );
     }
 
+    console.log(singleTrade);
+
+
     const {
         symbol,
         transactionType,
@@ -42,6 +46,7 @@ const TransactionDetails = () => {
         exitPrice,
         profitOrLoss,
         tradeDuration,
+        notes = []
     } = singleTrade;
 
     const tradeDetails = [
@@ -73,27 +78,34 @@ const TransactionDetails = () => {
         <>
             <Header />
             <div className="min-h-screen py-8 px-4 bg-light-background dark:bg-dark-background">
-                <div className="text-lg font-semibold flex cursor-pointer mb-4" onClick={() => navigate("/")} >
+
+                <div className="w-[80px] text-lg font-semibold flex cursor-pointer mb-4" onClick={() => navigate("/")} >
                     <MdKeyboardArrowLeft className="text-3xl -mt-0.5" />  Back
                 </div>
-                <div className="w-full mx-auto bg-white dark:bg-dark-background rounded-lg p-8">
-                    <div className="w-[50vw] p-6 shadow-lg dark:bg-dark-background2 rounded-md mb-4">
+                <div className="w-full mx-auto dark:bg-dark-background rounded-lg p-8">
+                    <div className="w-full md:max-h-[300px] md:flex p-6  bg-light-background2/20 dark:bg-dark-background2 rounded-md mb-4">
+                        <div className="md:w-1/2">
 
-                        {/* Trade Information Table */}
-                        <div className="mt-6">
-                            <div className="grid grid-cols-2 gap-2">
-                                {tradeDetails.map((item, index) => (
-                                    <div key={index} className="flex items-center">
-                                        <span className="font-medium text-lg">{item.label}:</span>
-                                        <span className="ml-3 text-lg ">{item.value}</span>
-                                    </div>
-                                ))}
+                            {/* Trade Information Table */}
+                            <div className="mt-6">
+                                <div className="md:grid grid-cols-2 gap-2">
+                                    {tradeDetails.map((item, index) => (
+                                        <div key={index} className="flex items-center">
+                                            <span className="font-medium text-lg">{item.label}:</span>
+                                            <span className="ml-3 text-lg ">{item.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
+                        <div className="md:w-1/2 overflow-y-auto scrollbar h-[270px] my-6 md:m-0">
+                            <Notes notes={notes} />
+                        </div>
+
                     </div>
-                    <div className="flex justify-center items-center w-full">
+                    <div className="sm:flex justify-center items-center w-full">
                         {/* Price Comparison Chart */}
-                        <div className="mt-8 w-1/2">
+                        <div className="mt-8 md:w-1/2">
                             <h2 className="text-xl font-semibold text-dark-primary dark:text-white mb-4">Price Comparison</h2>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -105,11 +117,12 @@ const TransactionDetails = () => {
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
+
                         </div>
 
 
                         {/* Trade Metrics Chart */}
-                        <div className="mt-8 w-1/2">
+                        <div className="mt-8 md:w-1/2">
                             <h2 className="text-xl font-semibold text-dark-primary dark:text-white mb-4">Trade Metrics</h2>
                             <div className="h-64">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -131,6 +144,7 @@ const TransactionDetails = () => {
 
 
                 </div>
+
             </div>
 
         </>
