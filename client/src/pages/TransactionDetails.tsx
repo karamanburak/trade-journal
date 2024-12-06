@@ -83,7 +83,7 @@ const TransactionDetails = () => {
                     <MdKeyboardArrowLeft className="text-3xl -mt-0.5" />  Back
                 </div>
                 <div className="w-full mx-auto dark:bg-dark-background rounded-lg p-8">
-                    <div className="w-full md:max-h-[300px] md:flex p-6  bg-light-background2/20 dark:bg-dark-background2 rounded-md mb-4">
+                    <div className="w-full md:max-h-[220px] md:flex p-6  bg-light-background2/20 dark:bg-dark-background2 rounded-md mb-4">
                         <div className="md:w-1/2">
 
                             {/* Trade Information Table */}
@@ -98,7 +98,7 @@ const TransactionDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="md:w-1/2 overflow-y-auto scrollbar h-[270px] my-6 md:m-0">
+                        <div className="md:w-1/2 overflow-y-auto scrollbar h-[190px] my-6 md:m-0">
                             <Notes notes={notes} />
                         </div>
 
