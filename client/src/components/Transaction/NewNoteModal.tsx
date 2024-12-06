@@ -31,7 +31,7 @@ const NewNoteModal: React.FC<INewNoteModalProps> = ({ isVisible, onClose, onSave
                     value={noteContent}
                     onChange={(e) => setNoteContent(e.target.value)}
                     rows={4}
-                    className="w-full p-2 border rounded-md"
+                    className="w-full p-2 border rounded-md text-dark-background2"
                     placeholder="Write your note here..."
                 />
                 <div className="mt-4 flex justify-end">

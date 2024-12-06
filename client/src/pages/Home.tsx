@@ -5,7 +5,6 @@ import KpiCards from "../components/Dashboard/KpiCards";
 import useAccountCall from "../hooks/useAccountCall";
 import { ImSpinner9 } from "react-icons/im";
 import { useEffect, useState } from "react";
-import TransactionsHistory from "../components/Transaction/TransactionsHistory";
 
 const Home = () => {
     const { currentUser } = useSelector((state: RootState) => state.auth);

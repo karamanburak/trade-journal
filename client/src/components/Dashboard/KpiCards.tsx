@@ -70,10 +70,10 @@ export default function KpiCardsWithChart({ account }: KpiCardsProps) {
 
     return (
         <div>
-            <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mb-5 items-center">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 mb-5 items-center">
                 {cardData.map((item) => (
                     <Card key={item.name} className='border border-light-primary rounded-lg shadow'>
-                        <dd className="flex items-start justify-between">
+                        <div className="flex items-start justify-between">
                             <span className="text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
                                 {item.value}
                             </span>
@@ -89,16 +89,16 @@ export default function KpiCardsWithChart({ account }: KpiCardsProps) {
                                     {item.change}
                                 </span>
                             )}
-                        </dd>
+                        </div>
                         <dt className="mt-1 text-tremor-default text-tremor-content dark:text-dark-tremor-content">
                             {item.name}
                         </dt>
                     </Card>
                 ))}
-            </dl>
+            </div>
 
-            <Card className="w-full h-96 mt-5">
-                <ResponsiveContainer width="100%" height="100%">
+            <Card className="w-full h-80 mt-5">
+                <ResponsiveContainer width="100%">
                     <BarChart data={chartData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="name" />
@@ -114,6 +114,6 @@ export default function KpiCardsWithChart({ account }: KpiCardsProps) {
                     </BarChart>
                 </ResponsiveContainer>
             </Card>
-        </div>
+        </div >
     );
 }

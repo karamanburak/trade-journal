@@ -52,7 +52,7 @@ const TransactionsHistory = () => {
     }
 
     return (
-        <div className="w-full px-6 border-2 h-[calc(100vh-122px)]">
+        <div className="w-full px-6 border-t border-l h-[calc(100vh-122px)]">
             <div className="flex flex-col md:flex-row items-start md:items-center my-6 gap-6">
                 {/* Search Input */}
                 <input

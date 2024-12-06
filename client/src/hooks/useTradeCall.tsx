@@ -127,16 +127,6 @@ const useTradeCall = () => {
         }
     };
 
-    const postNote = async (tradeId: string, note: string): Promise<void> => {
-        dispatch(fetchTradeStart());
-        try {
-            const { data } = await axiosWithPublic.post(`trades/${tradeId}/notes`, { note });
-            toastNotify("success", data.message);
-        } catch (error) {
-            console.log("Error posting note:", error);
-            dispatch(fetchTradeFail());
-        }
-    }
 
     return {
         getTrades,
@@ -147,7 +137,6 @@ const useTradeCall = () => {
         editTrade,
         editStock,
         deleteTrade,
-        postNote
     };
 };
 

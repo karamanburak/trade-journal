@@ -34,8 +34,7 @@ const TransactionDetails = () => {
         );
     }
 
-    console.log(singleTrade);
-
+    // console.log(singleTrade);
 
     const {
         symbol,
@@ -99,7 +98,7 @@ const TransactionDetails = () => {
                             </div>
                         </div>
                         <div className="md:w-1/2 overflow-y-auto scrollbar h-[190px] my-6 md:m-0">
-                            <Notes notes={notes} />
+                            <Notes notes={notes} tradeId={tradeId || ""} />
                         </div>
 
                     </div>
