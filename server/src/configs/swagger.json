@@ -6,7 +6,7 @@
     "description": "RESTful-API Trade-Journal",
     "termsOfService": "",
     "contact": {
-      "name": "tradejournalpjm@gmail.com",
+      "name": "karaman.buraak@gmail.com",
       "email": "tradejournalpjm@gmail.com"
     },
     "license": {
@@ -44,7 +44,7 @@
         }
       }
     },
-    "/api/${VERSION}/tokens/": {
+    "/api/v1/tokens/": {
       "get": {
         "tags": [
           "Token"
@@ -253,7 +253,7 @@
         }
       }
     },
-    "/api/${VERSION}/tokens/{id}": {
+    "/api/v1/tokens/{id}": {
       "get": {
         "tags": [
           "Token"
@@ -427,7 +427,7 @@
         }
       }
     },
-    "/api/${VERSION}/auth/register": {
+    "/api/v1/auth/register": {
       "post": {
         "tags": [
           "Authentication"
@@ -545,7 +545,7 @@
         }
       }
     },
-    "/api/${VERSION}/auth/login": {
+    "/api/v1/auth/login": {
       "post": {
         "tags": [
           "Authentication"
@@ -626,7 +626,7 @@
         }
       }
     },
-    "/api/${VERSION}/auth/logout": {
+    "/api/v1/auth/logout": {
       "get": {
         "tags": [
           "Authentication"
@@ -737,7 +737,7 @@
         }
       }
     },
-    "/api/${VERSION}/users/": {
+    "/api/v1/users/": {
       "get": {
         "tags": [
           "Users"
@@ -794,7 +794,7 @@
         }
       }
     },
-    "/api/${VERSION}/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -1098,7 +1098,7 @@
         }
       }
     },
-    "/api/${VERSION}/trades/": {
+    "/api/v1/trades/": {
       "get": {
         "tags": [
           "Trade"
@@ -1222,17 +1222,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Created"
-          },
-          "202": {
-            "description": "Accepted"
-          },
-          "204": {
-            "description": "No Content"
           },
           "400": {
             "description": "Bad Request"
@@ -1243,7 +1234,7 @@
         }
       }
     },
-    "/api/${VERSION}/trades/{id}": {
+    "/api/v1/trades/{id}": {
       "get": {
         "tags": [
           "Trade"
@@ -1528,7 +1519,7 @@
         }
       }
     },
-    "/api/${VERSION}/positions/": {
+    "/api/v1/positions/": {
       "get": {
         "tags": [
           "Position"
@@ -1722,7 +1713,7 @@
         }
       }
     },
-    "/api/${VERSION}/positions/{id}": {
+    "/api/v1/positions/{id}": {
       "get": {
         "tags": [
           "Position"
@@ -2233,7 +2224,7 @@
         }
       }
     },
-    "/api/${VERSION}/accounts/": {
+    "/api/v1/accounts/": {
       "get": {
         "tags": [
           "Account"
@@ -2345,7 +2336,7 @@
         }
       }
     },
-    "/api/${VERSION}/accounts/{id}": {
+    "/api/v1/accounts/{id}": {
       "get": {
         "tags": [
           "Account"
@@ -2472,7 +2463,13 @@
                 "userId": {
                   "example": "any"
                 },
-                "totalValue": {
+                "in": {
+                  "example": "any"
+                },
+                "required": {
+                  "example": "any"
+                },
+                "schema": {
                   "example": "any"
                 }
               }
@@ -2482,6 +2479,9 @@
         "responses": {
           "202": {
             "description": "Accepted"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -2583,7 +2583,7 @@
         }
       }
     },
-    "/api/${VERSION}/deposits/": {
+    "/api/v1/deposits/": {
       "get": {
         "tags": [
           "Deposit"
@@ -2688,8 +2688,8 @@
         "tags": [
           "Deposit"
         ],
-        "summary": "Create a New Deposit",
-        "description": "Add a new deposit transaction to the user's account",
+        "summary": "Create a New Transaction (Deposit or Withdrawal)",
+        "description": "Add a new transaction (deposit or withdrawal) and update the account balance",
         "parameters": [
           {
             "name": "VERSION",
@@ -2735,17 +2735,17 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
-                "amount": {
-                  "type": "number",
-                  "example": 5000
+                "in": {
+                  "example": "any"
                 },
-                "date": {
-                  "type": "string",
-                  "example": "2024-11-17"
+                "required": {
+                  "example": "any"
+                },
+                "schema": {
+                  "example": "any"
                 }
               }
             }
@@ -2753,7 +2753,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Deposit created successfully",
+            "description": "Transaction created successfully",
             "schema": {
               "type": "object",
               "properties": {
@@ -2763,14 +2763,18 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Deposit added successfully"
+                  "example": "Transaction added successfully"
                 },
                 "data": {
                   "type": "object",
                   "properties": {
                     "_id": {
                       "type": "string",
-                      "example": "deposit-id"
+                      "example": "transaction-id"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "account-id"
                     },
                     "userId": {
                       "type": "string",
@@ -2779,6 +2783,10 @@
                     "amount": {
                       "type": "number",
                       "example": 5000
+                    },
+                    "transactionType": {
+                      "type": "string",
+                      "example": "DEPOSIT"
                     },
                     "date": {
                       "type": "string",
@@ -2803,7 +2811,7 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Amount and date are required"
+                  "example": "Amount, accountId, and transactionType are required"
                 }
               },
               "xml": {
@@ -2814,7 +2822,7 @@
         }
       }
     },
-    "/api/${VERSION}/deposits/{id}": {
+    "/api/v1/deposits/{id}": {
       "get": {
         "tags": [
           "Deposit"
@@ -3027,7 +3035,7 @@
         }
       }
     },
-    "/api/${VERSION}/capitals/": {
+    "/api/v1/capitals/": {
       "get": {
         "tags": [
           "Capital"
@@ -3226,7 +3234,7 @@
         }
       }
     },
-    "/api/${VERSION}/capitals/{id}": {
+    "/api/v1/capitals/{id}": {
       "get": {
         "tags": [
           "Capital"
@@ -3674,7 +3682,7 @@
         }
       }
     },
-    "/api/${VERSION}/stocks/": {
+    "/api/v1/stocks/": {
       "get": {
         "tags": [
           "Stock"
@@ -3786,7 +3794,7 @@
         }
       }
     },
-    "/api/${VERSION}/stocks/{id}": {
+    "/api/v1/stocks/{id}": {
       "get": {
         "tags": [
           "Stock"
@@ -4071,7 +4079,686 @@
         }
       }
     },
-    "/api/${VERSION}/comments/": {
+    "/api/v1/notes/": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Get List of Notes",
+        "description": "Fetch a list of all Notes, including related open trades",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Create a New Note",
+        "description": "Create a new Note for a specific stock",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Note": {
+                  "type": "string",
+                  "example": "Content"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Note created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "Note-id"
+                    },
+                    "userId": {
+                      "type": "string",
+                      "example": "user-id"
+                    },
+                    "Note": {
+                      "type": "string",
+                      "example": "Content"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Note already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note already exists"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notes/{id}": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Get Note Details",
+        "description": "Fetch details of a single Note by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the Note to fetch"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Note details fetched successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "Note-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 15000
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Note not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Update a Note",
+        "description": "Update an existing Note by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the Note to update"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "number",
+                  "example": 150
+                },
+                "price": {
+                  "type": "number",
+                  "example": 155
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Note   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "Note-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 155
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 23250
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 23250
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Note not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Delete a Note",
+        "description": "Delete a Note by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the Note to delete"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Note   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note successfully deleted!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Note not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note not found!"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Update a Note",
+        "description": "Update an existing Note by its ID",
+        "parameters": [
+          {
+            "name": "VERSION",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the Note to update"
+          },
+          {
+            "name": "tradeDuration",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "notes",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quantity": {
+                  "type": "number",
+                  "example": 150
+                },
+                "price": {
+                  "type": "number",
+                  "example": 155
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Note   successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note updated successfully"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "Note-id"
+                    },
+                    "stockSymbol": {
+                      "type": "string",
+                      "example": "AAPL"
+                    },
+                    "quantity": {
+                      "type": "number",
+                      "example": 150
+                    },
+                    "averagePrice": {
+                      "type": "number",
+                      "example": 155
+                    },
+                    "totalInvestment": {
+                      "type": "number",
+                      "example": 23250
+                    },
+                    "currentValue": {
+                      "type": "number",
+                      "example": 23250
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Note not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Note not found"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comments/": {
       "get": {
         "tags": [
           "Comment"
@@ -4198,7 +4885,7 @@
         }
       }
     },
-    "/api/${VERSION}/comments/{id}": {
+    "/api/v1/comments/{id}": {
       "get": {
         "tags": [
           "Comment"
@@ -4510,6 +5197,10 @@
                 "message": {
                   "type": "string",
                   "example": "Invalid userType. Valid values are: admin, individual."
+                },
+                "immutable": {
+                  "type": "boolean",
+                  "example": true
                 }
               }
             },
@@ -4689,10 +5380,6 @@
               "type": "boolean",
               "example": true
             },
-            "uppercase": {
-              "type": "boolean",
-              "example": true
-            },
             "required": {
               "type": "boolean",
               "example": true
@@ -4840,14 +5527,17 @@
           }
         },
         "notes": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "function"
-            },
-            "trim": {
-              "type": "boolean",
-              "example": true
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "function"
+              },
+              "ref": {
+                "type": "string",
+                "example": "Note"
+              }
             }
           }
         },
@@ -4968,6 +5658,28 @@
             "default": {
               "type": "number",
               "example": 0
+            }
+          }
+        },
+        "status": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "function"
+            },
+            "enum": {
+              "type": "array",
+              "example": [
+                "OPEN",
+                "CLOSED"
+              ],
+              "items": {
+                "type": "string"
+              }
+            },
+            "default": {
+              "type": "string",
+              "example": "OPEN"
             }
           }
         }

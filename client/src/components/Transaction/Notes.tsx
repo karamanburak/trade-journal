@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { formatDateWithTime } from "../../helpers/formatDate";
-import MenuButton from "../Ui/Buttons/MenuButton";
-import NewNoteModal from "./NewNoteModal";
-import { MdNoteAlt } from "react-icons/md";
+import { MdNoteAlt, MdDelete, MdAdd } from "react-icons/md";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import useNoteCall from "../../hooks/useNoteCall";
+import NewNoteModal from "./NewNoteModal";
 
 interface INote {
     content: string;
@@ -39,41 +38,55 @@ const Notes: React.FC<INotesProps> = ({ notes, tradeId }) => {
     };
 
     return (
-        <div className="w-full px-4">
-            <MenuButton onClick={() => setIsModalVisible(true)} className="block ml-auto bg-light-background3/40 px-2 rounded-md dark:bg-dark-background3">
-                Create new Note
-            </MenuButton>
+        <div className="w-full">
+            {/* New Note Button */}
+            <button
+                onClick={() => setIsModalVisible(true)}
+                className=" flex items-center  bg-light-primary text-white rounded-full px-4 py-2 hover:bg-light-primary/80 transition-colors duration-300 m-2 ml-auto">
+                <MdAdd className="mr-2" /> Add Note
+            </button>
 
-            {/* Modal for creating a new note */}
+            {/* New Note Modal */}
             <NewNoteModal
                 isVisible={isModalVisible}
                 onClose={() => setIsModalVisible(false)}
                 onSave={handleCreateNewNote}
             />
 
-            <div className="dark:bg-dark-background2 rounded-lg p-6 space-y-4">
+            {/* Notes Container */}
+            <div className=" bg-white dark:bg-gray-800 shadow-sm border border-light-border dark:border-dark-border">
                 {notes && notes.length > 0 ? (
-                    notes
-                        .slice()
-                        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                        .map((note, index) => (
-                            <div key={index} className="bg-light-secondary dark:bg-dark-background3 p-4 rounded-lg flex items-start justify-between">
-                                <div className="flex-1">
-                                    <p className="text-lg font-medium">{note.content}</p>
-                                    <span className="text-sm">{formatDateWithTime(note.createdAt)}</span>
-                                </div>
+                    <div className="divide-y divide-dark-border dark:divide-dark-secondary">
+                        {notes
+                            .slice()
+                            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                            .map((note) => (
                                 <div
-                                    className="cursor-pointer ml-4"
-                                    onClick={() => handleDeleteNote(note._id)}
-                                >
-                                    x
+                                    key={note._id}
+                                    className=" p-4 flex items-start justify-between transition-colors duration-300">
+                                    <div className="flex-1">
+                                        <p className="font-medium mb-1 ">
+                                            {note.content}
+                                        </p>
+                                        <span className="text-sm text-dark-border/80">
+                                            {formatDateWithTime(note.createdAt)}
+                                        </span>
+                                    </div>
+                                    <button
+                                        onClick={() => handleDeleteNote(note._id)}
+                                        className=" ml-4 text-dark-danger hover:text-dark-danger/80 transition-colors duration-300 p-2 rounded-full hover:bg-dark-danger/10 dark:hover:bg-dark-danger/20">
+                                        <MdDelete />
+                                    </button>
                                 </div>
-                            </div>
-                        ))
+                            ))
+                        }
+                    </div>
                 ) : (
-                    <div className="flex flex-col justify-center items-center">
-                        <MdNoteAlt className="text-6xl" />
-                        <p className=" text-lg font-medium"> No notes yet.</p>
+                    <div className=" flex flex-col justify-center items-center p-8 text-center">
+                        <MdNoteAlt className="text-6xl mb-4" />
+                        <p className="text-lg font-medium">
+                            No notes for this transaction yet
+                        </p>
                     </div>
                 )}
             </div>

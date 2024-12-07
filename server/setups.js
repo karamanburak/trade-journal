@@ -15,6 +15,6 @@ module.exports = {
   ACCESS_EXP: process.env?.ACCESS_EXP || "1d",
   REFRESH_KEY: process.env?.REFRESH_KEY,
   REFRESH_EXP: process.env?.REFRESH_EXP || "2d",
-  NODEMAILER_EMAIL: process.env.NODEMAILER_EMAIL,
-  NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD,
+  NODEMAILER_EMAIL: process.env?.NODEMAILER_EMAIL,
+  NODEMAILER_PASSWORD: process.env?.NODEMAILER_PASSWORD,
 };
