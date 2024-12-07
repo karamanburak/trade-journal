@@ -82,7 +82,7 @@ const Notes: React.FC<INotesProps> = ({ notes, tradeId }) => {
                         }
                     </div>
                 ) : (
-                    <div className=" flex flex-col justify-center items-center p-8 text-center">
+                    <div className="md:h-[360px] flex flex-col justify-center items-center p-8 text-center">
                         <MdNoteAlt className="text-6xl mb-4" />
                         <p className="text-lg font-medium">
                             No notes for this transaction yet
