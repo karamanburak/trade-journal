@@ -108,14 +108,15 @@ const TransactionsHistory = () => {
                                 <p><strong>Quantity:</strong> {trade.quantity}</p>
                                 <p><strong>Status:</strong> {trade.status}</p>
                             </div>
-                            <div className="">
+                            <div>
                                 <p><strong>Price:</strong> {trade.price?.toFixed(2)} €</p>
                                 <p><strong>Total Price:</strong> {((trade.price ?? 0) * trade.quantity).toFixed(2)} €</p>
                                 <p><strong>Date:</strong> {formatDateWithTime(trade.transactionDate)}</p>
-                                <FiExternalLink
-                                    className="ml-auto text-xl mt-7 cursor-pointer"
-                                    onClick={() => navigate(`/trades/${trade?._id}`)}
-                                />
+                                <p className="flex justify-end gap-4 cursor-pointer mt-3"
+                                    onClick={() => navigate(`/trades/${trade?._id}`)}>
+                                    More Details
+                                    <FiExternalLink className="mt-1" />
+                                </p>
                             </div>
                         </div>
                     ))}

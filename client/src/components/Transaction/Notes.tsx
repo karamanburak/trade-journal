@@ -20,7 +20,6 @@ interface INotesProps {
 
 const Notes: React.FC<INotesProps> = ({ notes, tradeId }) => {
     const { currentUser } = useSelector((state: RootState) => state.auth);
-    const [localNotes, setLocalNotes] = useState<INote[]>(notes);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { postNote, deleteNote } = useNoteCall();
 
@@ -36,7 +35,6 @@ const Notes: React.FC<INotesProps> = ({ notes, tradeId }) => {
     const handleDeleteNote = async (noteId: string) => {
         if (currentUser?._id) {
             await deleteNote(noteId);
-            setLocalNotes(prevNotes => prevNotes.filter(note => note._id !== noteId));
         }
     };
 
@@ -54,8 +52,8 @@ const Notes: React.FC<INotesProps> = ({ notes, tradeId }) => {
             />
 
             <div className="dark:bg-dark-background2 rounded-lg p-6 space-y-4">
-                {localNotes && localNotes.length > 0 ? (
-                    localNotes
+                {notes && notes.length > 0 ? (
+                    notes
                         .slice()
                         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                         .map((note, index) => (

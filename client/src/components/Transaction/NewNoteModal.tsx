@@ -35,13 +35,13 @@ const NewNoteModal: React.FC<INewNoteModalProps> = ({ isVisible, onClose, onSave
                     placeholder="Write your note here..."
                 />
                 <div className="mt-4 flex justify-end">
-                    <MenuButton className="text-dark-primary hover:text-dark-primary/80" onClick={handleSave}>Save Note</MenuButton>
                     <MenuButton
-                        className="ml-2 text-dark-danger hover:text-dark-danger/80"
+                        className="bg-dark-danger hover:bg-dark-danger/70 text-white py-2 px-4 rounded-xl"
                         onClick={onClose}
                     >
                         Cancel
                     </MenuButton>
+                    <MenuButton className="bg-dark-primary hover:bg-dark-primary/70 text-white py-2 px-4 rounded-xl ml-4" onClick={handleSave}>Save Note</MenuButton>
                 </div>
             </div>
         </div>

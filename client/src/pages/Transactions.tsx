@@ -5,7 +5,6 @@ const Transactions = () => {
     return (
         <>
             <TransactionsHistory />
-
         </>
     );
 };

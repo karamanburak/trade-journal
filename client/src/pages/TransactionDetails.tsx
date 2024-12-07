@@ -78,7 +78,7 @@ const TransactionDetails = () => {
             <Header />
             <div className="min-h-screen py-8 px-4 bg-light-background dark:bg-dark-background">
 
-                <div className="w-[80px] text-lg font-semibold flex cursor-pointer mb-4" onClick={() => navigate("/")} >
+                <div className="w-[80px] text-lg font-semibold flex cursor-pointer mb-4" onClick={() => navigate("/?tab=transactions")} >
                     <MdKeyboardArrowLeft className="text-3xl -mt-0.5" />  Back
                 </div>
                 <div className="w-full mx-auto dark:bg-dark-background rounded-lg p-8">
@@ -97,7 +97,7 @@ const TransactionDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="md:w-1/2 overflow-y-auto scrollbar h-[190px] my-6 md:m-0">
+                        <div className="border-l-2 md:w-1/2 overflow-y-auto scrollbar h-[190px] my-6 md:m-0">
                             <Notes notes={notes} tradeId={tradeId || ""} />
                         </div>
 

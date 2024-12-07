@@ -4,8 +4,6 @@ import { handleAxiosError } from "./handleAxiosError";
 
 const useNoteCall = () => {
 
-
-
     const getNotes = async (): Promise<ITrade[]> => {
         try {
             const { data } = await axiosWithPublic("/notes");
