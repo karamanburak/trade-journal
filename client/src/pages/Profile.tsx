@@ -162,7 +162,7 @@ const Profile: React.FC = () => {
         <>
             <Header />
             <div className="min-h-screen bg-light-background dark:bg-dark-background p-6 md:p-10">
-                <div className="max-w-6xl mx-auto">
+                <div className="max-w-7xl mx-auto">
                     {/* User Profile Header */}
                     <div className="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0 md:space-x-6">
                         <div className="flex items-center gap-6">
