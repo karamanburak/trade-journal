@@ -1,5 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card } from '@tremor/react';
+import { ImSpinner9 } from 'react-icons/im';
 
 interface IAccount {
     winRate: number;
@@ -14,7 +15,10 @@ interface KpiCardsProps {
 
 export default function KpiCardsWithChart({ account }: KpiCardsProps) {
     if (!account) {
-        return <div>Loading...</div>;
+        return <div className="flex h-screen justify-center items-center text-xl">
+            Loading...  <ImSpinner9 className="animate-spin ml-3 h-8 w-8 text-dark-primary" />
+        </div>
+
     }
 
     function classNames(...classes: (string | undefined | null | false)[]): string {
