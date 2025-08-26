@@ -17,7 +17,7 @@ const useAuthCall = () => {
     const register = async (userInfo: object) => {
         dispatch(fetchStart());
         try {
-            const { data } = await axiosWithPublic.post(`auth/register`, userInfo);
+            const { data } = await axiosWithPublic.post(`api/v1/auth/register`, userInfo);
             // console.log(data);
             dispatch(registerSuccess(data.data));
             toastNotify("success", data.message)
@@ -32,7 +32,7 @@ const useAuthCall = () => {
     const login = async (userInfo: object) => {
         dispatch(fetchStart());
         try {
-            const { data } = await axiosWithPublic.post(`auth/login`, userInfo);
+            const { data } = await axiosWithPublic.post(`api/v1/auth/login`, userInfo);
             dispatch(loginSuccess(data));
             // console.log('Login response:', data);
             toastNotify("success", `Hello ${data.user.username}! Welcome back!`);
@@ -49,7 +49,7 @@ const useAuthCall = () => {
     const logout = async () => {
         dispatch(fetchStart());
         try {
-            await axiosWithToken(`auth/logout`);
+            await axiosWithToken(`api/v1/auth/logout`);
             dispatch(logoutSuccess());
             toastNotify("success", "You have been logged out successfully.");
             navigate("/");

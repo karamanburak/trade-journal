@@ -6,7 +6,7 @@ const useNoteCall = () => {
 
     const getNotes = async (): Promise<ITrade[]> => {
         try {
-            const { data } = await axiosWithPublic("/notes");
+            const { data } = await axiosWithPublic("/api/v1/notes");
             // console.log(data.data);
             return data.data;
         } catch (error) {
@@ -18,7 +18,7 @@ const useNoteCall = () => {
 
     const postNote = async (tradeId: string, userId: string, noteContent: string): Promise<void> => {
         try {
-            const { data } = await axiosWithPublic.post(`/notes`, {
+            const { data } = await axiosWithPublic.post(`/api/v1/notes`, {
                 content: noteContent,
                 tradeId: tradeId,
                 userId: userId
@@ -31,7 +31,7 @@ const useNoteCall = () => {
 
     const deleteNote = async (noteId: string): Promise<void> => {
         try {
-            const { data } = await axiosWithPublic.delete(`notes/${noteId}`);
+            const { data } = await axiosWithPublic.delete(`api/v1/notes/${noteId}`);
             toastNotify("success", data.message);
         } catch (error) {
             console.log("Error deleting trade:", error);

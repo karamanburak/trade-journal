@@ -9,7 +9,7 @@ module.exports = {
   CLIENT_URL: process.env?.CLIENT_URL,
   MONGODB_URI: process.env?.MONGODB_URI,
   PAGE_SIZE: process.env?.PAGE_SIZE || 50,
-  VERSION: process.env.VERSION,
+  VERSION: process.env.VERSION || "v1",
   SECRET_KEY: process.env?.SECRET_KEY,
   ACCESS_KEY: process.env?.ACCESS_KEY,
   ACCESS_EXP: process.env?.ACCESS_EXP || "1d",

@@ -7,7 +7,7 @@ const useAccountCall = () => {
 
     const getAccount = async (userId: string) => {
         try {
-            const { data } = await axiosWithToken.get(`accounts?filter[userId]=${userId}`);
+            const { data } = await axiosWithToken.get(`api/v1/accounts?filter[userId]=${userId}`);
             // console.log(data.data);
             return data;
         } catch (error) {
@@ -19,7 +19,7 @@ const useAccountCall = () => {
 
     const updateAccount = async (depositData: { accountId: string, userId: string, amount: number, transactionType: string }) => {
         try {
-            const { data } = await axiosWithToken.post(`deposits`, depositData);
+            const { data } = await axiosWithToken.post(`api/v1/deposits`, depositData);
             // toastNotify("success", "Value updated successfully.");
             return data;
         } catch (error) {

@@ -20,7 +20,7 @@ const useTradeCall = () => {
     const getTrades = async (userId: string): Promise<ITrade[]> => {
         dispatch(fetchTradeStart())
         try {
-            const { data } = await axiosWithPublic(`trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
+            const { data } = await axiosWithPublic(`api/v1/trades?filter[userId]=${userId}&sort[transactionDate]=desc`);
             dispatch(fetchTradeSuccess(data.data));
             // console.log(data.data);
             return data.data;
@@ -35,7 +35,7 @@ const useTradeCall = () => {
     const getStocks = async (): Promise<IStock[]> => {
         dispatch(fetchTradeStart());
         try {
-            const { data } = await axiosWithPublic("stocks");
+            const { data } = await axiosWithPublic("api/v1/stocks");
             dispatch(fetchStockSuccess(data.data));
             // console.log(data.data);
             return data.data;
@@ -51,7 +51,7 @@ const useTradeCall = () => {
         dispatch(fetchTradeStart());
 
         try {
-            const { data } = await axiosWithPublic(`trades/${tradeId}`);
+            const { data } = await axiosWithPublic(`api/v1/trades/${tradeId}`);
             // console.log(data.data);
             dispatch(fetchSingleTradeSuccess(data.data));
             return data.data;
@@ -65,7 +65,7 @@ const useTradeCall = () => {
     const getSingleStock = async (stockId: string): Promise<void> => {
         dispatch(fetchTradeStart());
         try {
-            const { data } = await axiosWithPublic(`stocks/${stockId}`);
+            const { data } = await axiosWithPublic(`api/v1/stocks/${stockId}`);
             // console.log(data.data);
             dispatch(fetchSingleStockSuccess(data.data));
         } catch (error) {
@@ -79,7 +79,7 @@ const useTradeCall = () => {
     const postTrade = async (tradeInfo: ITrade): Promise<void> => {
         dispatch(fetchTradeStart());
         try {
-            const { data } = await axiosWithPublic.post("trades", tradeInfo);
+            const { data } = await axiosWithPublic.post("api/v1/trades", tradeInfo);
             toastNotify("success", data.message);
             navigate(`/?tab=transactions`);
         } catch (error) {
@@ -93,7 +93,7 @@ const useTradeCall = () => {
     const editTrade = async (tradeId: string, tradeInfo: ITrade): Promise<void> => {
         dispatch(fetchTradeStart());
         try {
-            const { data } = await axiosWithPublic.put(`trades/${tradeId}`, tradeInfo);
+            const { data } = await axiosWithPublic.put(`api/v1/trades/${tradeId}`, tradeInfo);
             dispatch(fetchSingleTradeSuccess(data.new));
             toastNotify("success", data.message);
         } catch (error) {

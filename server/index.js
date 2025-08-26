@@ -10,11 +10,32 @@ const { PORT, HOST, VERSION } = require("./setups");
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
+// CORS configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: ["Authorization", "Content-Type"],
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "http://localhost:5173", 
+        "http://localhost:5174",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174"
+      ];
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: ["Authorization", "Content-Type", "Origin", "Accept"],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   })
 );
 // envVariables to process.env:
